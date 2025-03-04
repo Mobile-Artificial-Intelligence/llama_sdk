@@ -253,6 +253,11 @@ class LlamaNative implements Llama {
   }
 
   @override
+  Uint8List tts(String text) {
+    throw UnimplementedError();
+  }
+
+  @override
   void stop() => throw LlamaException('Not implemented');
 
   @override

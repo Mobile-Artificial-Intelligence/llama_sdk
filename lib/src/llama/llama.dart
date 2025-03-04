@@ -90,6 +90,13 @@ abstract interface class Llama {
   /// - Returns: A [Stream] of strings, where each string is a generated response.
   Stream<String> prompt(List<ChatMessage> messages);
 
+  /// Converts the given text to speech and returns the audio data as a [Uint8List].
+  ///
+  /// The [text] parameter is the input string that needs to be converted to speech.
+  ///
+  /// Returns a [Uint8List] containing the audio data of the synthesized speech.
+  Uint8List tts(String text);
+
   /// Stops the current operation or process.
   ///
   /// This method should be called to terminate any ongoing tasks or
