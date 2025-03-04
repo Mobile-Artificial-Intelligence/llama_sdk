@@ -17,7 +17,7 @@ class _LlamaWorker {
     samplingParams: samplingParams,
   ) {
     sendPort.send(receivePort.sendPort);
-    receivePort.listen(_handleMessage);
+    receivePort.listen(handleMessage);
   }
 
   factory _LlamaWorker.fromRecord(_LlamaWorkerRecord record) => _LlamaWorker(
@@ -27,7 +27,7 @@ class _LlamaWorker {
     samplingParams: SamplingParams.fromJson(record.$4),
   );
 
-  void _handleMessage(dynamic data) async {
+  void handleMessage(dynamic data) async {
     if (data is List<_ChatMessageRecord>) {
       final messages = ChatMessages._fromRecords(data);
       final stream = llamaNative.prompt(messages);
