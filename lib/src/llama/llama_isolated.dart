@@ -8,23 +8,18 @@ part of 'package:lcpp/lcpp.dart';
 /// The [LlamaIsolated] constructor initializes the isolate with the provided
 /// model, context, and sampling parameters.
 ///
-/// The [_listener] method listens for messages from the isolate and handles
-/// them accordingly. It adds responses to the [_responseController] stream,
-/// sets the [_sendPort] when received, and completes the [_initialized] completer.
-///
 /// The [prompt] method sends a list of [ChatMessage] to the isolate and returns
 /// a stream of responses. It waits for the isolate to be initialized before
 /// sending the messages.
 ///
 /// The [stop] method sends a signal to the isolate to stop processing. It waits
 /// for the isolate to be initialized before sending the signal.
-///
-/// The [free] method sends a signal to the isolate to free resources. It waits
-/// for the isolate to be initialized before sending the signal.
+/// 
+/// The [reload] method stops the current operation and reloads the isolate with
+/// the updated parameters.
 class LlamaIsolated implements Llama {
   Completer _initialized = Completer();
-  StreamController<String> _responseController = StreamController<String>()
-    ..close();
+  late StreamController<String> _responseController;
   Isolate? _isolate;
   SendPort? _sendPort;
   ReceivePort? _receivePort;
@@ -33,7 +28,7 @@ class LlamaIsolated implements Llama {
 
   /// Gets the model parameters.
   ///
-  /// This property returns the [_modelParams] which contains the parameters
+  /// This property returns the [modelParams] which contains the parameters
   /// for the model.
   ModelParams get modelParams => _modelParams;
 
