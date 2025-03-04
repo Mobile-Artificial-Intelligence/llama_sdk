@@ -1,36 +1,5 @@
 part of 'package:lcpp/lcpp.dart';
 
-void _isolateEntry(_LlamaIsolateRecord record) async {
-  final args = _LlamaIsolateParams.fromRecord(record);
-  final SendPort sendPort = args.sendPort;
-  final LlamaNative llamaCppNative;
-
-  try {
-    final receivePort = ReceivePort();
-    sendPort.send(receivePort.sendPort);
-
-    llamaCppNative = LlamaNative(
-        modelParams: args.modelParams,
-        contextParams: args.contextParams,
-        samplingParams: args.samplingParams);
-
-    await for (final data in receivePort) {
-      if (data is List<_ChatMessageRecord>) {
-        final messages = ChatMessages._fromRecords(data);
-        final stream = llamaCppNative.prompt(messages);
-
-        await for (final response in stream) {
-          sendPort.send(response);
-        }
-
-        sendPort.send(null);
-      }
-    }
-  } catch (e) {
-    log('LlamaIsolateEntry: $e');
-  }
-}
-
 /// A class that isolates the Llama implementation to run in a separate isolate.
 ///
 /// This class implements the [Llama] interface and provides methods to interact
@@ -126,14 +95,14 @@ class LlamaIsolated implements Llama {
   void _listener() async {
     _receivePort = ReceivePort();
 
-    final isolateParams = _LlamaIsolateParams(
+    final isolateParams = _LlamaWorkerParams(
       modelParams: _modelParams,
       contextParams: _contextParams,
       samplingParams: _samplingParams,
       sendPort: _receivePort!.sendPort
     );
 
-    _isolate = await Isolate.spawn(_isolateEntry, isolateParams.toRecord());
+    _isolate = await Isolate.spawn(_LlamaWorker.entry, isolateParams.toRecord());
 
     await for (final data in _receivePort!) {
       if (data is SendPort) {
