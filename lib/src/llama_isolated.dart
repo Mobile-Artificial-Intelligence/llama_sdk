@@ -1,35 +1,7 @@
 part of 'package:lcpp/lcpp.dart';
 
-typedef _IsolateArguments = ({
-  ModelParams modelParams,
-  ContextParams contextParams,
-  SamplingParams samplingParams,
-  SendPort sendPort
-});
-
-extension _IsolateArgumentsExtension on _IsolateArguments {
-  _SerializableIsolateArguments get toSerializable => (
-        modelParams.toJson(),
-        contextParams.toJson(),
-        samplingParams.toJson(),
-        sendPort
-      );
-}
-
-typedef _SerializableIsolateArguments = (String, String, String, SendPort);
-
-extension _SerializableIsolateArgumentsExtension
-    on _SerializableIsolateArguments {
-  ModelParams get modelParams => ModelParams.fromJson(this.$1);
-
-  ContextParams get contextParams => ContextParams.fromJson(this.$2);
-
-  SamplingParams get samplingParams => SamplingParams.fromJson(this.$3);
-
-  SendPort get sendPort => this.$4;
-}
-
-void _isolateEntry(_SerializableIsolateArguments args) async {
+void _isolateEntry(_LlamaIsolateRecord record) async {
+  final args = _LlamaIsolateParams.fromRecord(record);
   final SendPort sendPort = args.sendPort;
   final LlamaNative llamaCppNative;
 
@@ -154,14 +126,14 @@ class LlamaIsolated implements Llama {
   void _listener() async {
     _receivePort = ReceivePort();
 
-    final isolateParams = (
+    final isolateParams = _LlamaIsolateParams(
       modelParams: _modelParams,
       contextParams: _contextParams,
       samplingParams: _samplingParams,
       sendPort: _receivePort!.sendPort
     );
 
-    _isolate = await Isolate.spawn(_isolateEntry, isolateParams.toSerializable);
+    _isolate = await Isolate.spawn(_isolateEntry, isolateParams.toRecord());
 
     await for (final data in _receivePort!) {
       if (data is SendPort) {

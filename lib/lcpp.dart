@@ -18,5 +18,6 @@ part 'src/llama.dart';
 part 'src/llama_native.dart';
 part 'src/params/model_params.dart';
 part 'src/chat_message.dart';
+part 'src/params/isolate_params.dart';
 part 'src/params/context_params.dart';
 part 'src/params/sampling_params.dart';
