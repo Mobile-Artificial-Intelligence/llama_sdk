@@ -94,8 +94,8 @@ abstract interface class Llama {
   ///
   /// The [text] parameter is the input string that needs to be converted to speech.
   ///
-  /// Returns a [Uint8List] containing the audio data of the synthesized speech.
-  Uint8List tts(String text);
+  /// Returns a [Future<Uint8List>] containing the audio data of the synthesized speech.
+  Future<Uint8List> tts(String text);
 
   /// Stops the current operation or process.
   ///

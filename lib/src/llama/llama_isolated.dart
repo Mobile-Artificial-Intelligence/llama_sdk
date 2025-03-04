@@ -19,7 +19,7 @@ part of 'package:lcpp/lcpp.dart';
 /// the updated parameters.
 class LlamaIsolated implements Llama {
   Completer _initialized = Completer();
-  late StreamController<String> _responseController;
+  late StreamController _responseController;
   Isolate? _isolate;
   SendPort? _sendPort;
   ReceivePort? _receivePort;
@@ -103,9 +103,14 @@ class LlamaIsolated implements Llama {
       if (data is SendPort) {
         _sendPort = data;
         _initialized.complete();
-      } else if (data is String) {
+      } 
+      else if (data is String) {
         _responseController.add(data);
-      } else if (data == null) {
+      } 
+      else if (data is Uint8List) {
+        _responseController.add(data);
+      }
+      else if (data == null) {
         _responseController.close();
       }
     }
@@ -132,8 +137,21 @@ class LlamaIsolated implements Llama {
   }
 
   @override
-  Uint8List tts(String text) {
-    throw UnimplementedError();
+  Future<Uint8List> tts(String text) async {
+    if (isFreed) {
+      throw LlamaException('LlamaIsolated has been freed');
+    }
+
+    if (!_initialized.isCompleted) {
+      _listener();
+      await _initialized.future;
+    }
+
+    _responseController = StreamController<Uint8List>();
+
+    _sendPort!.send(text);
+
+    return await _responseController.stream.first;
   }
 
   @override

@@ -253,7 +253,7 @@ class LlamaNative implements Llama {
   }
 
   @override
-  Uint8List tts(String text) {
+  Future<Uint8List> tts(String text) {
     throw UnimplementedError();
   }
 
