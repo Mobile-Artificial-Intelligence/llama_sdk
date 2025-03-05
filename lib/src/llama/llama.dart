@@ -24,29 +24,16 @@ class Llama with _LlamaPromptMixin, _LlamaTTSMixin implements _LlamaBase {
   SendPort? _sendPort;
   ReceivePort? _receivePort;
 
-  ModelParams _modelParams;
+  LlamaParams _llamaParams;
 
   /// Gets the model parameters.
   ///
   /// This property returns the [modelParams] which contains the parameters
   /// for the model.
-  ModelParams get modelParams => _modelParams;
+  LlamaParams get modelParams => _llamaParams;
 
-  set modelParams(ModelParams modelParams) {
-    _modelParams = modelParams;
-    reload();
-  }
-
-  ContextParams _contextParams;
-
-  /// Gets the context parameters.
-  ///
-  /// This property returns the `_contextParams` which contains the parameters
-  /// for the current context.
-  ContextParams get contextParams => _contextParams;
-
-  set contextParams(ContextParams contextParams) {
-    _contextParams = contextParams;
+  set modelParams(LlamaParams modelParams) {
+    _llamaParams = modelParams;
     reload();
   }
 
@@ -76,23 +63,19 @@ class Llama with _LlamaPromptMixin, _LlamaTTSMixin implements _LlamaBase {
   /// the listener.
   ///
   /// Parameters:
-  /// - [modelParams]: The parameters required for the model. This parameter is required.
-  /// - [contextParams]: The parameters for the context. This parameter is optional and defaults to an instance of [ContextParams].
+  /// - [llamaParams]: The parameters required for the model. This parameter is required.
   /// - [samplingParams]: The parameters for sampling. This parameter is optional and defaults to an instance of [SamplingParams] with `greedy` set to `true`.
   Llama(
-      {required ModelParams modelParams,
-      ContextParams? contextParams,
+      {required LlamaParams llamaParams,
       SamplingParams samplingParams = const SamplingParams(greedy: true)})
-      : _modelParams = modelParams,
-        _contextParams = contextParams ?? ContextParams(),
+      : _llamaParams = llamaParams,
         _samplingParams = samplingParams;
 
   void _listener() async {
     _receivePort = ReceivePort();
 
     final isolateParams = _LlamaWorkerParams(
-      modelParams: _modelParams,
-      contextParams: _contextParams,
+      llamaParams: _llamaParams,
       samplingParams: _samplingParams,
       sendPort: _receivePort!.sendPort
     );

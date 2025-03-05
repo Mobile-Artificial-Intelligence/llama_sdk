@@ -1,70 +1,42 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
-  ffi.Pointer<llama_model> _model = ffi.nullptr;
-  ffi.Pointer<llama_context> _context = ffi.nullptr;
-  ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;
-
-  int _contextLength = 0;
-
-  ModelParams _modelParams;
-  ContextParams _contextParams;
-  SamplingParams _samplingParams;
-
-  set modelParams(ModelParams modelParams) {
-    _modelParams = modelParams;
-    _modelParams.addListener(_initModel);
-    _initModel();
-  }
-
-  set contextParams(ContextParams contextParams) {
-    _contextParams = contextParams;
-    _contextParams.addListener(_initContext);
-    _initContext();
-  }
-
-  set samplingParams(SamplingParams samplingParams) {
-    _samplingParams = samplingParams;
-
-    _initSampler();
-  }
-
-  /// A class that initializes and manages a native Llama model.
-  ///
-  /// The [LlamaChat] constructor requires [ModelParams] and optionally accepts
-  /// [ContextParams] and [SamplingParams]. It initializes the model by loading
-  /// the necessary backends and calling the `_initModel` method.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// final llamaNative = LlamaNative(
-  ///   modelParams: ModelParams(...),
-  ///   contextParams: ContextParams(...),
-  ///   samplingParams: SamplingParams(...),
-  /// );
-  /// ```
-  ///
-  /// Parameters:
-  /// - [modelParams]: The parameters required to configure the model.
-  /// - [contextParams]: Optional parameters for the context configuration. Defaults to an empty [ContextParams] object.
-  /// - [samplingParams]: Optional parameters for the sampling configuration. Defaults to an empty [SamplingParams] object.
   LlamaChat(
-      {required ModelParams modelParams,
-      ContextParams? contextParams,
+      {required LlamaChatParams chatParams,
       SamplingParams samplingParams = const SamplingParams()})
-      : _modelParams = modelParams,
-        _contextParams = contextParams ?? ContextParams(),
+      : _chatParams = chatParams,
         _samplingParams = samplingParams {
     _LlamaBase.lib.ggml_backend_load_all();
     _LlamaBase.lib.llama_backend_init();
 
     _initModel();
   }
+  
+  ffi.Pointer<llama_model> _model = ffi.nullptr;
+  ffi.Pointer<llama_context> _context = ffi.nullptr;
+  ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;
+
+  int _contextLength = 0;
+
+  LlamaChatParams _chatParams;
+  SamplingParams _samplingParams;
+
+  set chatParams(LlamaChatParams value) {
+    _chatParams = value;
+    _chatParams.addListener(_initModel);
+    _initModel();
+  }
+
+  set samplingParams(SamplingParams value) {
+    _samplingParams = value;
+
+    _initSampler();
+  }
 
   void _initModel() {
-    assert(_modelParams.chatModel != null, LlamaException('Chat model is required'));
-    final nativeModelParams = _modelParams.toNative();
-    final nativeModelPath = _modelParams.chatModel!.path.toNativeUtf8().cast<ffi.Char>();
+    assert(_chatParams.chatModel != null, LlamaException('Chat model is required'));
+    final nativeModelParams = _chatParams.getModelParams();
+    final nativeModelPath = _chatParams.chatModel!.path.toNativeUtf8().cast<ffi.Char>();
 
     if (_model != ffi.nullptr) {
       _LlamaBase.lib.llama_free_model(_model);
@@ -83,7 +55,7 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   void _initContext() {
     assert(_model != ffi.nullptr, LlamaException('Model is not loaded'));
 
-    final nativeContextParams = _contextParams.toNative();
+    final nativeContextParams = _chatParams.getContextParams();
 
     if (_context != ffi.nullptr) {
       _LlamaBase.lib.llama_free(_context);
@@ -103,7 +75,7 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
     }
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_model);
-    _sampler = _samplingParams.toNative(vocab);
+    _sampler = _samplingParams.getSampler(vocab);
     assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
 
     _LlamaBase.samplerFinalizer.attach(this, _sampler);

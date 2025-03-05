@@ -44,7 +44,7 @@ class LlamaAppState extends State<LlamaApp> {
     }
 
     final llamaCpp = Llama(
-        modelParams: ModelParams(chatModel: resultFile),
+        llamaParams: LlamaParams(chatModel: resultFile),
         contextParams: ContextParams(nCtx: 2048, nBatch: 2048),
         samplingParams: const SamplingParams(greedy: true));
 

@@ -1,338 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
-/// Arguments for Top-P sampling.
-class TopPArguments {
-  /// The probability threshold for Top-P sampling.
-  final double p;
-
-  /// The minimum number of items to keep in the sample.
-  final int minKeep;
-
-  /// Creates a new instance of [TopPArguments].
-  const TopPArguments({
-    required this.p,
-    required this.minKeep,
-  });
-
-  /// Constructs a [TopPArguments] instance from a [Map].
-  factory TopPArguments.fromMap(Map<String, dynamic> map) => TopPArguments(
-        p: map['p'],
-        minKeep: map['min_keep'],
-      );
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'p': p,
-        'min_keep': minKeep,
-      };
-}
-
-/// Arguments for Minimum Probability sampling.
-class MinPArguments {
-  /// The probability threshold for Minimum Probability sampling.
-  final double p;
-
-  /// The minimum number of items to keep in the sample.
-  final int minKeep;
-
-  /// Creates a new instance of [MinPArguments].
-  const MinPArguments({
-    required this.p,
-    required this.minKeep,
-  });
-
-  /// Constructs a [MinPArguments] instance from a [Map].
-  factory MinPArguments.fromMap(Map<String, dynamic> map) => MinPArguments(
-        p: map['p'],
-        minKeep: map['min_keep'],
-      );
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'p': p,
-        'min_keep': minKeep,
-      };
-}
-
-/// Arguments for Typical-P sampling.
-class TypicalPArguments {
-  /// The probability threshold for Typical-P sampling.
-  final double p;
-
-  /// The minimum number of items to keep in the sample.
-  final int minKeep;
-
-  /// Creates a new instance of [TypicalPArguments].
-  const TypicalPArguments({
-    required this.p,
-    required this.minKeep,
-  });
-
-  /// Constructs a [TypicalPArguments] instance from a [Map].
-  factory TypicalPArguments.fromMap(Map<String, dynamic> map) =>
-      TypicalPArguments(
-        p: map['p'],
-        minKeep: map['min_keep'],
-      );
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'p': p,
-        'min_keep': minKeep,
-      };
-
-  /// Adds this configuration to the sampler.
-  void add(ffi.Pointer<llama_sampler> sampler) {
-    _LlamaBase.lib.llama_sampler_chain_add(
-      sampler,
-      _LlamaBase.lib.llama_sampler_init_typical(p, minKeep),
-    );
-  }
-}
-
-/// Arguments for temperature-based sampling.
-class TemperatureArguments {
-  /// The temperature value for sampling.
-  final double temperature;
-
-  /// Optional delta parameter for temperature adjustment.
-  final double? delta;
-
-  /// Optional exponent parameter for temperature adjustment.
-  final double? exponent;
-
-  /// Creates a new instance of [TemperatureArguments].
-  const TemperatureArguments({
-    required this.temperature,
-    this.delta,
-    this.exponent,
-  });
-
-  /// Constructs a [TemperatureArguments] instance from a [Map].
-  factory TemperatureArguments.fromMap(Map<String, dynamic> map) =>
-      TemperatureArguments(
-        temperature: map['temperature'],
-        delta: map['delta'],
-        exponent: map['exponent'],
-      );
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'temperature': temperature,
-        'delta': delta,
-        'exponent': exponent,
-      };
-}
-
-/// Arguments for XTC sampling.
-class XtcArguments {
-  /// The probability threshold for XTC sampling.
-  final double p;
-
-  /// The temperature value for XTC sampling.
-  final double t;
-
-  /// The minimum number of items to keep in the sample.
-  final int minKeep;
-
-  /// The random seed value.
-  final int seed;
-
-  /// Creates a new instance of [XtcArguments].
-  const XtcArguments({
-    required this.p,
-    required this.t,
-    required this.minKeep,
-    required this.seed,
-  });
-
-  /// Constructs an [XtcArguments] instance from a [Map].
-  factory XtcArguments.fromMap(Map<String, dynamic> map) => XtcArguments(
-        p: map['p'],
-        t: map['t'],
-        minKeep: map['min_keep'],
-        seed: map['seed'],
-      );
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'p': p,
-        't': t,
-        'min_keep': minKeep,
-        'seed': seed,
-      };
-}
-
-/// Arguments for Mirostat sampling.
-class MirostatArguments {
-  /// The number of vocabulary items.
-  final int nVocab;
-
-  /// The random seed value.
-  final int seed;
-
-  /// The tau value for Mirostat sampling.
-  final double tau;
-
-  /// The eta value for Mirostat sampling.
-  final double eta;
-
-  /// The number of items to keep in the sample.
-  final int m;
-
-  /// Creates a new instance of [MirostatArguments].
-  const MirostatArguments(
-      {required this.nVocab,
-      required this.seed,
-      required this.tau,
-      required this.eta,
-      required this.m});
-
-  /// Constructs a [MirostatArguments] instance from a [Map].
-  factory MirostatArguments.fromMap(Map<String, dynamic> map) =>
-      MirostatArguments(
-          nVocab: map['n_vocab'],
-          seed: map['seed'],
-          tau: map['tau'],
-          eta: map['eta'],
-          m: map['m']);
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() =>
-      {'n_vocab': nVocab, 'seed': seed, 'tau': tau, 'eta': eta, 'm': m};
-}
-
-/// Arguments for Mirostat version 2 sampling.
-class MirostatV2Arguments {
-  /// The random seed value.
-  final int seed;
-
-  /// The tau value for Mirostat sampling.
-  final double tau;
-
-  /// The eta value for Mirostat sampling.
-  final double eta;
-
-  /// Creates a new instance of [MirostatV2Arguments].
-  const MirostatV2Arguments(
-      {required this.seed, required this.tau, required this.eta});
-
-  /// Constructs a [MirostatV2Arguments] instance from a [Map].
-  factory MirostatV2Arguments.fromMap(Map<String, dynamic> map) =>
-      MirostatV2Arguments(seed: map['seed'], tau: map['tau'], eta: map['eta']);
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {'seed': seed, 'tau': tau, 'eta': eta};
-}
-
-/// Arguments for grammar-based sampling.
-class GrammarArguments {
-  /// The grammar rules.
-  final String str;
-
-  /// The root node for the grammar.
-  final String root;
-
-  /// Creates a new instance of [GrammarArguments].
-  const GrammarArguments({required this.str, required this.root});
-
-  /// Constructs a [GrammarArguments] instance from a [Map].
-  factory GrammarArguments.fromMap(Map<String, dynamic> map) =>
-      GrammarArguments(str: map['str'], root: map['root']);
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {'str': str, 'root': root};
-}
-
-/// Arguments for penalties.
-class PenaltiesArguments {
-  /// The number of items to consider for the penalty.
-  final int lastN;
-
-  /// The penalty for repetition.
-  final double repeat;
-
-  /// The penalty frequency.
-  final double frequency;
-
-  /// The penalty for present items.
-  final double present;
-
-  /// Creates a new instance of [PenaltiesArguments].
-  const PenaltiesArguments(
-      {required this.lastN,
-      required this.repeat,
-      required this.frequency,
-      required this.present});
-
-  /// Constructs a [PenaltiesArguments] instance from a [Map].
-  factory PenaltiesArguments.fromMap(Map<String, dynamic> map) =>
-      PenaltiesArguments(
-          lastN: map['last_n'],
-          repeat: map['repeat'],
-          frequency: map['frequency'],
-          present: map['present']);
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'last_n': lastN,
-        'repeat': repeat,
-        'frequency': frequency,
-        'present': present
-      };
-}
-
-/// Arguments for dry sampling.
-class DrySamplerArguments {
-  /// The number of training contexts.
-  final int nCtxTrain;
-
-  /// The multiplier for the penalty.
-  final double multiplier;
-
-  /// The base value for the penalty.
-  final double dryBase;
-
-  /// The maximum allowed length for the sequence.
-  final int allowedLength;
-
-  /// The penalty for the last N items.
-  final int penaltyLastN;
-
-  /// The sequence breakers.
-  final List<String> sequenceBreakers;
-
-  /// Creates a new instance of [DrySamplerArguments].
-  const DrySamplerArguments(
-      {required this.nCtxTrain,
-      required this.multiplier,
-      required this.dryBase,
-      required this.allowedLength,
-      required this.penaltyLastN,
-      required this.sequenceBreakers});
-
-  /// Constructs a [DrySamplerArguments] instance from a [Map].
-  factory DrySamplerArguments.fromMap(Map<String, dynamic> map) =>
-      DrySamplerArguments(
-          nCtxTrain: map['n_ctx_train'],
-          multiplier: map['multiplier'],
-          dryBase: map['dryBase'],
-          allowedLength: map['allowed_length'],
-          penaltyLastN: map['penalty_last_n'],
-          sequenceBreakers: List<String>.from(map['sequence_breakers']));
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'n_ctx_train': nCtxTrain,
-        'multiplier': multiplier,
-        'dryBase': dryBase,
-        'allowed_length': allowedLength,
-        'penalty_last_n': penaltyLastN,
-        'sequence_breakers': sequenceBreakers
-      };
-}
-
-/// Represents the parameters used for sampling in the model.
+/// Sampling parameters combining all argument fields.
 class SamplingParams {
   /// Enables greedy decoding if set to `true`.
   final bool greedy;
@@ -346,90 +14,230 @@ class SamplingParams {
   /// Limits the number of top candidates considered during sampling.
   final int? topK;
 
-  /// Arguments for top-p sampling (nucleus sampling).
-  final TopPArguments? topP;
+  /// Top-P sampling
+  final double? topP;
 
-  /// Arguments for minimum-p sampling.
-  final MinPArguments? minP;
+  /// Top-P sampling minimum keep
+  final int? minKeepTopP;
 
-  /// Arguments for typical-p sampling.
-  final TypicalPArguments? typicalP;
+  /// Minimum Probability sampling
+  final double? minP;
 
-  /// Arguments for controlling the temperature during sampling.
-  final TemperatureArguments? temperature;
+  /// Minimum Probability sampling minimum keep
+  final int? minKeepMinP;
 
-  /// Arguments for Xtc sampling.
-  final XtcArguments? xtc;
+  /// Typical-P sampling
+  final double? typicalP;
 
-  /// Arguments for Mirostat sampling.
-  final MirostatArguments? mirostat;
+  /// Typical-P sampling minimum keep
+  final int? minKeepTypicalP;
 
-  /// Arguments for Mirostat version 2 sampling.
-  final MirostatV2Arguments? mirostatV2;
+  /// Temperature-based sampling
+  final double? temperature;
 
-  /// Grammar rules and root node for constrained sampling.
-  final GrammarArguments? grammar;
+  /// Temperature-based sampling delta
+  final double? temperatureDelta;
 
-  /// Penalty configurations for preventing repetition.
-  final PenaltiesArguments? penalties;
+  /// Temperature-based sampling exponent
+  final double? temperatureExponent;
 
-  /// Arguments for dry sampling (specific training context).
-  final DrySamplerArguments? drySampler;
+  /// XTC sampling probability
+  final double? xtcP;
+
+  /// XTC sampling temperature
+  final double? xtcT;
+
+  /// XTC sampling minimum keep
+  final int? minKeepXtc;
+
+  /// XTC sampling seed
+  final int? xtcSeed;
+
+  /// Mirostat sampling vocabulary size
+  final int? mirostatNVocab;
+
+  /// Mirostat sampling seed
+  final int? mirostatSeed;
+
+  /// Mirostat sampling tau
+  final double? mirostatTau;
+
+  /// Mirostat sampling eta
+  final double? mirostatEta;
+
+  /// Mirostat sampling M
+  final int? mirostatM;
+
+  /// Mirostat v2 sampling seed
+  final int? mirostatV2Seed;
+
+  /// Mirostat v2 sampling tau
+  final double? mirostatV2Tau;
+
+  /// Mirostat v2 sampling eta
+  final double? mirostatV2Eta;
+
+  /// Grammar-based sampling string
+  final String? grammarStr;
+
+  /// Grammar-based sampling root
+  final String? grammarRoot;
+
+  /// Penalties last N
+  final int? penaltiesLastN;
+
+  /// Penalties repeat
+  final double? penaltiesRepeat;
+
+  /// Penalties frequency
+  final double? penaltiesFrequency;
+
+  /// Penalties present
+  final double? penaltiesPresent;
+
+  /// Dry sampler n ctx train
+  final int? drySamplerNCtxTrain;
+
+  /// Dry sampler multiplier
+  final double? drySamplerMultiplier;
+
+  /// Dry sampler dry base
+  final double? drySamplerDryBase;
+
+  /// Dry sampler allowed length
+  final int? drySamplerAllowedLength;
+
+  /// Dry sampler penalty last N
+  final int? drySamplerPenaltyLastN;
+
+  /// Dry sampler sequence breakers
+  final List<String>? drySamplerSequenceBreakers;
 
   /// Creates a new instance of [SamplingParams].
-  const SamplingParams(
-      {this.greedy = false,
-      this.infill = false,
-      this.seed,
-      this.topK,
-      this.topP,
-      this.minP,
-      this.typicalP,
-      this.temperature,
-      this.xtc,
-      this.mirostat,
-      this.mirostatV2,
-      this.grammar,
-      this.penalties,
-      this.drySampler});
+  const SamplingParams({
+    this.greedy = false,
+    this.infill = false,
+    this.seed,
+    this.topK,
+    this.topP,
+    this.minKeepTopP,
+    this.minP,
+    this.minKeepMinP,
+    this.typicalP,
+    this.minKeepTypicalP,
+    this.temperature,
+    this.temperatureDelta,
+    this.temperatureExponent,
+    this.xtcP,
+    this.xtcT,
+    this.minKeepXtc,
+    this.xtcSeed,
+    this.mirostatNVocab,
+    this.mirostatSeed,
+    this.mirostatTau,
+    this.mirostatEta,
+    this.mirostatM,
+    this.mirostatV2Seed,
+    this.mirostatV2Tau,
+    this.mirostatV2Eta,
+    this.grammarStr,
+    this.grammarRoot,
+    this.penaltiesLastN,
+    this.penaltiesRepeat,
+    this.penaltiesFrequency,
+    this.penaltiesPresent,
+    this.drySamplerNCtxTrain,
+    this.drySamplerMultiplier,
+    this.drySamplerDryBase,
+    this.drySamplerAllowedLength,
+    this.drySamplerPenaltyLastN,
+    this.drySamplerSequenceBreakers,
+  });
 
   /// Constructs a [SamplingParams] instance from a [Map].
   factory SamplingParams.fromMap(Map<String, dynamic> map) => SamplingParams(
-      greedy: map['greedy'] ?? false,
-      infill: map['infill'] ?? false,
-      seed: map['seed'],
-      topK: map['top_k'],
-      topP: map['top_p'] != null ? TopPArguments.fromMap(map['top_p']) : null,
-      minP: map['min_p'] != null ? MinPArguments.fromMap(map['min_p']) : null,
-      typicalP: map['typical_p'] != null
-          ? TypicalPArguments.fromMap(map['typical_p'])
-          : null,
-      temperature: map['temperature'] != null
-          ? TemperatureArguments.fromMap(map['temperature'])
-          : null,
-      xtc: map['xtc'] != null ? XtcArguments.fromMap(map['xtc']) : null,
-      mirostat: map['mirostat'] != null
-          ? MirostatArguments.fromMap(map['mirostat'])
-          : null,
-      mirostatV2: map['mirostat_v2'] != null
-          ? MirostatV2Arguments.fromMap(map['mirostat_v2'])
-          : null,
-      grammar: map['grammar'] != null
-          ? GrammarArguments.fromMap(map['grammar'])
-          : null,
-      penalties: map['penalties'] != null
-          ? PenaltiesArguments.fromMap(map['penalties'])
-          : null,
-      drySampler: map['dry_sampler'] != null
-          ? DrySamplerArguments.fromMap(map['dry_sampler'])
-          : null);
+        greedy: map['greedy'] ?? false,
+        infill: map['infill'] ?? false,
+        seed: map['seed'],
+        topK: map['top_k'],
+        topP: map['top_p'],
+        minKeepTopP: map['top_p_min_keep'],
+        minP: map['min_p'],
+        minKeepMinP: map['min_p_min_keep'],
+        typicalP: map['typical_p'],
+        minKeepTypicalP: map['typical_p_min_keep'],
+        temperature: map['temperature'],
+        temperatureDelta: map['temperature_delta'],
+        temperatureExponent: map['temperature_exponent'],
+        xtcP: map['xtc_p'],
+        xtcT: map['xtc_t'],
+        minKeepXtc: map['xtc_min_keep'],
+        xtcSeed: map['xtc_seed'],
+        mirostatNVocab: map['mirostat_n_vocab'],
+        mirostatSeed: map['mirostat_seed'],
+        mirostatTau: map['mirostat_tau'],
+        mirostatEta: map['mirostat_eta'],
+        mirostatM: map['mirostat_m'],
+        mirostatV2Seed: map['mirostat_v2_seed'],
+        mirostatV2Tau: map['mirostat_v2_tau'],
+        mirostatV2Eta: map['mirostat_v2_eta'],
+        grammarStr: map['grammar_str'],
+        grammarRoot: map['grammar_root'],
+        penaltiesLastN: map['penalties_last_n'],
+        penaltiesRepeat: map['penalties_repeat'],
+        penaltiesFrequency: map['penalties_frequency'],
+        penaltiesPresent: map['penalties_present'],
+        drySamplerNCtxTrain: map['dry_sampler_n_ctx_train'],
+        drySamplerMultiplier: map['dry_sampler_multiplier'],
+        drySamplerDryBase: map['dry_sampler_dry_base'],
+        drySamplerAllowedLength: map['dry_sampler_allowed_length'],
+      );
 
-  /// Constructs a [SamplingParams] instance from a JSON string.
-  factory SamplingParams.fromJson(String source) =>
-      SamplingParams.fromMap(jsonDecode(source));
+  factory SamplingParams.fromJson(String json) =>
+      SamplingParams.fromMap(jsonDecode(json));
 
-  /// Converts this instance to a [Pointer<llama_sampler>].
-  ffi.Pointer<llama_sampler> toNative([ffi.Pointer<llama_vocab>? vocab]) {
+  /// Converts this instance to a [Map].
+  Map<String, dynamic> toMap() => {
+        'greedy': greedy,
+        'infill': infill,
+        'seed': seed,
+        'top_k': topK,
+        'top_p': topP,
+        'top_p_min_keep': minKeepTopP,
+        'min_p': minP,
+        'min_p_min_keep': minKeepMinP,
+        'typical_p': typicalP,
+        'typical_p_min_keep': minKeepTypicalP,
+        'temperature': temperature,
+        'temperature_delta': temperatureDelta,
+        'temperature_exponent': temperatureExponent,
+        'xtc_p': xtcP,
+        'xtc_t': xtcT,
+        'xtc_min_keep': minKeepXtc,
+        'xtc_seed': xtcSeed,
+        'mirostat_n_vocab': mirostatNVocab,
+        'mirostat_seed': mirostatSeed,
+        'mirostat_tau': mirostatTau,
+        'mirostat_eta': mirostatEta,
+        'mirostat_m': mirostatM,
+        'mirostat_v2_seed': mirostatV2Seed,
+        'mirostat_v2_tau': mirostatV2Tau,
+        'mirostat_v2_eta': mirostatV2Eta,
+        'grammar_str': grammarStr,
+        'grammar_root': grammarRoot,
+        'penalties_last_n': penaltiesLastN,
+        'penalties_repeat': penaltiesRepeat,
+        'penalties_frequency': penaltiesFrequency,
+        'penalties_present': penaltiesPresent,
+        'dry_sampler_n_ctx_train': drySamplerNCtxTrain,
+        'dry_sampler_multiplier': drySamplerMultiplier,
+        'dry_sampler_dry_base': drySamplerDryBase,
+        'dry_sampler_allowed_length': drySamplerAllowedLength,
+      };
+
+  String toJson() => jsonEncode(toMap());
+
+  ffi.Pointer<llama_sampler> getSampler([ffi.Pointer<llama_vocab>? vocab]) {
     final sampler = _LlamaBase.lib.llama_sampler_chain_init(
         _LlamaBase.lib.llama_sampler_chain_default_params());
 
@@ -454,114 +262,109 @@ class SamplingParams {
           sampler, _LlamaBase.lib.llama_sampler_init_top_k(topK!));
     }
 
-    if (topP != null) {
+    if (topP != null && minKeepTopP != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_top_p(topP!.p, topP!.minKeep));
+          sampler, _LlamaBase.lib.llama_sampler_init_top_p(topP!, minKeepTopP!));
     }
 
-    if (minP != null) {
+    if (minP != null && minKeepMinP != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_min_p(minP!.p, minP!.minKeep));
+          sampler, _LlamaBase.lib.llama_sampler_init_min_p(minP!, minKeepMinP!));
     }
 
-    if (typicalP != null) {
+    if (typicalP != null && minKeepTypicalP != null) {
       _LlamaBase.lib.llama_sampler_chain_add(sampler,
-          _LlamaBase.lib.llama_sampler_init_typical(typicalP!.p, typicalP!.minKeep));
+          _LlamaBase.lib.llama_sampler_init_typical(typicalP!, minKeepTypicalP!));
     }
 
     if (temperature != null) {
-      if (temperature!.delta == null || temperature!.exponent == null) {
+      if (temperatureDelta == null || temperatureExponent == null) {
         _LlamaBase.lib.llama_sampler_chain_add(sampler,
-            _LlamaBase.lib.llama_sampler_init_temp(temperature!.temperature));
+            _LlamaBase.lib.llama_sampler_init_temp(temperature!));
       } else {
         _LlamaBase.lib.llama_sampler_chain_add(
             sampler,
-            _LlamaBase.lib.llama_sampler_init_temp_ext(temperature!.temperature,
-                temperature!.delta!, temperature!.exponent!));
+            _LlamaBase.lib.llama_sampler_init_temp_ext(temperature!,
+                temperatureDelta!, temperatureExponent!));
       }
     }
 
-    if (xtc != null) {
+    if (xtcP != null &&
+        xtcT != null &&
+        minKeepXtc != null &&
+        xtcSeed != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib
-              .llama_sampler_init_xtc(xtc!.p, xtc!.t, xtc!.minKeep, xtc!.seed));
+              .llama_sampler_init_xtc(xtcP!, xtcT!, minKeepXtc!, xtcSeed!));
     }
 
-    if (mirostat != null) {
+    if (mirostatNVocab != null &&
+        mirostatSeed != null &&
+        mirostatTau != null &&
+        mirostatEta != null &&
+        mirostatM != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
-          _LlamaBase.lib.llama_sampler_init_mirostat(mirostat!.nVocab,
-              mirostat!.seed, mirostat!.tau, mirostat!.eta, mirostat!.m));
+          _LlamaBase.lib.llama_sampler_init_mirostat(mirostatNVocab!,
+              mirostatSeed!, mirostatTau!, mirostatEta!, mirostatM!));
     }
 
-    if (mirostatV2 != null) {
+    if (mirostatV2Seed != null &&
+        mirostatV2Tau != null &&
+        mirostatV2Eta != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_mirostat_v2(
-              mirostatV2!.seed, mirostatV2!.tau, mirostatV2!.eta));
+              mirostatV2Seed!, mirostatV2Tau!, mirostatV2Eta!));
     }
 
-    if (grammar != null) {
+    if (grammarStr != null && grammarRoot != null) {
       assert(vocab != null, LlamaException('Vocabulary is required for grammar'));
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_grammar(
               vocab!,
-              grammar!.str.toNativeUtf8().cast<ffi.Char>(),
-              grammar!.root.toNativeUtf8().cast<ffi.Char>()));
+              grammarStr!.toNativeUtf8().cast<ffi.Char>(),
+              grammarRoot!.toNativeUtf8().cast<ffi.Char>()));
     }
 
-    if (penalties != null) {
+    if (penaltiesLastN != null &&
+        penaltiesRepeat != null &&
+        penaltiesFrequency != null &&
+        penaltiesPresent != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
-          _LlamaBase.lib.llama_sampler_init_penalties(penalties!.lastN,
-              penalties!.repeat, penalties!.frequency, penalties!.present));
+          _LlamaBase.lib.llama_sampler_init_penalties(penaltiesLastN!,
+              penaltiesRepeat!, penaltiesFrequency!, penaltiesPresent!));
     }
 
-    if (drySampler != null) {
+    if (drySamplerSequenceBreakers != null &&
+        drySamplerNCtxTrain != null &&
+        drySamplerMultiplier != null &&
+        drySamplerDryBase != null &&
+        drySamplerAllowedLength != null) {
       assert(vocab != null, LlamaException('Vocabulary is required for dry sampler'));
       final sequenceBreakers =
-          calloc<ffi.Pointer<ffi.Char>>(drySampler!.sequenceBreakers.length);
-      for (var i = 0; i < drySampler!.sequenceBreakers.length; i++) {
+          calloc<ffi.Pointer<ffi.Char>>(drySamplerSequenceBreakers!.length);
+      for (var i = 0; i < drySamplerSequenceBreakers!.length; i++) {
         sequenceBreakers[i] =
-            drySampler!.sequenceBreakers[i].toNativeUtf8().cast<ffi.Char>();
+            drySamplerSequenceBreakers![i].toNativeUtf8().cast<ffi.Char>();
       }
 
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_dry(
               vocab!,
-              drySampler!.nCtxTrain,
-              drySampler!.multiplier,
-              drySampler!.dryBase,
-              drySampler!.allowedLength,
-              drySampler!.penaltyLastN,
+              drySamplerNCtxTrain!,
+              drySamplerMultiplier!,
+              drySamplerDryBase!,
+              drySamplerAllowedLength!,
+              drySamplerPenaltyLastN!,
               sequenceBreakers,
-              drySampler!.sequenceBreakers.length));
+              drySamplerSequenceBreakers!.length));
     }
 
     return sampler;
   }
-
-  /// Converts this instance to a [Map].
-  Map<String, dynamic> toMap() => {
-        'greedy': greedy,
-        'infill': infill,
-        'seed': seed,
-        'top_k': topK,
-        'top_p': topP?.toMap(),
-        'min_p': minP?.toMap(),
-        'typical_p': typicalP?.toMap(),
-        'temperature': temperature?.toMap(),
-        'xtc': xtc?.toMap(),
-        'mirostat': mirostat?.toMap(),
-        'mirostat_v2': mirostatV2?.toMap(),
-        'grammar': grammar?.toMap(),
-        'penalties': penalties?.toMap(),
-        'dry_sampler': drySampler?.toMap()
-      };
-
-  /// Converts this instance to a JSON-encoded string.
-  String toJson() => jsonEncode(toMap());
 }

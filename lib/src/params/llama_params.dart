@@ -1,8 +1,62 @@
-// ignore_for_file: constant_identifier_names
 part of 'package:lcpp/lcpp.dart';
 
-/// A class representing the parameters for context configuration.
-class ContextParams extends ChangeNotifier {
+abstract class LlamaParams extends ChangeNotifier {
+  bool? _vocabOnly;
+
+  /// Indicates whether only the vocabulary should be loaded.
+  ///
+  /// If `true`, only the vocabulary is loaded, which can be useful for
+  /// certain operations where the full model is not required. If `false`
+  /// or `null`, the full model is loaded.
+  bool? get vocabOnly => _vocabOnly;
+
+  set vocabOnly(bool? value) {
+    _vocabOnly = value;
+    notifyListeners();
+  }
+
+  bool? _useMmap;
+
+  /// Indicates whether memory-mapped files should be used.
+  ///
+  /// If `true`, memory-mapped files will be used, which can improve performance
+  /// by allowing the operating system to manage memory more efficiently.
+  /// If `false` or `null`, memory-mapped files will not be used.
+  bool? get useMmap => _useMmap;
+
+  set useMmap(bool? value) {
+    _useMmap = value;
+    notifyListeners();
+  }
+
+  bool? _useMlock;
+
+  /// Indicates whether memory locking (mlock) should be used.
+  ///
+  /// When `true`, the memory used by the application will be locked,
+  /// preventing it from being swapped out to disk. This can improve
+  /// performance by ensuring that the memory remains in RAM.
+  ///
+  /// When `false` or `null`, memory locking is not used.
+  bool? get useMlock => _useMlock;
+
+  set useMlock(bool? value) {
+    _useMlock = value;
+    notifyListeners();
+  }
+
+  bool? _checkTensors;
+
+  /// A flag indicating whether to check tensors.
+  ///
+  /// If `true`, tensors will be checked. If `false` or `null`, tensors will not be checked.
+  bool? get checkTensors => _checkTensors;
+
+  set checkTensors(bool? value) {
+    _checkTensors = value;
+    notifyListeners();
+  }
+
   int _nCtx;
 
   /// text context, 0 = from model
@@ -233,35 +287,11 @@ class ContextParams extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// A class representing the parameters for context configuration.
-  ///
-  /// The parameters include various settings for context size, batch size,
-  /// threading, scaling, pooling, attention, and other advanced configurations.
-  ///
-  /// - `nCtx`: The context size.
-  /// - `nBatch`: The batch size.
-  /// - `nUBatch`: The unrolled batch size.
-  /// - `nSeqMax`: The maximum sequence length.
-  /// - `nThreads`: The number of threads.
-  /// - `nThreadsBatch`: The number of threads for batch processing.
-  /// - `ropeScalingType`: The type of scaling for ROPE (Rotary Position Embedding).
-  /// - `poolingType`: The type of pooling to be used.
-  /// - `attentionType`: The type of attention mechanism to be used.
-  /// - `ropeFrequencyBase`: The base frequency for ROPE.
-  /// - `ropeFrequencyScale`: The scaling factor for ROPE frequency.
-  /// - `yarnExtrapolationFactor`: The extrapolation factor for YARN.
-  /// - `yarnAttenuationFactor`: The attenuation factor for YARN.
-  /// - `yarnBetaFast`: The fast beta parameter for YARN.
-  /// - `yarnBetaSlow`: The slow beta parameter for YARN.
-  /// - `yarnOriginalContext`: The original context for YARN.
-  /// - `defragmentationThreshold`: The threshold for defragmentation.
-  /// - `typeK`: The type of key embeddings.
-  /// - `typeV`: The type of value embeddings.
-  /// - `embeddings`: The embeddings to be used.
-  /// - `offloadKqv`: Whether to offload KQV (Key, Query, Value) computations.
-  /// - `flashAttention`: Whether to use flash attention.
-  /// - `noPerformance`: Whether to disable performance optimizations.
-  ContextParams({
+  LlamaParams({
+    bool? vocabOnly,
+    bool? useMmap,
+    bool? useMlock,
+    bool? checkTensors,
     int nCtx = 0,
     int? nBatch,
     int? nUBatch,
@@ -285,7 +315,11 @@ class ContextParams extends ChangeNotifier {
     bool? offloadKqv,
     bool? flashAttention,
     bool? noPerformance,
-  })  : _nCtx = nCtx,
+  })  : _vocabOnly = vocabOnly,
+        _useMmap = useMmap,
+        _useMlock = useMlock,
+        _checkTensors = checkTensors,
+        _nCtx = nCtx,
         _nBatch = nBatch,
         _nUBatch = nUBatch,
         _nSeqMax = nSeqMax,
@@ -309,184 +343,63 @@ class ContextParams extends ChangeNotifier {
         _flashAttention = flashAttention,
         _noPerformance = noPerformance;
 
-  /// Creates a new instance of [ContextParams] from a map.
-  ///
-  /// The [map] parameter should contain the following keys:
-  /// - `n_ctx`: The context size.
-  /// - `n_batch`: The batch size.
-  /// - `n_ubatch`: The unrolled batch size.
-  /// - `n_seq_max`: The maximum sequence length.
-  /// - `n_threads`: The number of threads.
-  /// - `n_threads_batch`: The number of threads for batch processing.
-  /// - `rope_scaling_type`: The type of scaling for ROPE (Rotary Position Embedding).
-  /// - `pooling_type`: The type of pooling to be used.
-  /// - `attention_type`: The type of attention mechanism to be used.
-  /// - `rope_frequency_base`: The base frequency for ROPE.
-  /// - `rope_frequency_scale`: The scaling factor for ROPE frequency.
-  /// - `yarn_ext_factor`: The extrapolation factor for YARN.
-  /// - `yarn_attn_factor`: The attenuation factor for YARN.
-  /// - `yarn_beta_fast`: The fast beta parameter for YARN.
-  /// - `yarn_beta_slow`: The slow beta parameter for YARN.
-  /// - `yarn_orig_ctx`: The original context for YARN.
-  /// - `defrag_thold`: The threshold for defragmentation.
-  /// - `type_k`: The type of key embeddings.
-  /// - `type_v`: The type of value embeddings.
-  /// - `embeddings`: The embeddings to be used.
-  /// - `offload_kqv`: Whether to offload KQV (Key, Query, Value) computations.
-  /// - `flash_attn`: Whether to use flash attention.
-  /// - `no_perf`: Whether to disable performance optimizations.
-  factory ContextParams.fromMap(Map<String, dynamic> map) => ContextParams(
-        nCtx: map['n_ctx'] ?? 0,
-        nBatch: map['n_batch'],
-        nUBatch: map['n_ubatch'],
-        nSeqMax: map['n_seq_max'],
-        nThreads: map['n_threads'],
-        nThreadsBatch: map['n_threads_batch'],
-        ropeScalingType: map['rope_scaling_type'] != null
-            ? RopeScalingType.fromString(map['rope_scaling_type'])
-            : null,
-        poolingType: map['pooling_type'] != null
-            ? PoolingType.fromString(map['pooling_type'])
-            : null,
-        attentionType: map['attention_type'] != null
-            ? AttentionType.fromString(map['attention_type'])
-            : null,
-        ropeFrequencyBase: map['rope_frequency_base'],
-        ropeFrequencyScale: map['rope_frequency_scale'],
-        yarnExtrapolationFactor: map['yarn_ext_factor'],
-        yarnAttenuationFactor: map['yarn_attn_factor'],
-        yarnBetaFast: map['yarn_beta_fast'],
-        yarnBetaSlow: map['yarn_beta_slow'],
-        yarnOriginalContext: map['yarn_orig_ctx'],
-        defragmentationThreshold: map['defrag_thold'],
-        typeK:
-            map['type_k'] != null ? GgmlType.fromString(map['type_k']) : null,
-        typeV:
-            map['type_v'] != null ? GgmlType.fromString(map['type_v']) : null,
-        embeddings: map['embeddings'],
-        offloadKqv: map['offload_kqv'],
-        flashAttention: map['flash_attn'],
-        noPerformance: map['no_perf'],
-      );
+  Map<String, dynamic> toMap() => {
+    'vocabOnly': vocabOnly,
+    'useMmap': useMmap,
+    'useMlock': useMlock,
+    'checkTensors': checkTensors,
+    'nCtx': nCtx,
+    'nBatch': nBatch,
+    'nUBatch': nUBatch,
+    'nSeqMax': nSeqMax,
+    'nThreads': nThreads,
+    'nThreadsBatch': nThreadsBatch,
+    'ropeScalingType': ropeScalingType.toString().split('.').last,
+    'poolingType': poolingType.toString().split('.').last,
+    'attentionType': attentionType.toString().split('.').last,
+    'ropeFrequencyBase': ropeFrequencyBase,
+    'ropeFrequencyScale': ropeFrequencyScale,
+    'yarnExtrapolationFactor': yarnExtrapolationFactor,
+    'yarnAttenuationFactor': yarnAttenuationFactor,
+    'yarnBetaFast': yarnBetaFast,
+    'yarnBetaSlow': yarnBetaSlow,
+    'yarnOriginalContext': yarnOriginalContext,
+    'defragmentationThreshold': defragmentationThreshold,
+    'typeK': typeK.toString().split('.').last,
+    'typeV': typeV.toString().split('.').last,
+    'embeddings': embeddings,
+    'offloadKqv': offloadKqv,
+    'flashAttention': flashAttention,
+    'noPerformance': noPerformance,
+  };
 
-  /// Creates an instance of [ContextParams] from a JSON string.
-  ///
-  /// The [source] parameter is a JSON-encoded string representation of the
-  /// context parameters.
-  ///
-  /// Returns an instance of [ContextParams] created from the decoded JSON map.
-  factory ContextParams.fromJson(String source) =>
-      ContextParams.fromMap(jsonDecode(source));
+  String toJson() => jsonEncode(toMap());
 
-  /// Creates a [ContextParams] instance from a native [llama_context_params] object.
-  ///
-  /// The [params] parameter is a native structure containing various context parameters.
-  ///
-  /// The following fields are mapped from the native structure:
-  /// - [nCtx]: Number of contexts.
-  /// - [nBatch]: Number of batches.
-  /// - [nUBatch]: Number of micro-batches.
-  /// - [nSeqMax]: Maximum sequence length.
-  /// - [nThreads]: Number of threads.
-  /// - [nThreadsBatch]: Number of threads per batch.
-  /// - [ropeScalingType]: Type of rope scaling, if applicable.
-  /// - [poolingType]: Type of pooling, if applicable.
-  /// - [attentionType]: Type of attention, if applicable.
-  /// - [ropeFrequencyBase]: Base frequency for rope.
-  /// - [ropeFrequencyScale]: Scaling factor for rope frequency.
-  /// - [yarnExtrapolationFactor]: Extrapolation factor for yarn.
-  /// - [yarnAttenuationFactor]: Attenuation factor for yarn.
-  /// - [yarnBetaFast]: Beta fast parameter for yarn.
-  /// - [yarnBetaSlow]: Beta slow parameter for yarn.
-  /// - [yarnOriginalContext]: Original context for yarn.
-  /// - [defragmentationThreshold]: Threshold for defragmentation.
-  /// - [typeK]: Type K, if applicable.
-  /// - [typeV]: Type V, if applicable.
-  /// - [embeddings]: Embeddings.
-  /// - [offloadKqv]: Offload KQV flag.
-  /// - [flashAttention]: Flash attention flag.
-  /// - [noPerformance]: No performance flag.
-  factory ContextParams.fromNative(llama_context_params params) {
-    return ContextParams(
-      nCtx: params.n_ctx,
-      nBatch: params.n_batch,
-      nUBatch: params.n_ubatch,
-      nSeqMax: params.n_seq_max,
-      nThreads: params.n_threads,
-      nThreadsBatch: params.n_threads_batch,
-      ropeScalingType: params.rope_scaling_typeAsInt != -1
-          ? RopeScalingType.values[params.rope_scaling_typeAsInt + 1]
-          : null,
-      poolingType: params.pooling_typeAsInt != -1
-          ? PoolingType.values[params.pooling_typeAsInt + 1]
-          : null,
-      attentionType: params.attention_typeAsInt != -1
-          ? AttentionType.values[params.attention_typeAsInt + 1]
-          : null,
-      ropeFrequencyBase: params.rope_freq_base,
-      ropeFrequencyScale: params.rope_freq_scale,
-      yarnExtrapolationFactor: params.yarn_ext_factor,
-      yarnAttenuationFactor: params.yarn_attn_factor,
-      yarnBetaFast: params.yarn_beta_fast,
-      yarnBetaSlow: params.yarn_beta_slow,
-      yarnOriginalContext: params.yarn_orig_ctx,
-      defragmentationThreshold: params.defrag_thold,
-      typeK:
-          params.type_kAsInt != -1 ? GgmlType.values[params.type_kAsInt] : null,
-      typeV:
-          params.type_vAsInt != -1 ? GgmlType.values[params.type_vAsInt] : null,
-      embeddings: params.embeddings,
-      offloadKqv: params.offload_kqv,
-      flashAttention: params.flash_attn,
-      noPerformance: params.no_perf,
-    );
+  llama_model_params getModelParams() {
+    final llama_model_params modelParams =
+        _LlamaBase.lib.llama_model_default_params();
+    log("Model params initialized");
+
+    if (vocabOnly != null) {
+      modelParams.vocab_only = vocabOnly!;
+    }
+
+    if (useMmap != null) {
+      modelParams.use_mmap = useMmap!;
+    }
+
+    if (useMlock != null) {
+      modelParams.use_mlock = useMlock!;
+    }
+
+    if (checkTensors != null) {
+      modelParams.check_tensors = checkTensors!;
+    }
+
+    return modelParams;
   }
 
-  /// Factory constructor that creates an instance of [ContextParams] with default parameters.
-  ///
-  /// This constructor uses the `llama_context_default_params` function from the
-  /// Llama library to obtain the default context parameters and then converts
-  /// them to a [ContextParams] instance using the [ContextParams.fromNative] method.
-  factory ContextParams.defaultParams() {
-    final llama_context_params contextParams =
-        _LlamaBase.lib.llama_context_default_params();
-
-    return ContextParams.fromNative(contextParams);
-  }
-
-  /// Converts the current instance to a native `llama_context_params` object.
-  ///
-  /// This method initializes a `llama_context_params` object with default values
-  /// and then updates its fields based on the current instance's properties if they are not null.
-  ///
-  /// The following fields are set if they are not null:
-  /// - `nCtx`: Sets the `n_ctx` field.
-  /// - `nBatch`: Sets the `n_batch` field.
-  /// - `nUBatch`: Sets the `n_ubatch` field.
-  /// - `nSeqMax`: Sets the `n_seq_max` field.
-  /// - `nThreads`: Sets the `n_threads` field.
-  /// - `nThreadsBatch`: Sets the `n_threads_batch` field.
-  /// - `ropeScalingType`: Sets the `rope_scaling_typeAsInt` field (enum index - 1).
-  /// - `poolingType`: Sets the `pooling_typeAsInt` field (enum index - 1).
-  /// - `attentionType`: Sets the `attention_typeAsInt` field (enum index - 1).
-  /// - `ropeFrequencyBase`: Sets the `rope_freq_base` field.
-  /// - `ropeFrequencyScale`: Sets the `rope_freq_scale` field.
-  /// - `yarnExtrapolationFactor`: Sets the `yarn_ext_factor` field.
-  /// - `yarnAttenuationFactor`: Sets the `yarn_attn_factor` field.
-  /// - `yarnBetaFast`: Sets the `yarn_beta_fast` field.
-  /// - `yarnBetaSlow`: Sets the `yarn_beta_slow` field.
-  /// - `yarnOriginalContext`: Sets the `yarn_orig_ctx` field.
-  /// - `defragmentationThreshold`: Sets the `defrag_thold` field.
-  /// - `typeK`: Sets the `type_kAsInt` field (enum index * 1).
-  /// - `typeV`: Sets the `type_vAsInt` field (enum index * 1).
-  /// - `embeddings`: Sets the `embeddings` field.
-  /// - `offloadKqv`: Sets the `offload_kqv` field.
-  /// - `flashAttention`: Sets the `flash_attn` field.
-  /// - `noPerformance`: Sets the `no_perf` field.
-  ///
-  /// Returns:
-  /// - A `llama_context_params` object with the updated fields.
-  llama_context_params toNative() {
+  llama_context_params getContextParams() {
     final llama_context_params contextParams =
         _LlamaBase.lib.llama_context_default_params();
 
@@ -587,67 +500,6 @@ class ContextParams extends ChangeNotifier {
 
     return contextParams;
   }
-
-  /// Converts the context parameters to a map.
-  ///
-  /// The map contains the following key-value pairs:
-  /// - `n_ctx`: The context size.
-  /// - `n_batch`: The batch size.
-  /// - `n_ubatch`: The unrolled batch size.
-  /// - `n_seq_max`: The maximum sequence length.
-  /// - `n_threads`: The number of threads.
-  /// - `n_threads_batch`: The number of threads for batch processing.
-  /// - `rope_scaling_type`: The type of scaling for ROPE (Rotary Position Embedding).
-  /// - `pooling_type`: The type of pooling to be used.
-  /// - `attention_type`: The type of attention mechanism to be used.
-  /// - `rope_frequency_base`: The base frequency for ROPE.
-  /// - `rope_frequency_scale`: The scaling factor for ROPE frequency.
-  /// - `yarn_ext_factor`: The extrapolation factor for YARN.
-  /// - `yarn_attn_factor`: The attenuation factor for YARN.
-  /// - `yarn_beta_fast`: The fast beta parameter for YARN.
-  /// - `yarn_beta_slow`: The slow beta parameter for YARN.
-  /// - `yarn_orig_ctx`: The original context for YARN.
-  /// - `defrag_thold`: The threshold for defragmentation.
-  /// - `type_k`: The type of key embeddings.
-  /// - `type_v`: The type of value embeddings.
-  /// - `embeddings`: The embeddings to be used.
-  /// - `offload_kqv`: Whether to offload KQV (Key, Query, Value) computations.
-  /// - `flash_attn`: Whether to use flash attention.
-  /// - `no_perf`: Whether to disable performance optimizations.
-  Map<String, dynamic> toMap() => {
-        'n_ctx': nCtx,
-        'n_batch': nBatch,
-        'n_ubatch': nUBatch,
-        'n_seq_max': nSeqMax,
-        'n_threads': nThreads,
-        'n_threads_batch': nThreadsBatch,
-        'rope_scaling_type': ropeScalingType?.toString().split('.').last,
-        'pooling_type': poolingType?.toString().split('.').last,
-        'attention_type': attentionType?.toString().split('.').last,
-        'rope_frequency_base': ropeFrequencyBase,
-        'rope_frequency_scale': ropeFrequencyScale,
-        'yarn_ext_factor': yarnExtrapolationFactor,
-        'yarn_attn_factor': yarnAttenuationFactor,
-        'yarn_beta_fast': yarnBetaFast,
-        'yarn_beta_slow': yarnBetaSlow,
-        'yarn_orig_ctx': yarnOriginalContext,
-        'defrag_thold': defragmentationThreshold,
-        'type_k': typeK?.toString().split('.').last,
-        'type_v': typeV?.toString().split('.').last,
-        'embeddings': embeddings,
-        'offload_kqv': offloadKqv,
-        'flash_attn': flashAttention,
-        'no_perf': noPerformance,
-      };
-
-  /// Converts the current object to a JSON string representation.
-  ///
-  /// This method uses the `toMap` method to first convert the object to a
-  /// map, and then encodes the map to a JSON string using `jsonEncode`.
-  ///
-  /// Returns:
-  ///   A JSON string representation of the current object.
-  String toJson() => jsonEncode(toMap());
 }
 
 /// Enum representing different types of rope scaling.

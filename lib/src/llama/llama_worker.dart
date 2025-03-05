@@ -4,27 +4,25 @@ class _LlamaWorker {
   final Completer<void> completer = Completer<void>();
   final ReceivePort receivePort = ReceivePort();
   final SendPort sendPort;
-  final LlamaChat llamaNative;
+  LlamaChat? chat;
 
   _LlamaWorker({
     required this.sendPort,
-    required ModelParams modelParams,
-    required ContextParams contextParams,
+    LlamaChatParams? chatParams,
     required SamplingParams samplingParams,
-  }) : llamaNative = LlamaChat(
-    modelParams: modelParams,
-    contextParams: contextParams,
-    samplingParams: samplingParams,
-  ) {
+  }) {
+    if (chatParams != null) {
+      chat = LlamaChat(chatParams: chatParams, samplingParams: samplingParams);
+    }
+
     sendPort.send(receivePort.sendPort);
     receivePort.listen(handleData);
   }
 
   factory _LlamaWorker.fromRecord(_LlamaWorkerRecord record) => _LlamaWorker(
     sendPort: record.$1,
-    modelParams: ModelParams.fromJson(record.$2),
-    contextParams: ContextParams.fromJson(record.$3),
-    samplingParams: SamplingParams.fromJson(record.$4),
+    chatParams: LlamaChatParams.fromJson(record.$2),
+    samplingParams: SamplingParams.fromJson(record.$3),
   );
 
   void handleData(dynamic data) async {
@@ -39,8 +37,10 @@ class _LlamaWorker {
   }
 
   void handlePrompt(List<_ChatMessageRecord> data) async {
+    assert(chat != null, LlamaException('Chat is not initialized'));
+    
     final messages = ChatMessages._fromRecords(data);
-    final stream = llamaNative.prompt(messages);
+    final stream = chat!.prompt(messages);
 
     await for (final response in stream) {
       sendPort.send(response);
