@@ -99,3 +99,17 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   }
   
 }
+
+enum _OuteTtsVersion {
+  v2,
+  v3;
+
+  static _OuteTtsVersion getVersion(ffi.Pointer<llama_model> model) {
+    final version = _LlamaBase.lib.llama_model_chat_template(model, ffi.nullptr).cast<Utf8>().toDartString();
+    if (version.contains('0.3')) {
+      return _OuteTtsVersion.v3;
+    }
+
+    return _OuteTtsVersion.v2;
+  }
+}
