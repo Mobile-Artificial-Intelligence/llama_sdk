@@ -1,36 +1,30 @@
 part of 'package:lcpp/lcpp.dart';
 
-/// A class representing the parameters for a model.
-///
-/// The [ModelParams] class holds various configuration options for a model,
-/// including the path to the model, and optional parameters for vocabulary,
-/// memory mapping, memory locking, and tensor checking.
-///
-/// The class provides methods to create an instance from a map or JSON string,
-/// convert the instance to a map or JSON string, and convert the instance to
-/// native parameters.
-///
-/// Properties:
-/// - `path`: The path to the model.
-/// - `vocabOnly`: Optional. Whether to use only the vocabulary.
-/// - `useMmap`: Optional. Whether to use memory mapping.
-/// - `useMlock`: Optional. Whether to use memory locking.
-/// - `checkTensors`: Optional. Whether to check tensors.
-///
-/// Methods:
-/// - `ModelParams.fromMap(Map<String, dynamic> map)`: Creates an instance from a map.
-/// - `ModelParams.fromJson(String source)`: Creates an instance from a JSON string.
-/// - `llama_model_params toNative()`: Converts the instance to native parameters.
-/// - `Map<String, dynamic> toMap()`: Converts the instance to a map.
-/// - `String toJson()`: Converts the instance to a JSON string.
 class ModelParams extends ChangeNotifier {
-  String _path;
+  File? _chatModel;
 
-  /// The file path to the model.
-  String get path => _path;
+  File? get chatModel => _chatModel;
 
-  set path(String value) {
-    _path = value;
+  set chatModel(File? value) {
+    _chatModel = value;
+    notifyListeners();
+  }
+
+  File? _ttcModel;
+
+  File? get ttcModel => _ttcModel;
+
+  set ttcModel(File? value) {
+    _ttcModel = value;
+    notifyListeners();
+  }
+
+  File? _ctsModel;
+
+  File? get ctsModel => _ctsModel;
+
+  set ctsModel(File? value) {
+    _ctsModel = value;
     notifyListeners();
   }
 
@@ -99,29 +93,25 @@ class ModelParams extends ChangeNotifier {
   /// - `useMlock` (optional): A flag indicating whether to lock the model in memory.
   /// - `checkTensors` (optional): A flag indicating whether to check the tensors.
   ModelParams({
-    required String path,
+    File? chatModel,
+    File? ttcModel,
+    File? ctsModel,
     bool? vocabOnly,
     bool? useMmap,
     bool? useMlock,
     bool? checkTensors,
-  })  : _path = path,
+  })  : _chatModel = chatModel,
+        _ttcModel = ttcModel,
+        _ctsModel = ctsModel,
         _vocabOnly = vocabOnly,
         _useMmap = useMmap,
         _useMlock = useMlock,
         _checkTensors = checkTensors;
 
-  /// Creates an instance of [ModelParams] from a map.
-  ///
-  /// The [map] parameter should contain the following keys:
-  /// - `path`: The path to the model.
-  /// - `vocab_only`: Whether to use only the vocabulary.
-  /// - `use_mmap`: Whether to use memory mapping.
-  /// - `use_mlock`: Whether to use memory locking.
-  /// - `check_tensors`: Whether to check tensors.
-  ///
-  /// Returns an instance of [ModelParams] with values from the provided map.
   factory ModelParams.fromMap(Map<String, dynamic> map) => ModelParams(
-      path: map['path'],
+      chatModel: map['chat_model'] != null ? File(map['chat_model']) : null,
+      ttcModel: map['ttc_model'] != null ? File(map['ttc_model']) : null,
+      ctsModel: map['cts_model'] != null ? File(map['cts_model']) : null,
       vocabOnly: map['vocab_only'],
       useMmap: map['use_mmap'],
       useMlock: map['use_mlock'],
@@ -178,7 +168,9 @@ class ModelParams extends ChangeNotifier {
   ///
   /// Returns a map representation of the model parameters.
   Map<String, dynamic> toMap() => {
-        'path': path,
+        'chat_model': chatModel?.path,
+        'ttc_model': ttcModel?.path,
+        'cts_model': ctsModel?.path,
         'vocab_only': vocabOnly,
         'use_mmap': useMmap,
         'use_mlock': useMlock,

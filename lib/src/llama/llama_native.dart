@@ -62,6 +62,7 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
       : _modelParams = modelParams,
         _contextParams = contextParams ?? ContextParams(),
         _samplingParams = samplingParams {
+    assert(_modelParams.chatModel != null, LlamaException('Chat model is required'));
     Llama.lib.ggml_backend_load_all();
     Llama.lib.llama_backend_init();
 
@@ -70,7 +71,7 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
 
   void _initModel() {
     final nativeModelParams = _modelParams.toNative();
-    final nativeModelPath = _modelParams.path.toNativeUtf8().cast<ffi.Char>();
+    final nativeModelPath = _modelParams.chatModel!.path.toNativeUtf8().cast<ffi.Char>();
 
     if (_model != ffi.nullptr) {
       Llama.lib.llama_free_model(_model);
