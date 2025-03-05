@@ -1,11 +1,8 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
-  LlamaChat(
-      {required LlamaChatParams chatParams,
-      SamplingParams? samplingParams})
-      : _chatParams = chatParams,
-        _samplingParams = samplingParams ?? SamplingParams(greedy: true) {
+  LlamaChat(LlamaChatParams chatParams)
+      : _chatParams = chatParams {
     _LlamaBase.lib.ggml_backend_load_all();
     _LlamaBase.lib.llama_backend_init();
 
@@ -19,18 +16,11 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   int _contextLength = 0;
 
   LlamaChatParams _chatParams;
-  SamplingParams _samplingParams;
 
   set chatParams(LlamaChatParams value) {
     _chatParams = value;
     _chatParams.addListener(_initModel);
     _initModel();
-  }
-
-  set samplingParams(SamplingParams value) {
-    _samplingParams = value;
-
-    _initSampler();
   }
 
   void _initModel() {
@@ -75,11 +65,14 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
     }
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_model);
-    _sampler = _samplingParams.getSampler(vocab);
+    _sampler = _chatParams.getSampler(vocab);
     assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
 
     _LlamaBase.samplerFinalizer.attach(this, _sampler);
   }
+
+  @override
+  void reload() => _initModel();
 
   @override
   Stream<String> prompt(List<ChatMessage> messages) async* {
@@ -185,10 +178,4 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
     calloc.free(promptTokens);
     _LlamaBase.lib.llama_batch_free(batch);
   }
-
-  @override
-  void stop() => throw LlamaException('Not implemented');
-
-  @override
-  void reload() => _initModel();
 }

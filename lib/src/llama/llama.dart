@@ -24,59 +24,35 @@ class Llama with _LlamaPromptMixin, _LlamaTTSMixin implements _LlamaBase {
   SendPort? _sendPort;
   ReceivePort? _receivePort;
 
-  LlamaParams _llamaParams;
+  LlamaTtsParams? _ttsParams;
 
-  /// Gets the model parameters.
-  ///
-  /// This property returns the [modelParams] which contains the parameters
-  /// for the model.
-  LlamaParams get modelParams => _llamaParams;
+  LlamaTtsParams? get ttsParams => _ttsParams;
 
-  set modelParams(LlamaParams modelParams) {
-    _llamaParams = modelParams;
+  set ttsParams(LlamaTtsParams? value) {
+    _ttsParams = value;
     reload();
   }
 
-  SamplingParams _samplingParams;
+  LlamaChatParams? _chatParams;
 
-  /// Gets the current sampling parameters.
-  ///
-  /// This property returns the [_samplingParams] which contains the
-  /// parameters used for sampling in the llama isolated context.
-  SamplingParams get samplingParams => _samplingParams;
+  LlamaChatParams? get chatParams => _chatParams;
 
-  set samplingParams(SamplingParams samplingParams) {
-    _samplingParams = samplingParams;
+  set chatParams(LlamaChatParams? value) {
+    _chatParams = value;
     reload();
   }
 
-  /// Indicates whether the resource has been freed.
-  ///
-  /// This boolean flag is used to track the state of the resource,
-  /// where `true` means the resource has been freed and `false` means
-  /// it is still in use.
   bool isFreed = false;
 
-  /// Constructs an instance of [Llama].
-  ///
-  /// Initializes the [Llama] with the provided parameters and sets up
-  /// the listener.
-  ///
-  /// Parameters:
-  /// - [llamaParams]: The parameters required for the model. This parameter is required.
-  /// - [samplingParams]: The parameters for sampling. This parameter is optional and defaults to an instance of [SamplingParams] with `greedy` set to `true`.
-  Llama(
-      {required LlamaParams llamaParams,
-      SamplingParams? samplingParams})
-      : _llamaParams = llamaParams,
-        _samplingParams = samplingParams ?? SamplingParams(greedy: true);
+  Llama({LlamaChatParams? chatParams, LlamaTtsParams? ttsParams})
+      : _chatParams = chatParams, _ttsParams = ttsParams;
 
   void _listener() async {
     _receivePort = ReceivePort();
 
     final isolateParams = _LlamaWorkerParams(
-      llamaParams: _llamaParams,
-      samplingParams: _samplingParams,
+      ttsParams: _ttsParams,
+      chatParams: _chatParams,
       sendPort: _receivePort!.sendPort
     );
 
@@ -137,7 +113,11 @@ class Llama with _LlamaPromptMixin, _LlamaTTSMixin implements _LlamaBase {
     return await _responseController.stream.first;
   }
 
-  @override
+  /// Stops the current operation or process.
+  ///
+  /// This method should be called to terminate any ongoing tasks or
+  /// processes that need to be halted. It ensures that resources are
+  /// properly released and the system is left in a stable state.
   void stop() {
     _isolate?.kill(priority: Isolate.immediate);
     _receivePort?.close();

@@ -45,13 +45,6 @@ abstract interface class _LlamaBase {
     return _lib!;
   }
 
-  /// Stops the current operation or process.
-  ///
-  /// This method should be called to terminate any ongoing tasks or
-  /// processes that need to be halted. It ensures that resources are
-  /// properly released and the system is left in a stable state.
-  void stop();
-
   /// Reloads the current state or configuration.
   ///
   /// This method is used to refresh or reinitialize the state or configuration

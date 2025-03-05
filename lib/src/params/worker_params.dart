@@ -1,19 +1,19 @@
 part of 'package:lcpp/lcpp.dart';
 
-typedef _LlamaWorkerRecord = (SendPort, String, String);
+typedef _LlamaWorkerRecord = (SendPort, String?, String?);
 
 class _LlamaWorkerParams {
   final SendPort sendPort;
-  final LlamaParams llamaParams;
-  final SamplingParams samplingParams;
+  final LlamaChatParams? chatParams;
+  final LlamaTtsParams? ttsParams;
 
   _LlamaWorkerParams({
     required this.sendPort,
-    required this.llamaParams,
-    required this.samplingParams,
+    required this.chatParams,
+    required this.ttsParams,
   });
 
   _LlamaWorkerRecord toRecord() {
-    return (sendPort, llamaParams.toJson(),  samplingParams.toJson());
+    return (sendPort, chatParams?.toJson(), ttsParams?.toJson());
   }
 }

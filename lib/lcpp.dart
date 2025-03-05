@@ -25,4 +25,3 @@ part 'src/params/llama_params.dart';
 part 'src/params/llama_tts_params.dart';
 part 'src/utility/chat_message.dart';
 part 'src/params/worker_params.dart';
-part 'src/params/sampling_params.dart';

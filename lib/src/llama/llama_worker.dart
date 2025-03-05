@@ -9,10 +9,9 @@ class _LlamaWorker {
   _LlamaWorker({
     required this.sendPort,
     LlamaChatParams? chatParams,
-    required SamplingParams samplingParams,
   }) {
     if (chatParams != null) {
-      chat = LlamaChat(chatParams: chatParams, samplingParams: samplingParams);
+      chat = LlamaChat(chatParams);
     }
 
     sendPort.send(receivePort.sendPort);
@@ -21,8 +20,7 @@ class _LlamaWorker {
 
   factory _LlamaWorker.fromRecord(_LlamaWorkerRecord record) => _LlamaWorker(
     sendPort: record.$1,
-    chatParams: LlamaChatParams.fromJson(record.$2),
-    samplingParams: SamplingParams.fromJson(record.$3),
+    chatParams: record.$2 != null ? LlamaChatParams.fromJson(record.$2!) : null,
   );
 
   void handleData(dynamic data) async {

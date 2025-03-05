@@ -1,11 +1,8 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
-  LlamaTTS({
-    required LlamaTtsParams ttsParams,
-    SamplingParams? samplingParams,
-  }) : _ttsParams = ttsParams,
-       _samplingParams = samplingParams ?? SamplingParams(greedy: true) {
+  LlamaTTS(LlamaTtsParams ttsParams) 
+    : _ttsParams = ttsParams {
     _LlamaBase.lib.ggml_backend_load_all();
     _LlamaBase.lib.llama_backend_init();
 
@@ -19,18 +16,11 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;
 
   LlamaTtsParams _ttsParams;
-  SamplingParams _samplingParams;
 
   set ttsParams(LlamaTtsParams value) {
     _ttsParams = value;
     _ttsParams.addListener(_initModel);
     _initModel();
-  }
-
-  set samplingParams(SamplingParams value) {
-    _samplingParams = value;
-
-    _initSampler();
   }
 
   void _initModel() {
@@ -93,21 +83,14 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       _LlamaBase.lib.llama_sampler_free(_sampler);
     }
 
-    _sampler = _samplingParams.getSampler();
+    _sampler = _ttsParams.getSampler();
     assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
 
     _LlamaBase.samplerFinalizer.attach(this, _sampler);
   }
 
   @override
-  void reload() {
-    // TODO: implement reload
-  }
-
-  @override
-  void stop() {
-    // TODO: implement stop
-  }
+  void reload() => _initModel();
 
   @override
   Future<Uint8List> tts(String text) {
