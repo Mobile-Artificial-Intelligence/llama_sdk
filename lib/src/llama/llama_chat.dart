@@ -24,9 +24,8 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   }
 
   void _initModel() {
-    assert(_chatParams.chatModel != null, LlamaException('Chat model is required'));
     final nativeModelParams = _chatParams.getModelParams();
-    final nativeModelPath = _chatParams.chatModel!.path.toNativeUtf8().cast<ffi.Char>();
+    final nativeModelPath = _chatParams.chatModel.path.toNativeUtf8().cast<ffi.Char>();
 
     if (_model != ffi.nullptr) {
       _LlamaBase.lib.llama_free_model(_model);

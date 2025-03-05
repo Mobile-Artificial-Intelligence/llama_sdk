@@ -1,17 +1,17 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaChatParams extends LlamaParams {
-  File? _chatModel;
+  File _chatModel;
 
-  File? get chatModel => _chatModel;
+  File get chatModel => _chatModel;
 
-  set chatModel(File? value) {
+  set chatModel(File value) {
     _chatModel = value;
     notifyListeners();
   }
 
   LlamaChatParams({
-    File? chatModel,
+    required File chatModel,
     super.vocabOnly,
     super.useMmap,
     super.useMlock,
@@ -146,7 +146,7 @@ class LlamaChatParams extends LlamaParams {
 
   @override
   Map<String, dynamic> toMap() => {
-    'chat_model': chatModel?.path,
+    'chat_model': chatModel.path,
     ...super.toMap(),
   };
 }

@@ -24,9 +24,6 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   }
 
   void _initModel() {
-    assert(_ttsParams.ttcModel != null, LlamaException('TTC model is required'));
-    assert(_ttsParams.ctsModel != null, LlamaException('CTS model is required'));
-
     final nativeModelParams = _ttsParams.getModelParams();
     final nativeTtcModelPath = _ttsParams.ttcModel!.path.toNativeUtf8().cast<ffi.Char>();
     final nativeCtsModelPath = _ttsParams.ctsModel!.path.toNativeUtf8().cast<ffi.Char>();

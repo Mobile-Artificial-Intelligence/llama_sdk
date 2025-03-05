@@ -1,27 +1,37 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaTtsParams extends LlamaParams {
-  File? _ttcModel;
+  File _ttcModel;
 
-  File? get ttcModel => _ttcModel;
+  File get ttcModel => _ttcModel;
 
-  set ttcModel(File? value) {
+  set ttcModel(File value) {
     _ttcModel = value;
     notifyListeners();
   }
 
-  File? _ctsModel;
+  File _ctsModel;
 
-  File? get ctsModel => _ctsModel;
+  File get ctsModel => _ctsModel;
 
-  set ctsModel(File? value) {
+  set ctsModel(File value) {
     _ctsModel = value;
     notifyListeners();
   }
 
+  VoiceData _voice;
+
+  VoiceData get voice => _voice;
+
+  set voice(VoiceData value) {
+    _voice = value;
+    notifyListeners();
+  }
+
   LlamaTtsParams({
-    File? ttcModel,
-    File? ctsModel,
+    required File ttcModel,
+    required File ctsModel,
+    required VoiceData voice,
     super.vocabOnly,
     super.useMmap,
     super.useMlock,
@@ -84,11 +94,12 @@ class LlamaTtsParams extends LlamaParams {
     super.drySamplerMultiplier,
     super.drySamplerDryBase,
     super.drySamplerAllowedLength,
-  }) : _ttcModel = ttcModel, _ctsModel = ctsModel;
+  }) : _ttcModel = ttcModel, _ctsModel = ctsModel, _voice = voice;
 
   factory LlamaTtsParams.fromMap(Map<String, dynamic> map) => LlamaTtsParams(
       ttcModel: File(map['ttc_model']),
       ctsModel: File(map['cts_model']),
+      voice: VoiceData.fromMap(map['voice']),
       vocabOnly: map['vocab_only'],
       useMmap: map['use_mmap'],
       useMlock: map['use_mlock'],
@@ -157,8 +168,9 @@ class LlamaTtsParams extends LlamaParams {
 
   @override
   Map<String, dynamic> toMap() => {
-    'ttc_model': ttcModel?.path,
-    'cts_model': ctsModel?.path,
+    'ttc_model': ttcModel.path,
+    'cts_model': ctsModel.path,
+    'voice': voice.toMap(),
     ...super.toMap(),
   };
 }

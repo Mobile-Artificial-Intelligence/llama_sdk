@@ -14,21 +14,27 @@ class VoiceData {
     words: List<WordData>.from(map['words'].map((x) => WordData.fromMap(x))),
   );
 
-  String get formattedText {
+  Map<String, dynamic> toMap() => {
+    'text': text,
+    'words': List.from(words.map((x) => x.toMap())),
+  };
+
+  String _getFormattedText(_OuteTtsVersion version) {
     String result = '<|text_start|>';
+    final seperator = version == _OuteTtsVersion.v3 ? "<|space|>" : "<|text_sep|>";
 
     for (final word in words) {
-      result += '${word.text}<|text_sep|>';
+      result += '${word.text}$seperator';
     }
 
     return result;
   }
 
-  String get formattedData {
-    String result = '<|audio_start|>';
+  String _getFormattedData(_OuteTtsVersion version) {
+    String result = '<|audio_start|>\n';
 
     for (final word in words) {
-      result += word.formattedText;
+      result += word._getFormattedText(version);
     }
 
     return result;
@@ -49,16 +55,24 @@ class WordData {
   factory WordData.fromMap(Map<String, dynamic> map) => WordData(
     text: map['text'],
     duration: Duration(seconds: map['duration']),
-    codes: List<int>.from(map['codes']),
+    codes: map['codes'],
   );
 
-  String get formattedText {
-    String result = '$text<|t_${duration.inSeconds.toStringAsFixed(2)}|><|code_start|>';
+  Map<String, dynamic> toMap() => {
+    'text': text,
+    'duration': duration.inSeconds.toStringAsFixed(2),
+    'codes': codes,
+  };
+
+  String _getFormattedText(_OuteTtsVersion version) {
+    final codeStart = version == _OuteTtsVersion.v3 ? "" : "<|code_start|>";
+    String result = '$text<|t_${duration.inSeconds.toStringAsFixed(2)}|>$codeStart';
 
     for (final code in codes) {
       result += '<|$code|>';
     }
 
-    return '$result<|code_end|>';
+    final codeEnd = version == _OuteTtsVersion.v3 ? "<|space|>\n" : "<|code_end|>\n";
+    return '$result$codeEnd';
   }
 }
