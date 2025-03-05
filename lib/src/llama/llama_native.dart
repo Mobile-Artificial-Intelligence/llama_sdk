@@ -221,11 +221,6 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
   }
 
   @override
-  Future<Uint8List> tts(String text) {
-    throw UnimplementedError();
-  }
-
-  @override
   void stop() => throw LlamaException('Not implemented');
 
   @override
