@@ -1,38 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
-/// A class that implements the Llama interface and provides functionality
-/// for loading and interacting with a Llama model, context, and sampler.
-///
-/// The class initializes the model, context, and sampler based on the provided
-/// parameters and allows for prompting the model with chat messages.
-///
-/// The class also provides methods to stop the current operation and free
-/// the allocated resources.
-///
-/// Example usage:
-/// ```dart
-/// final llamaNative = LlamaNative(
-///   modelParams: ModelParams(...),
-///   contextParams: ContextParams(...),
-///   samplingParams: SamplingParams(...)
-/// );
-///
-/// final responseStream = llamaNative.prompt([...]);
-/// responseStream.listen((response) {
-///   print(response);
-/// });
-/// ```
-///
-/// Properties:
-/// - `modelParams`: Sets the model parameters and initializes the model.
-/// - `contextParams`: Sets the context parameters and initializes the context.
-/// - `samplingParams`: Sets the sampling parameters and initializes the sampler.
-///
-/// Methods:
-/// - `prompt(List<ChatMessage> messages)`: Prompts the model with the given chat messages and returns a stream of responses.
-/// - `stop()`: Stops the current operation.
-/// - `free()`: Frees the allocated resources.
-class LlamaNative implements Llama {
+class LlamaNative with _LlamaPromptMixin implements Llama {
   static final _modelFinalizer =
       Finalizer<ffi.Pointer<llama_model>>(Llama.lib.llama_free_model);
   static final _contextFinalizer =

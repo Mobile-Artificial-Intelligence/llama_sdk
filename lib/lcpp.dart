@@ -17,6 +17,8 @@ part 'src/llama/llama_exception.dart';
 part 'src/llama/llama.dart';
 part 'src/llama/llama_native.dart';
 part 'src/llama/llama_worker.dart';
+part 'src/mixins/llama_prompt_mixin.dart';
+part 'src/mixins/llama_tts_mixin.dart';
 part 'src/params/model_params.dart';
 part 'src/utility/chat_message.dart';
 part 'src/params/worker_params.dart';

@@ -50,52 +50,20 @@ abstract interface class Llama {
 
   /// Factory constructor for creating a [Llama] instance.
   ///
-  /// Depending on the value of [isolate], this constructor will either create
-  /// an instance of [LlamaIsolated] or [LlamaNative].
-  ///
   /// - [modelParams]: Required parameters for the model.
   /// - [contextParams]: Optional parameters for the context, defaults to an
   ///   instance of [ContextParams].
   /// - [samplingParams]: Optional parameters for sampling, defaults to an
   ///   instance of [SamplingParams].
-  /// - [isolate]: If true, creates an instance of [LlamaIsolated], otherwise
-  ///   creates an instance of [LlamaNative].
   factory Llama({
     required ModelParams modelParams,
     ContextParams? contextParams,
-    SamplingParams samplingParams = const SamplingParams(),
-    bool isolate = false,
-  }) =>
-      isolate
-          ? LlamaIsolated(
-              modelParams: modelParams,
-              contextParams: contextParams,
-              samplingParams: samplingParams,
-            )
-          : LlamaNative(
-              modelParams: modelParams,
-              contextParams: contextParams,
-              samplingParams: samplingParams,
-            );
-
-  /// Generates a stream of responses based on the provided list of chat messages.
-  ///
-  /// This method takes a list of [ChatMessage] objects and returns a [Stream] of
-  /// strings, where each string represents a response generated from the chat messages.
-  ///
-  /// The stream allows for asynchronous processing of the chat messages, enabling
-  /// real-time or batched responses.
-  ///
-  /// - Parameter messages: A list of [ChatMessage] objects that represent the chat history.
-  /// - Returns: A [Stream] of strings, where each string is a generated response.
-  Stream<String> prompt(List<ChatMessage> messages);
-
-  /// Converts the given text to speech and returns the audio data as a [Uint8List].
-  ///
-  /// The [text] parameter is the input string that needs to be converted to speech.
-  ///
-  /// Returns a [Future<Uint8List>] containing the audio data of the synthesized speech.
-  Future<Uint8List> tts(String text);
+    SamplingParams samplingParams = const SamplingParams(greedy: true)
+  }) => LlamaIsolated(
+    modelParams: modelParams,
+    contextParams: contextParams,
+    samplingParams: samplingParams,
+  );
 
   /// Stops the current operation or process.
   ///

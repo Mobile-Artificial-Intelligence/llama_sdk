@@ -17,7 +17,7 @@ part of 'package:lcpp/lcpp.dart';
 /// 
 /// The [reload] method stops the current operation and reloads the isolate with
 /// the updated parameters.
-class LlamaIsolated implements Llama {
+class LlamaIsolated with _LlamaPromptMixin, _LlamaTTSMixin implements Llama {
   Completer _initialized = Completer();
   late StreamController _responseController;
   Isolate? _isolate;
