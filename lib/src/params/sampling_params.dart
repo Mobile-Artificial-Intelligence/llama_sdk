@@ -429,7 +429,7 @@ class SamplingParams {
       SamplingParams.fromMap(jsonDecode(source));
 
   /// Converts this instance to a [Pointer<llama_sampler>].
-  ffi.Pointer<llama_sampler> toNative(ffi.Pointer<llama_vocab> vocab) {
+  ffi.Pointer<llama_sampler> toNative([ffi.Pointer<llama_vocab>? vocab]) {
     final sampler = _LlamaBase.lib.llama_sampler_chain_init(
         _LlamaBase.lib.llama_sampler_chain_default_params());
 
@@ -439,8 +439,9 @@ class SamplingParams {
     }
 
     if (infill) {
+      assert(vocab != null, LlamaException('Vocabulary is required for infill'));
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_infill(vocab));
+          sampler, _LlamaBase.lib.llama_sampler_init_infill(vocab!));
     }
 
     if (seed != null) {
@@ -502,10 +503,11 @@ class SamplingParams {
     }
 
     if (grammar != null) {
+      assert(vocab != null, LlamaException('Vocabulary is required for grammar'));
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_grammar(
-              vocab,
+              vocab!,
               grammar!.str.toNativeUtf8().cast<ffi.Char>(),
               grammar!.root.toNativeUtf8().cast<ffi.Char>()));
     }
@@ -518,6 +520,7 @@ class SamplingParams {
     }
 
     if (drySampler != null) {
+      assert(vocab != null, LlamaException('Vocabulary is required for dry sampler'));
       final sequenceBreakers =
           calloc<ffi.Pointer<ffi.Char>>(drySampler!.sequenceBreakers.length);
       for (var i = 0; i < drySampler!.sequenceBreakers.length; i++) {
@@ -528,7 +531,7 @@ class SamplingParams {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_dry(
-              vocab,
+              vocab!,
               drySampler!.nCtxTrain,
               drySampler!.multiplier,
               drySampler!.dryBase,

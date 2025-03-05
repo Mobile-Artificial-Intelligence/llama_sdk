@@ -5,11 +5,11 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   ffi.Pointer<llama_context> _context = ffi.nullptr;
   ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;
 
+  int _contextLength = 0;
+
   ModelParams _modelParams;
   ContextParams _contextParams;
   SamplingParams _samplingParams;
-
-  int _contextLength = 0;
 
   set modelParams(ModelParams modelParams) {
     _modelParams = modelParams;
@@ -55,7 +55,6 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
       : _modelParams = modelParams,
         _contextParams = contextParams ?? ContextParams(),
         _samplingParams = samplingParams {
-    assert(_modelParams.chatModel != null, LlamaException('Chat model is required'));
     _LlamaBase.lib.ggml_backend_load_all();
     _LlamaBase.lib.llama_backend_init();
 
@@ -63,6 +62,7 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   }
 
   void _initModel() {
+    assert(_modelParams.chatModel != null, LlamaException('Chat model is required'));
     final nativeModelParams = _modelParams.toNative();
     final nativeModelPath = _modelParams.chatModel!.path.toNativeUtf8().cast<ffi.Char>();
 
