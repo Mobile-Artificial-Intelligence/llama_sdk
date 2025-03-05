@@ -25,8 +25,8 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
   void _initModel() {
     final nativeModelParams = _ttsParams.getModelParams();
-    final nativeTtcModelPath = _ttsParams.ttcModel!.path.toNativeUtf8().cast<ffi.Char>();
-    final nativeCtsModelPath = _ttsParams.ctsModel!.path.toNativeUtf8().cast<ffi.Char>();
+    final nativeTtcModelPath = _ttsParams.ttcModel.path.toNativeUtf8().cast<ffi.Char>();
+    final nativeCtsModelPath = _ttsParams.ctsModel.path.toNativeUtf8().cast<ffi.Char>();
 
     if (_ttcModel != ffi.nullptr) {
       _LlamaBase.lib.llama_free_model(_ttcModel);
@@ -80,7 +80,8 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       _LlamaBase.lib.llama_sampler_free(_sampler);
     }
 
-    _sampler = _ttsParams.getSampler();
+    final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
+    _sampler = _ttsParams.getSampler(vocab);
     assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
 
     _LlamaBase.samplerFinalizer.attach(this, _sampler);
@@ -91,10 +92,148 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
   @override
   Future<Uint8List> tts(String text) {
-    // TODO: implement tts
+    final version = _OuteTtsVersion.getVersion(_ttcModel);
+    final audioText = _ttsParams.voice._getFormattedText(version);
+    final audioData = _ttsParams.voice._getFormattedData(version);
+    final processedText = _processText(text);
+    final prompt = '<|im_start|>\n$processedText$audioText<|text_end|>\n$audioData';
+    final promptPtr = prompt.toNativeUtf8().cast<ffi.Char>();
+
+    final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
+
+    final nPromptTokens = -_LlamaBase.lib.llama_tokenize(
+      vocab, 
+      promptPtr, 
+      prompt.length, 
+      ffi.nullptr, 
+      0, 
+      false, 
+      true
+    );
+    ffi.Pointer<llama_token> promptTokens = calloc<llama_token>(nPromptTokens);
+
+    if (_LlamaBase.lib.llama_tokenize(vocab, promptPtr, prompt.length, promptTokens,
+            nPromptTokens, true, true) <
+        0) {
+      throw LlamaException('Failed to tokenize');
+    }
+
+    // TODO
     throw UnimplementedError();
   }
+
+  List<String> _splitIntoThrees(String str) {
+    List<String> parts = [];
+
+    for (int i = str.length; i > 0; i -= 3) {
+      if (i < 3) {
+        parts.add(str.substring(0, i));
+      } else {
+        parts.add(str.substring(i - 3, i));
+      }
+    }
+
+    return parts.reversed.toList();
+  }
+
+  String _numberToWord(int number) {
+    const words = [
+      "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+    ];
+    return words[number];
+  }
+
+  String _tensToWord(int tens) {
+    const words = [
+      "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+    ];
+    return words[tens];
+  }
+
+  String _teensToWord(int teens) {
+    const words = [
+      "", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+    ];
+    return words[teens - 10];
+  }
+
+  List<String> _hundredsToWords(int hundreds) {
+    int hundredsDigit = hundreds ~/ 100;
+    int tensDigit = (hundreds % 100) ~/ 10;
+    int onesDigit = hundreds % 10;
+    List<String> result = [];
+
+    if (hundredsDigit > 0) {
+      result.add(_numberToWord(hundredsDigit));
+      result.add("hundred");
+      if (tensDigit > 0 || onesDigit > 0) {
+        result.add("and");
+      }
+    }
+
+    if (tensDigit > 1) {
+      result.add(_tensToWord(tensDigit));
+    } else if (tensDigit == 1 && onesDigit > 0) {
+      result.add(_teensToWord(hundreds % 100));
+      return result;
+    }
+
+    if (onesDigit > 0 && tensDigit != 1) {
+      result.add(_numberToWord(onesDigit));
+    }
+
+    return result;
+  }
+
+  String _numbersToWords(String text) {
+    const suffixes = [
+      "thousand", "million", "billion", "trillion", "quadrillion", "quintillion",
+      "sextillion", "septillion", "octillion", "nonillion", "decillion"
+    ];
+
+    List<String> parts = _splitIntoThrees(text);
+    List<String> result = [];
+
+    for (int i = 0; i < parts.length; i++) {
+      int number = int.parse(parts[i]);
+      List<String> words = _hundredsToWords(number);
+      result.addAll(words);
+
+      if (i < suffixes.length && i < parts.length - 1) {
+        int suffixIndex = parts.length - i - 2;
+        result.add(suffixes[suffixIndex]);
+      }
+    }
+
+    return result.join(" ");
+  }
   
+  String _processText(String text) {
+    // Replace numbers with words (Assuming you have an equivalent function)
+    String processedText = _numbersToWords(text);
+
+    // Convert to lowercase
+    processedText = processedText.toLowerCase();
+
+    // Replace special characters with spaces
+    processedText = processedText.replaceAll(RegExp(r'[-_/,\.\\]'), ' ');
+
+    // Remove non-alphabetic characters
+    processedText = processedText.replaceAll(RegExp(r'[^a-z\s]'), '');
+
+    // Replace multiple spaces with a single space
+    processedText = processedText.replaceAll(RegExp(r'\s+'), ' ').trim();
+
+    final version = _OuteTtsVersion.getVersion(_ttcModel);
+
+    // Choose the separator based on TTS version
+    String separator = version == _OuteTtsVersion.v3 ? '<|space|>' : '<|text_sep|>';
+
+    // Replace spaces with the separator
+    processedText = processedText.replaceAll(RegExp(r'\s'), separator);
+
+    return processedText;
+  }
 }
 
 enum _OuteTtsVersion {
