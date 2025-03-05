@@ -19,7 +19,7 @@ class LlamaApp extends StatefulWidget {
 class LlamaAppState extends State<LlamaApp> {
   final TextEditingController controller = TextEditingController();
   final List<ChatMessage> messages = [];
-  Llama? model;
+  LlamaIsolated? model;
   String? modelPath;
   bool busy = false;
 

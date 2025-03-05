@@ -1,6 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
-mixin _LlamaPromptMixin implements Llama {
+mixin _LlamaPromptMixin implements _LlamaBase {
   /// Generates a stream of responses based on the provided list of chat messages.
   ///
   /// This method takes a list of [ChatMessage] objects and returns a [Stream] of

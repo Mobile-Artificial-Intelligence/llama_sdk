@@ -449,7 +449,7 @@ class ContextParams extends ChangeNotifier {
   /// them to a [ContextParams] instance using the [ContextParams.fromNative] method.
   factory ContextParams.defaultParams() {
     final llama_context_params contextParams =
-        Llama.lib.llama_context_default_params();
+        _LlamaBase.lib.llama_context_default_params();
 
     return ContextParams.fromNative(contextParams);
   }
@@ -488,7 +488,7 @@ class ContextParams extends ChangeNotifier {
   /// - A `llama_context_params` object with the updated fields.
   llama_context_params toNative() {
     final llama_context_params contextParams =
-        Llama.lib.llama_context_default_params();
+        _LlamaBase.lib.llama_context_default_params();
 
     contextParams.n_ctx = nCtx;
 

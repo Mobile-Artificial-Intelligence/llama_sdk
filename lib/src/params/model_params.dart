@@ -135,7 +135,7 @@ class ModelParams extends ChangeNotifier {
   ///   A `llama_model_params` instance with the updated values.
   llama_model_params toNative() {
     final llama_model_params modelParams =
-        Llama.lib.llama_model_default_params();
+        _LlamaBase.lib.llama_model_default_params();
     log("Model params initialized");
 
     if (vocabOnly != null) {

@@ -1,12 +1,12 @@
 part of 'package:lcpp/lcpp.dart';
 
-class LlamaNative with _LlamaPromptMixin implements Llama {
+class LlamaNative with _LlamaPromptMixin implements _LlamaBase {
   static final _modelFinalizer =
-      Finalizer<ffi.Pointer<llama_model>>(Llama.lib.llama_free_model);
+      Finalizer<ffi.Pointer<llama_model>>(_LlamaBase.lib.llama_free_model);
   static final _contextFinalizer =
-      Finalizer<ffi.Pointer<llama_context>>(Llama.lib.llama_free);
+      Finalizer<ffi.Pointer<llama_context>>(_LlamaBase.lib.llama_free);
   static final _samplerFinalizer =
-      Finalizer<ffi.Pointer<llama_sampler>>(Llama.lib.llama_sampler_free);
+      Finalizer<ffi.Pointer<llama_sampler>>(_LlamaBase.lib.llama_sampler_free);
 
   ffi.Pointer<llama_model> _model = ffi.nullptr;
   ffi.Pointer<llama_context> _context = ffi.nullptr;
@@ -63,8 +63,8 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
         _contextParams = contextParams ?? ContextParams(),
         _samplingParams = samplingParams {
     assert(_modelParams.chatModel != null, LlamaException('Chat model is required'));
-    Llama.lib.ggml_backend_load_all();
-    Llama.lib.llama_backend_init();
+    _LlamaBase.lib.ggml_backend_load_all();
+    _LlamaBase.lib.llama_backend_init();
 
     _initModel();
   }
@@ -74,10 +74,10 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
     final nativeModelPath = _modelParams.chatModel!.path.toNativeUtf8().cast<ffi.Char>();
 
     if (_model != ffi.nullptr) {
-      Llama.lib.llama_free_model(_model);
+      _LlamaBase.lib.llama_free_model(_model);
     }
 
-    _model = Llama.lib
+    _model = _LlamaBase.lib
         .llama_load_model_from_file(nativeModelPath, nativeModelParams);
     assert(_model != ffi.nullptr, LlamaException('Failed to load model'));
 
@@ -93,10 +93,10 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
     final nativeContextParams = _contextParams.toNative();
 
     if (_context != ffi.nullptr) {
-      Llama.lib.llama_free(_context);
+      _LlamaBase.lib.llama_free(_context);
     }
 
-    _context = Llama.lib.llama_init_from_model(_model, nativeContextParams);
+    _context = _LlamaBase.lib.llama_init_from_model(_model, nativeContextParams);
     assert(_context != ffi.nullptr, LlamaException('Failed to initialize context'));
 
     _contextFinalizer.attach(this, _context);
@@ -106,10 +106,10 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
     assert(_model != ffi.nullptr, LlamaException('Model is not loaded'));
 
     if (_sampler != ffi.nullptr) {
-      Llama.lib.llama_sampler_free(_sampler);
+      _LlamaBase.lib.llama_sampler_free(_sampler);
     }
 
-    final vocab = Llama.lib.llama_model_get_vocab(_model);
+    final vocab = _LlamaBase.lib.llama_model_get_vocab(_model);
     _sampler = _samplingParams.toNative(vocab);
     assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
 
@@ -124,21 +124,21 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
     assert(_context != ffi.nullptr, LlamaException('Context is not initialized'));
     assert(_sampler != ffi.nullptr, LlamaException('Sampler is not initialized'));
 
-    final nCtx = Llama.lib.llama_n_ctx(_context);
+    final nCtx = _LlamaBase.lib.llama_n_ctx(_context);
 
     ffi.Pointer<ffi.Char> formatted = calloc<ffi.Char>(nCtx);
 
-    final template = Llama.lib.llama_model_chat_template(_model, ffi.nullptr);
+    final template = _LlamaBase.lib.llama_model_chat_template(_model, ffi.nullptr);
 
     ffi.Pointer<llama_chat_message> messagesPtr = messagesCopy.toNative();
 
-    int newContextLength = Llama.lib.llama_chat_apply_template(
+    int newContextLength = _LlamaBase.lib.llama_chat_apply_template(
         template, messagesPtr, messagesCopy.length, true, formatted, nCtx);
 
     if (newContextLength > nCtx) {
       calloc.free(formatted);
       formatted = calloc<ffi.Char>(newContextLength);
-      newContextLength = Llama.lib.llama_chat_apply_template(template,
+      newContextLength = _LlamaBase.lib.llama_chat_apply_template(template,
           messagesPtr, messagesCopy.length, true, formatted, newContextLength);
     }
 
@@ -152,16 +152,16 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
         formatted.cast<Utf8>().toDartString().substring(_contextLength);
     calloc.free(formatted);
 
-    final vocab = Llama.lib.llama_model_get_vocab(_model);
-    final isFirst = Llama.lib.llama_get_kv_cache_used_cells(_context) == 0;
+    final vocab = _LlamaBase.lib.llama_model_get_vocab(_model);
+    final isFirst = _LlamaBase.lib.llama_get_kv_cache_used_cells(_context) == 0;
 
     final promptPtr = prompt.toNativeUtf8().cast<ffi.Char>();
 
-    final nPromptTokens = -Llama.lib.llama_tokenize(
+    final nPromptTokens = -_LlamaBase.lib.llama_tokenize(
         vocab, promptPtr, prompt.length, ffi.nullptr, 0, isFirst, true);
     ffi.Pointer<llama_token> promptTokens = calloc<llama_token>(nPromptTokens);
 
-    if (Llama.lib.llama_tokenize(vocab, promptPtr, prompt.length, promptTokens,
+    if (_LlamaBase.lib.llama_tokenize(vocab, promptPtr, prompt.length, promptTokens,
             nPromptTokens, isFirst, true) <
         0) {
       throw Exception('Failed to tokenize');
@@ -170,32 +170,32 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
     calloc.free(promptPtr);
 
     llama_batch batch =
-        Llama.lib.llama_batch_get_one(promptTokens, nPromptTokens);
+        _LlamaBase.lib.llama_batch_get_one(promptTokens, nPromptTokens);
     ffi.Pointer<llama_token> newTokenId = calloc<llama_token>(1);
 
     String response = '';
 
     while (true) {
-      final nCtx = Llama.lib.llama_n_ctx(_context);
-      final nCtxUsed = Llama.lib.llama_get_kv_cache_used_cells(_context);
+      final nCtx = _LlamaBase.lib.llama_n_ctx(_context);
+      final nCtxUsed = _LlamaBase.lib.llama_get_kv_cache_used_cells(_context);
 
       if (nCtxUsed + batch.n_tokens > nCtx) {
         throw Exception('Context size exceeded');
       }
 
-      if (Llama.lib.llama_decode(_context, batch) != 0) {
+      if (_LlamaBase.lib.llama_decode(_context, batch) != 0) {
         throw Exception('Failed to decode');
       }
 
-      newTokenId.value = Llama.lib.llama_sampler_sample(_sampler, _context, -1);
+      newTokenId.value = _LlamaBase.lib.llama_sampler_sample(_sampler, _context, -1);
 
       // is it an end of generation?
-      if (Llama.lib.llama_vocab_is_eog(vocab, newTokenId.value)) {
+      if (_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value)) {
         break;
       }
 
       final buffer = calloc<ffi.Char>(256);
-      final n = Llama.lib
+      final n = _LlamaBase.lib
           .llama_token_to_piece(vocab, newTokenId.value, buffer, 256, 0, true);
       if (n < 0) {
         throw Exception('Failed to convert token to piece');
@@ -206,19 +206,19 @@ class LlamaNative with _LlamaPromptMixin implements Llama {
       response += piece;
       yield piece;
 
-      batch = Llama.lib.llama_batch_get_one(newTokenId, 1);
+      batch = _LlamaBase.lib.llama_batch_get_one(newTokenId, 1);
     }
 
     messagesCopy.add(AssistantChatMessage(response));
 
     messagesPtr = messagesCopy.toNative();
 
-    _contextLength = Llama.lib.llama_chat_apply_template(
+    _contextLength = _LlamaBase.lib.llama_chat_apply_template(
         template, messagesPtr, messagesCopy.length, false, ffi.nullptr, 0);
 
     messagesPtr.free(messagesCopy.length);
     calloc.free(promptTokens);
-    Llama.lib.llama_batch_free(batch);
+    _LlamaBase.lib.llama_batch_free(batch);
   }
 
   @override

@@ -20,7 +20,7 @@ part of 'package:lcpp/lcpp.dart';
 /// - `free`: A method to free the resources used by the Llama instance.
 ///
 /// Throws an `LlamaException` if the platform is unsupported.
-abstract interface class Llama {
+abstract interface class _LlamaBase {
   static llama? _lib;
 
   /// Returns an instance of the `llama` library.
@@ -47,23 +47,6 @@ abstract interface class Llama {
     }
     return _lib!;
   }
-
-  /// Factory constructor for creating a [Llama] instance.
-  ///
-  /// - [modelParams]: Required parameters for the model.
-  /// - [contextParams]: Optional parameters for the context, defaults to an
-  ///   instance of [ContextParams].
-  /// - [samplingParams]: Optional parameters for sampling, defaults to an
-  ///   instance of [SamplingParams].
-  factory Llama({
-    required ModelParams modelParams,
-    ContextParams? contextParams,
-    SamplingParams samplingParams = const SamplingParams(greedy: true)
-  }) => LlamaIsolated(
-    modelParams: modelParams,
-    contextParams: contextParams,
-    samplingParams: samplingParams,
-  );
 
   /// Stops the current operation or process.
   ///

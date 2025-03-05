@@ -1,6 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
-mixin _LlamaTTSMixin implements Llama {
+mixin _LlamaTTSMixin implements _LlamaBase {
   /// Converts the given text to speech and returns the audio data as a [Uint8List].
   ///
   /// The [text] parameter is the input string that needs to be converted to speech.
