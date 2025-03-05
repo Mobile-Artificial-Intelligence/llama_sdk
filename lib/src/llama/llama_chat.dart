@@ -3,15 +3,15 @@ part of 'package:lcpp/lcpp.dart';
 class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   LlamaChat(
       {required LlamaChatParams chatParams,
-      SamplingParams samplingParams = const SamplingParams()})
+      SamplingParams? samplingParams})
       : _chatParams = chatParams,
-        _samplingParams = samplingParams {
+        _samplingParams = samplingParams ?? SamplingParams(greedy: true) {
     _LlamaBase.lib.ggml_backend_load_all();
     _LlamaBase.lib.llama_backend_init();
 
     _initModel();
   }
-  
+
   ffi.Pointer<llama_model> _model = ffi.nullptr;
   ffi.Pointer<llama_context> _context = ffi.nullptr;
   ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;

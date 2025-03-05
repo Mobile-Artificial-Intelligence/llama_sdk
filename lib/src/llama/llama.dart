@@ -67,9 +67,9 @@ class Llama with _LlamaPromptMixin, _LlamaTTSMixin implements _LlamaBase {
   /// - [samplingParams]: The parameters for sampling. This parameter is optional and defaults to an instance of [SamplingParams] with `greedy` set to `true`.
   Llama(
       {required LlamaParams llamaParams,
-      SamplingParams samplingParams = const SamplingParams(greedy: true)})
+      SamplingParams? samplingParams})
       : _llamaParams = llamaParams,
-        _samplingParams = samplingParams;
+        _samplingParams = samplingParams ?? SamplingParams(greedy: true);
 
   void _listener() async {
     _receivePort = ReceivePort();

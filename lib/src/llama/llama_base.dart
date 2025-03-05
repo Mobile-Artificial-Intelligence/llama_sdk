@@ -30,16 +30,6 @@ abstract interface class _LlamaBase {
 
   static llama? _lib;
 
-  /// Returns an instance of the `llama` library.
-  ///
-  /// This getter initializes the `_lib` field if it is `null` by loading the
-  /// appropriate dynamic library based on the current platform:
-  ///
-  /// - On Windows, it loads `llama.dll`.
-  /// - On Linux or Android, it loads `libllama.so`.
-  /// - On macOS or iOS, it loads `llama.framework/llama`.
-  ///
-  /// Throws a [LlamaException] if the platform is unsupported.
   static llama get lib {
     if (_lib == null) {
       if (Platform.isWindows) {

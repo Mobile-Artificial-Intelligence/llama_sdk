@@ -3,9 +3,9 @@ part of 'package:lcpp/lcpp.dart';
 class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   LlamaTTS({
     required LlamaTtsParams ttsParams,
-    SamplingParams samplingParams = const SamplingParams(),
+    SamplingParams? samplingParams,
   }) : _ttsParams = ttsParams,
-       _samplingParams = samplingParams {
+       _samplingParams = samplingParams ?? SamplingParams(greedy: true) {
     _LlamaBase.lib.ggml_backend_load_all();
     _LlamaBase.lib.llama_backend_init();
 

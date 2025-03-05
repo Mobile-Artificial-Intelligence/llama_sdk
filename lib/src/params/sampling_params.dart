@@ -1,158 +1,449 @@
 part of 'package:lcpp/lcpp.dart';
 
 /// Sampling parameters combining all argument fields.
-class SamplingParams {
+class SamplingParams extends ChangeNotifier{
+  bool _greedy = false;
+
   /// Enables greedy decoding if set to `true`.
-  final bool greedy;
+  bool get greedy => _greedy;
+
+  set greedy(bool value) {
+    _greedy = value;
+    notifyListeners();
+  }
+
+  bool _infill = false;
 
   /// Enables infill sampling if set to `true`.
-  final bool infill;
+  bool get infill => _infill;
+
+  set infill(bool value) {
+    _infill = value;
+    notifyListeners();
+  }
+
+  int? _seed;
 
   /// Optional seed for random number generation to ensure reproducibility.
-  final int? seed;
+  int? get seed => _seed;
+
+  set seed(int? value) {
+    _seed = value;
+    notifyListeners();
+  }
+
+  int? _topK;
 
   /// Limits the number of top candidates considered during sampling.
-  final int? topK;
+  int? get topK => _topK;
+
+  set topK(int? value) {
+    _topK = value;
+    notifyListeners();
+  }
+
+  double? _topP;
 
   /// Top-P sampling
-  final double? topP;
+  double? get topP => _topP;
+
+  set topP(double? value) {
+    _topP = value;
+    notifyListeners();
+  }
+
+  int? _minKeepTopP;
 
   /// Top-P sampling minimum keep
-  final int? minKeepTopP;
+  int? get minKeepTopP => _minKeepTopP;
+
+  set minKeepTopP(int? value) {
+    _minKeepTopP = value;
+    notifyListeners();
+  }
+
+  double? _minP;
 
   /// Minimum Probability sampling
-  final double? minP;
+  double? get minP => _minP;
+
+  set minP(double? value) {
+    _minP = value;
+    notifyListeners();
+  }
+
+  int? _minKeepMinP;
 
   /// Minimum Probability sampling minimum keep
-  final int? minKeepMinP;
+  int? get minKeepMinP => _minKeepMinP;
+
+  set minKeepMinP(int? value) {
+    _minKeepMinP = value;
+    notifyListeners();
+  }
+
+  double? _typicalP;
 
   /// Typical-P sampling
-  final double? typicalP;
+  double? get typicalP => _typicalP;
+
+  set typicalP(double? value) {
+    _typicalP = value;
+    notifyListeners();
+  }
+
+  int? _minKeepTypicalP;
 
   /// Typical-P sampling minimum keep
-  final int? minKeepTypicalP;
+  int? get minKeepTypicalP => _minKeepTypicalP;
+
+  set minKeepTypicalP(int? value) {
+    _minKeepTypicalP = value;
+    notifyListeners();
+  }
+
+  double? _temperature;
 
   /// Temperature-based sampling
-  final double? temperature;
+  double? get temperature => _temperature;
+
+  set temperature(double? value) {
+    _temperature = value;
+    notifyListeners();
+  }
+
+  double? _temperatureDelta;
 
   /// Temperature-based sampling delta
-  final double? temperatureDelta;
+  double? get temperatureDelta => _temperatureDelta;
+
+  set temperatureDelta(double? value) {
+    _temperatureDelta = value;
+    notifyListeners();
+  }
+
+  double? _temperatureExponent;
 
   /// Temperature-based sampling exponent
-  final double? temperatureExponent;
+  double? get temperatureExponent => _temperatureExponent;
+
+  set temperatureExponent(double? value) {
+    _temperatureExponent = value;
+    notifyListeners();
+  }
+
+  double? _xtcP;
 
   /// XTC sampling probability
-  final double? xtcP;
+  double? get xtcP => _xtcP;
+
+  set xtcP(double? value) {
+    _xtcP = value;
+    notifyListeners();
+  }
+
+  double? _xtcT;
 
   /// XTC sampling temperature
-  final double? xtcT;
+  double? get xtcT => _xtcT;
+
+  set xtcT(double? value) {
+    _xtcT = value;
+    notifyListeners();
+  }
+
+  int? _minKeepXtc;
 
   /// XTC sampling minimum keep
-  final int? minKeepXtc;
+  int? get minKeepXtc => _minKeepXtc;
+
+  set minKeepXtc(int? value) {
+    _minKeepXtc = value;
+    notifyListeners();
+  }
+
+  int? _xtcSeed;
 
   /// XTC sampling seed
-  final int? xtcSeed;
+  int? get xtcSeed => _xtcSeed;
+
+  set xtcSeed(int? value) {
+    _xtcSeed = value;
+    notifyListeners();
+  }
+
+  int? _mirostatNVocab;
 
   /// Mirostat sampling vocabulary size
-  final int? mirostatNVocab;
+  int? get mirostatNVocab => _mirostatNVocab;
+
+  set mirostatNVocab(int? value) {
+    _mirostatNVocab = value;
+    notifyListeners();
+  }
+
+  int? _mirostatSeed;
 
   /// Mirostat sampling seed
-  final int? mirostatSeed;
+  int? get mirostatSeed => _mirostatSeed;
+
+  set mirostatSeed(int? value) {
+    _mirostatSeed = value;
+    notifyListeners();
+  }
+
+  double? _mirostatTau;
 
   /// Mirostat sampling tau
-  final double? mirostatTau;
+  double? get mirostatTau => _mirostatTau;
+
+  set mirostatTau(double? value) {
+    _mirostatTau = value;
+    notifyListeners();
+  }
+
+  double? _mirostatEta;
 
   /// Mirostat sampling eta
-  final double? mirostatEta;
+  double? get mirostatEta => _mirostatEta;
+
+  set mirostatEta(double? value) {
+    _mirostatEta = value;
+    notifyListeners();
+  }
+
+  int? _mirostatM;
 
   /// Mirostat sampling M
-  final int? mirostatM;
+  int? get mirostatM => _mirostatM;
+
+  set mirostatM(int? value) {
+    _mirostatM = value;
+    notifyListeners();
+  }
+
+  int? _mirostatV2Seed;
 
   /// Mirostat v2 sampling seed
-  final int? mirostatV2Seed;
+  int? get mirostatV2Seed => _mirostatV2Seed;
+
+  set mirostatV2Seed(int? value) {
+    _mirostatV2Seed = value;
+    notifyListeners();
+  }
+
+  double? _mirostatV2Tau;
 
   /// Mirostat v2 sampling tau
-  final double? mirostatV2Tau;
+  double? get mirostatV2Tau => _mirostatV2Tau;
+
+  set mirostatV2Tau(double? value) {
+    _mirostatV2Tau = value;
+    notifyListeners();
+  }
+
+  double? _mirostatV2Eta;
 
   /// Mirostat v2 sampling eta
-  final double? mirostatV2Eta;
+  double? get mirostatV2Eta => _mirostatV2Eta;
+
+  set mirostatV2Eta(double? value) {
+    _mirostatV2Eta = value;
+    notifyListeners();
+  }
+
+  String? _grammarStr;
 
   /// Grammar-based sampling string
-  final String? grammarStr;
+  String? get grammarStr => _grammarStr;
+
+  set grammarStr(String? value) {
+    _grammarStr = value;
+    notifyListeners();
+  }
+
+  String? _grammarRoot;
 
   /// Grammar-based sampling root
-  final String? grammarRoot;
+  String? get grammarRoot => _grammarRoot;
+
+  set grammarRoot(String? value) {
+    _grammarRoot = value;
+    notifyListeners();
+  }
+
+  int? _penaltiesLastN;
 
   /// Penalties last N
-  final int? penaltiesLastN;
+  int? get penaltiesLastN => _penaltiesLastN;
+
+  set penaltiesLastN(int? value) {
+    _penaltiesLastN = value;
+    notifyListeners();
+  }
+
+  double? _penaltiesRepeat;
 
   /// Penalties repeat
-  final double? penaltiesRepeat;
+  double? get penaltiesRepeat => _penaltiesRepeat;
+
+  set penaltiesRepeat(double? value) {
+    _penaltiesRepeat = value;
+    notifyListeners();
+  }
+
+  double? _penaltiesFrequency;
 
   /// Penalties frequency
-  final double? penaltiesFrequency;
+  double? get penaltiesFrequency => _penaltiesFrequency;
+
+  set penaltiesFrequency(double? value) {
+    _penaltiesFrequency = value;
+    notifyListeners();
+  }
+
+  double? _penaltiesPresent;
 
   /// Penalties present
-  final double? penaltiesPresent;
+  double? get penaltiesPresent => _penaltiesPresent;
+
+  set penaltiesPresent(double? value) {
+    _penaltiesPresent = value;
+    notifyListeners();
+  }
+
+  int? _drySamplerNCtxTrain;
 
   /// Dry sampler n ctx train
-  final int? drySamplerNCtxTrain;
+  int? get drySamplerNCtxTrain => _drySamplerNCtxTrain;
+  
+  set drySamplerNCtxTrain(int? value) {
+    _drySamplerNCtxTrain = value;
+    notifyListeners();
+  }
+
+  double? _drySamplerMultiplier;
 
   /// Dry sampler multiplier
-  final double? drySamplerMultiplier;
+  double? get drySamplerMultiplier => _drySamplerMultiplier;
+
+  set drySamplerMultiplier(double? value) {
+    _drySamplerMultiplier = value;
+    notifyListeners();
+  }
+
+  double? _drySamplerDryBase;
 
   /// Dry sampler dry base
-  final double? drySamplerDryBase;
+  double? get drySamplerDryBase => _drySamplerDryBase;
+
+  set drySamplerDryBase(double? value) {
+    _drySamplerDryBase = value;
+    notifyListeners();
+  }
+
+  int? _drySamplerAllowedLength;
 
   /// Dry sampler allowed length
-  final int? drySamplerAllowedLength;
+  int? get drySamplerAllowedLength => _drySamplerAllowedLength;
+
+  set drySamplerAllowedLength(int? value) {
+    _drySamplerAllowedLength = value;
+    notifyListeners();
+  }
+
+  int? _drySamplerPenaltyLastN;
 
   /// Dry sampler penalty last N
-  final int? drySamplerPenaltyLastN;
+  int? get drySamplerPenaltyLastN => _drySamplerPenaltyLastN;
+
+  set drySamplerPenaltyLastN(int? value) {
+    _drySamplerPenaltyLastN = value;
+    notifyListeners();
+  }
+
+  List<String>? _drySamplerSequenceBreakers;
 
   /// Dry sampler sequence breakers
-  final List<String>? drySamplerSequenceBreakers;
+  List<String>? get drySamplerSequenceBreakers => _drySamplerSequenceBreakers;
+
+  set drySamplerSequenceBreakers(List<String>? value) {
+    _drySamplerSequenceBreakers = value;
+    notifyListeners();
+  }
 
   /// Creates a new instance of [SamplingParams].
-  const SamplingParams({
-    this.greedy = false,
-    this.infill = false,
-    this.seed,
-    this.topK,
-    this.topP,
-    this.minKeepTopP,
-    this.minP,
-    this.minKeepMinP,
-    this.typicalP,
-    this.minKeepTypicalP,
-    this.temperature,
-    this.temperatureDelta,
-    this.temperatureExponent,
-    this.xtcP,
-    this.xtcT,
-    this.minKeepXtc,
-    this.xtcSeed,
-    this.mirostatNVocab,
-    this.mirostatSeed,
-    this.mirostatTau,
-    this.mirostatEta,
-    this.mirostatM,
-    this.mirostatV2Seed,
-    this.mirostatV2Tau,
-    this.mirostatV2Eta,
-    this.grammarStr,
-    this.grammarRoot,
-    this.penaltiesLastN,
-    this.penaltiesRepeat,
-    this.penaltiesFrequency,
-    this.penaltiesPresent,
-    this.drySamplerNCtxTrain,
-    this.drySamplerMultiplier,
-    this.drySamplerDryBase,
-    this.drySamplerAllowedLength,
-    this.drySamplerPenaltyLastN,
-    this.drySamplerSequenceBreakers,
-  });
+  SamplingParams({
+    bool? greedy,
+    bool? infill,
+    int? seed,
+    int? topK,
+    double? topP,
+    int? minKeepTopP,
+    double? minP,
+    int? minKeepMinP,
+    double? typicalP,
+    int? minKeepTypicalP,
+    double? temperature,
+    double? temperatureDelta,
+    double? temperatureExponent,
+    double? xtcP,
+    double? xtcT,
+    int? minKeepXtc,
+    int? xtcSeed,
+    int? mirostatNVocab,
+    int? mirostatSeed,
+    double? mirostatTau,
+    double? mirostatEta,
+    int? mirostatM,
+    int? mirostatV2Seed,
+    double? mirostatV2Tau,
+    double? mirostatV2Eta,
+    String? grammarStr,
+    String? grammarRoot,
+    int? penaltiesLastN,
+    double? penaltiesRepeat,
+    double? penaltiesFrequency,
+    double? penaltiesPresent,
+    int? drySamplerNCtxTrain,
+    double? drySamplerMultiplier,
+    double? drySamplerDryBase,
+    int? drySamplerAllowedLength,
+  }) : _greedy = greedy ?? false,
+       _infill = infill ?? false,
+       _seed = seed,
+       _topK = topK,
+       _topP = topP,
+       _minKeepTopP = minKeepTopP,
+       _minP = minP,
+       _minKeepMinP = minKeepMinP,
+       _typicalP = typicalP,
+       _minKeepTypicalP = minKeepTypicalP,
+       _temperature = temperature,
+       _temperatureDelta = temperatureDelta,
+       _temperatureExponent = temperatureExponent,
+       _xtcP = xtcP,
+       _xtcT = xtcT,
+       _minKeepXtc = minKeepXtc,
+       _xtcSeed = xtcSeed,
+       _mirostatNVocab = mirostatNVocab,
+       _mirostatSeed = mirostatSeed,
+       _mirostatTau = mirostatTau,
+       _mirostatEta = mirostatEta,
+       _mirostatM = mirostatM,
+       _mirostatV2Seed = mirostatV2Seed,
+       _mirostatV2Tau = mirostatV2Tau,
+       _mirostatV2Eta = mirostatV2Eta,
+       _grammarStr = grammarStr,
+       _grammarRoot = grammarRoot,
+       _penaltiesLastN = penaltiesLastN,
+       _penaltiesRepeat = penaltiesRepeat,
+       _penaltiesFrequency = penaltiesFrequency,
+       _penaltiesPresent = penaltiesPresent,
+       _drySamplerNCtxTrain = drySamplerNCtxTrain,
+       _drySamplerMultiplier = drySamplerMultiplier,
+       _drySamplerDryBase = drySamplerDryBase,
+       _drySamplerAllowedLength = drySamplerAllowedLength;
 
   /// Constructs a [SamplingParams] instance from a [Map].
   factory SamplingParams.fromMap(Map<String, dynamic> map) => SamplingParams(
@@ -198,41 +489,41 @@ class SamplingParams {
 
   /// Converts this instance to a [Map].
   Map<String, dynamic> toMap() => {
-        'greedy': greedy,
-        'infill': infill,
-        'seed': seed,
-        'top_k': topK,
-        'top_p': topP,
-        'top_p_min_keep': minKeepTopP,
-        'min_p': minP,
-        'min_p_min_keep': minKeepMinP,
-        'typical_p': typicalP,
-        'typical_p_min_keep': minKeepTypicalP,
-        'temperature': temperature,
-        'temperature_delta': temperatureDelta,
-        'temperature_exponent': temperatureExponent,
-        'xtc_p': xtcP,
-        'xtc_t': xtcT,
-        'xtc_min_keep': minKeepXtc,
-        'xtc_seed': xtcSeed,
-        'mirostat_n_vocab': mirostatNVocab,
-        'mirostat_seed': mirostatSeed,
-        'mirostat_tau': mirostatTau,
-        'mirostat_eta': mirostatEta,
-        'mirostat_m': mirostatM,
-        'mirostat_v2_seed': mirostatV2Seed,
-        'mirostat_v2_tau': mirostatV2Tau,
-        'mirostat_v2_eta': mirostatV2Eta,
-        'grammar_str': grammarStr,
-        'grammar_root': grammarRoot,
-        'penalties_last_n': penaltiesLastN,
-        'penalties_repeat': penaltiesRepeat,
-        'penalties_frequency': penaltiesFrequency,
-        'penalties_present': penaltiesPresent,
-        'dry_sampler_n_ctx_train': drySamplerNCtxTrain,
-        'dry_sampler_multiplier': drySamplerMultiplier,
-        'dry_sampler_dry_base': drySamplerDryBase,
-        'dry_sampler_allowed_length': drySamplerAllowedLength,
+        'greedy': _greedy,
+        'infill': _infill,
+        'seed': _seed,
+        'top_k': _topK,
+        'top_p': _topP,
+        'top_p_min_keep': _minKeepTopP,
+        'min_p': _minP,
+        'min_p_min_keep': _minKeepMinP,
+        'typical_p': _typicalP,
+        'typical_p_min_keep': _minKeepTypicalP,
+        'temperature': _temperature,
+        'temperature_delta': _temperatureDelta,
+        'temperature_exponent': _temperatureExponent,
+        'xtc_p': _xtcP,
+        'xtc_t': _xtcT,
+        'xtc_min_keep': _minKeepXtc,
+        'xtc_seed': _xtcSeed,
+        'mirostat_n_vocab': _mirostatNVocab,
+        'mirostat_seed': _mirostatSeed,
+        'mirostat_tau': _mirostatTau,
+        'mirostat_eta': _mirostatEta,
+        'mirostat_m': _mirostatM,
+        'mirostat_v2_seed': _mirostatV2Seed,
+        'mirostat_v2_tau': _mirostatV2Tau,
+        'mirostat_v2_eta': _mirostatV2Eta,
+        'grammar_str': _grammarStr,
+        'grammar_root': _grammarRoot,
+        'penalties_last_n': _penaltiesLastN,
+        'penalties_repeat': _penaltiesRepeat,
+        'penalties_frequency': _penaltiesFrequency,
+        'penalties_present': _penaltiesPresent,
+        'dry_sampler_n_ctx_train': _drySamplerNCtxTrain,
+        'dry_sampler_multiplier': _drySamplerMultiplier,
+        'dry_sampler_dry_base': _drySamplerDryBase,
+        'dry_sampler_allowed_length': _drySamplerAllowedLength,
       };
 
   String toJson() => jsonEncode(toMap());
@@ -246,123 +537,123 @@ class SamplingParams {
           sampler, _LlamaBase.lib.llama_sampler_init_greedy());
     }
 
-    if (infill) {
+    if (_infill) {
       assert(vocab != null, LlamaException('Vocabulary is required for infill'));
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler, _LlamaBase.lib.llama_sampler_init_infill(vocab!));
     }
 
-    if (seed != null) {
+    if (_seed != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_dist(seed!));
+          sampler, _LlamaBase.lib.llama_sampler_init_dist(_seed!));
     }
 
-    if (topK != null) {
+    if (_topK != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_top_k(topK!));
+          sampler, _LlamaBase.lib.llama_sampler_init_top_k(_topK!));
     }
 
-    if (topP != null && minKeepTopP != null) {
+    if (_topP != null && _minKeepTopP != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_top_p(topP!, minKeepTopP!));
+          sampler, _LlamaBase.lib.llama_sampler_init_top_p(_topP!, _minKeepTopP!));
     }
 
-    if (minP != null && minKeepMinP != null) {
+    if (_minP != null && _minKeepMinP != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
-          sampler, _LlamaBase.lib.llama_sampler_init_min_p(minP!, minKeepMinP!));
+          sampler, _LlamaBase.lib.llama_sampler_init_min_p(_minP!, _minKeepMinP!));
     }
 
-    if (typicalP != null && minKeepTypicalP != null) {
+    if (_typicalP != null && _minKeepTypicalP != null) {
       _LlamaBase.lib.llama_sampler_chain_add(sampler,
-          _LlamaBase.lib.llama_sampler_init_typical(typicalP!, minKeepTypicalP!));
+          _LlamaBase.lib.llama_sampler_init_typical(_typicalP!, _minKeepTypicalP!));
     }
 
-    if (temperature != null) {
-      if (temperatureDelta == null || temperatureExponent == null) {
+    if (_temperature != null) {
+      if (_temperatureDelta == null || _temperatureExponent == null) {
         _LlamaBase.lib.llama_sampler_chain_add(sampler,
-            _LlamaBase.lib.llama_sampler_init_temp(temperature!));
+            _LlamaBase.lib.llama_sampler_init_temp(_temperature!));
       } else {
         _LlamaBase.lib.llama_sampler_chain_add(
             sampler,
-            _LlamaBase.lib.llama_sampler_init_temp_ext(temperature!,
-                temperatureDelta!, temperatureExponent!));
+            _LlamaBase.lib.llama_sampler_init_temp_ext(_temperature!,
+                _temperatureDelta!, _temperatureExponent!));
       }
     }
 
-    if (xtcP != null &&
-        xtcT != null &&
-        minKeepXtc != null &&
-        xtcSeed != null) {
+    if (_xtcP != null &&
+        _xtcT != null &&
+        _minKeepXtc != null &&
+        _xtcSeed != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib
-              .llama_sampler_init_xtc(xtcP!, xtcT!, minKeepXtc!, xtcSeed!));
+              .llama_sampler_init_xtc(_xtcP!, _xtcT!, _minKeepXtc!, _xtcSeed!));
     }
 
-    if (mirostatNVocab != null &&
-        mirostatSeed != null &&
-        mirostatTau != null &&
-        mirostatEta != null &&
-        mirostatM != null) {
+    if (_mirostatNVocab != null &&
+        _mirostatSeed != null &&
+        _mirostatTau != null &&
+        _mirostatEta != null &&
+        _mirostatM != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
-          _LlamaBase.lib.llama_sampler_init_mirostat(mirostatNVocab!,
-              mirostatSeed!, mirostatTau!, mirostatEta!, mirostatM!));
+          _LlamaBase.lib.llama_sampler_init_mirostat(_mirostatNVocab!,
+              _mirostatSeed!, _mirostatTau!, _mirostatEta!, _mirostatM!));
     }
 
-    if (mirostatV2Seed != null &&
-        mirostatV2Tau != null &&
-        mirostatV2Eta != null) {
+    if (_mirostatV2Seed != null &&
+        _mirostatV2Tau != null &&
+        _mirostatV2Eta != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_mirostat_v2(
-              mirostatV2Seed!, mirostatV2Tau!, mirostatV2Eta!));
+              _mirostatV2Seed!, _mirostatV2Tau!, _mirostatV2Eta!));
     }
 
-    if (grammarStr != null && grammarRoot != null) {
+    if (_grammarStr != null && _grammarRoot != null) {
       assert(vocab != null, LlamaException('Vocabulary is required for grammar'));
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_grammar(
               vocab!,
-              grammarStr!.toNativeUtf8().cast<ffi.Char>(),
-              grammarRoot!.toNativeUtf8().cast<ffi.Char>()));
+              _grammarStr!.toNativeUtf8().cast<ffi.Char>(),
+              _grammarRoot!.toNativeUtf8().cast<ffi.Char>()));
     }
 
-    if (penaltiesLastN != null &&
-        penaltiesRepeat != null &&
-        penaltiesFrequency != null &&
-        penaltiesPresent != null) {
+    if (_penaltiesLastN != null &&
+        _penaltiesRepeat != null &&
+        _penaltiesFrequency != null &&
+        _penaltiesPresent != null) {
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
-          _LlamaBase.lib.llama_sampler_init_penalties(penaltiesLastN!,
-              penaltiesRepeat!, penaltiesFrequency!, penaltiesPresent!));
+          _LlamaBase.lib.llama_sampler_init_penalties(_penaltiesLastN!,
+              _penaltiesRepeat!, _penaltiesFrequency!, _penaltiesPresent!));
     }
 
-    if (drySamplerSequenceBreakers != null &&
-        drySamplerNCtxTrain != null &&
-        drySamplerMultiplier != null &&
-        drySamplerDryBase != null &&
-        drySamplerAllowedLength != null) {
+    if (_drySamplerSequenceBreakers != null &&
+        _drySamplerNCtxTrain != null &&
+        _drySamplerMultiplier != null &&
+        _drySamplerDryBase != null &&
+        _drySamplerAllowedLength != null) {
       assert(vocab != null, LlamaException('Vocabulary is required for dry sampler'));
       final sequenceBreakers =
-          calloc<ffi.Pointer<ffi.Char>>(drySamplerSequenceBreakers!.length);
-      for (var i = 0; i < drySamplerSequenceBreakers!.length; i++) {
+          calloc<ffi.Pointer<ffi.Char>>(_drySamplerSequenceBreakers!.length);
+      for (var i = 0; i < _drySamplerSequenceBreakers!.length; i++) {
         sequenceBreakers[i] =
-            drySamplerSequenceBreakers![i].toNativeUtf8().cast<ffi.Char>();
+            _drySamplerSequenceBreakers![i].toNativeUtf8().cast<ffi.Char>();
       }
 
       _LlamaBase.lib.llama_sampler_chain_add(
           sampler,
           _LlamaBase.lib.llama_sampler_init_dry(
               vocab!,
-              drySamplerNCtxTrain!,
-              drySamplerMultiplier!,
-              drySamplerDryBase!,
-              drySamplerAllowedLength!,
-              drySamplerPenaltyLastN!,
+              _drySamplerNCtxTrain!,
+              _drySamplerMultiplier!,
+              _drySamplerDryBase!,
+              _drySamplerAllowedLength!,
+              _drySamplerPenaltyLastN!,
               sequenceBreakers,
-              drySamplerSequenceBreakers!.length));
+              _drySamplerSequenceBreakers!.length));
     }
 
     return sampler;
