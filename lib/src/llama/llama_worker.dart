@@ -4,14 +4,14 @@ class _LlamaWorker {
   final Completer<void> completer = Completer<void>();
   final ReceivePort receivePort = ReceivePort();
   final SendPort sendPort;
-  final LlamaNative llamaNative;
+  final LlamaChat llamaNative;
 
   _LlamaWorker({
     required this.sendPort,
     required ModelParams modelParams,
     required ContextParams contextParams,
     required SamplingParams samplingParams,
-  }) : llamaNative = LlamaNative(
+  }) : llamaNative = LlamaChat(
     modelParams: modelParams,
     contextParams: contextParams,
     samplingParams: samplingParams,

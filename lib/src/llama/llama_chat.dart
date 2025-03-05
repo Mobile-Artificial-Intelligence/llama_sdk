@@ -1,6 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
-class LlamaNative with _LlamaPromptMixin implements _LlamaBase {
+class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
   static final _modelFinalizer =
       Finalizer<ffi.Pointer<llama_model>>(_LlamaBase.lib.llama_free_model);
   static final _contextFinalizer =
@@ -38,7 +38,7 @@ class LlamaNative with _LlamaPromptMixin implements _LlamaBase {
 
   /// A class that initializes and manages a native Llama model.
   ///
-  /// The [LlamaNative] constructor requires [ModelParams] and optionally accepts
+  /// The [LlamaChat] constructor requires [ModelParams] and optionally accepts
   /// [ContextParams] and [SamplingParams]. It initializes the model by loading
   /// the necessary backends and calling the `_initModel` method.
   ///
@@ -55,7 +55,7 @@ class LlamaNative with _LlamaPromptMixin implements _LlamaBase {
   /// - [modelParams]: The parameters required to configure the model.
   /// - [contextParams]: Optional parameters for the context configuration. Defaults to an empty [ContextParams] object.
   /// - [samplingParams]: Optional parameters for the sampling configuration. Defaults to an empty [SamplingParams] object.
-  LlamaNative(
+  LlamaChat(
       {required ModelParams modelParams,
       ContextParams? contextParams,
       SamplingParams samplingParams = const SamplingParams()})
