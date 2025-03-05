@@ -12,9 +12,9 @@ import 'package:flutter/foundation.dart';
 
 import 'src/utility/bindings.dart';
 
-part 'src/llama/llama_isolated.dart';
-part 'src/llama/llama_exception.dart';
 part 'src/llama/llama.dart';
+part 'src/llama/llama_exception.dart';
+part 'src/llama/llama_base.dart';
 part 'src/llama/llama_native.dart';
 part 'src/llama/llama_worker.dart';
 part 'src/mixins/llama_prompt_mixin.dart';

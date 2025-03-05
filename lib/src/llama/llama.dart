@@ -1,64 +1,166 @@
 part of 'package:lcpp/lcpp.dart';
 
-/// An abstract interface class representing a Llama library.
+/// A class that isolates the Llama implementation to run in a separate isolate.
 ///
-/// This class provides a factory constructor to create instances of either
-/// `LlamaIsolated` or `LlamaNative` based on the `isolate` parameter. It also
-/// provides a static getter to load the appropriate dynamic library based on
-/// the platform.
+/// This class implements the [Llama] interface and provides methods to interact
+/// with the Llama model in an isolated environment.
 ///
-/// The `Llama` class has the following members:
+/// The [Llama] constructor initializes the isolate with the provided
+/// model, context, and sampling parameters.
 ///
-/// - `lib`: A static getter that returns an instance of the `llama` library,
-///   loading the appropriate dynamic library based on the platform if it has
-///   not been loaded already.
-/// - `Llama` factory constructor: Creates an instance of either `LlamaIsolated`
-///   or `LlamaNative` based on the `isolate` parameter.
-/// - `prompt`: A method that takes a list of `ChatMessage` objects and returns
-///   a stream of strings.
-/// - `stop`: A method to stop the Llama instance.
-/// - `free`: A method to free the resources used by the Llama instance.
+/// The [prompt] method sends a list of [ChatMessage] to the isolate and returns
+/// a stream of responses. It waits for the isolate to be initialized before
+/// sending the messages.
 ///
-/// Throws an `LlamaException` if the platform is unsupported.
-abstract interface class _LlamaBase {
-  static llama? _lib;
+/// The [stop] method sends a signal to the isolate to stop processing. It waits
+/// for the isolate to be initialized before sending the signal.
+/// 
+/// The [reload] method stops the current operation and reloads the isolate with
+/// the updated parameters.
+class Llama with _LlamaPromptMixin, _LlamaTTSMixin implements _LlamaBase {
+  Completer _initialized = Completer();
+  late StreamController _responseController;
+  Isolate? _isolate;
+  SendPort? _sendPort;
+  ReceivePort? _receivePort;
 
-  /// Returns an instance of the `llama` library.
+  ModelParams _modelParams;
+
+  /// Gets the model parameters.
   ///
-  /// This getter initializes the `_lib` field if it is `null` by loading the
-  /// appropriate dynamic library based on the current platform:
-  ///
-  /// - On Windows, it loads `llama.dll`.
-  /// - On Linux or Android, it loads `libllama.so`.
-  /// - On macOS or iOS, it loads `llama.framework/llama`.
-  ///
-  /// Throws a [LlamaException] if the platform is unsupported.
-  static llama get lib {
-    if (_lib == null) {
-      if (Platform.isWindows) {
-        _lib = llama(ffi.DynamicLibrary.open('llama.dll'));
-      } else if (Platform.isLinux || Platform.isAndroid) {
-        _lib = llama(ffi.DynamicLibrary.open('libllama.so'));
-      } else if (Platform.isMacOS || Platform.isIOS) {
-        _lib = llama(ffi.DynamicLibrary.open('lcpp.framework/lcpp'));
-      } else {
-        throw LlamaException('Unsupported platform');
-      }
-    }
-    return _lib!;
+  /// This property returns the [modelParams] which contains the parameters
+  /// for the model.
+  ModelParams get modelParams => _modelParams;
+
+  set modelParams(ModelParams modelParams) {
+    _modelParams = modelParams;
+    reload();
   }
 
-  /// Stops the current operation or process.
-  ///
-  /// This method should be called to terminate any ongoing tasks or
-  /// processes that need to be halted. It ensures that resources are
-  /// properly released and the system is left in a stable state.
-  void stop();
+  ContextParams _contextParams;
 
-  /// Reloads the current state or configuration.
+  /// Gets the context parameters.
   ///
-  /// This method is used to refresh or reinitialize the state or configuration
-  /// of the object. Implementations should define the specific behavior of
-  /// what needs to be reloaded.
-  void reload();
+  /// This property returns the `_contextParams` which contains the parameters
+  /// for the current context.
+  ContextParams get contextParams => _contextParams;
+
+  set contextParams(ContextParams contextParams) {
+    _contextParams = contextParams;
+    reload();
+  }
+
+  SamplingParams _samplingParams;
+
+  /// Gets the current sampling parameters.
+  ///
+  /// This property returns the [_samplingParams] which contains the
+  /// parameters used for sampling in the llama isolated context.
+  SamplingParams get samplingParams => _samplingParams;
+
+  set samplingParams(SamplingParams samplingParams) {
+    _samplingParams = samplingParams;
+    reload();
+  }
+
+  /// Indicates whether the resource has been freed.
+  ///
+  /// This boolean flag is used to track the state of the resource,
+  /// where `true` means the resource has been freed and `false` means
+  /// it is still in use.
+  bool isFreed = false;
+
+  /// Constructs an instance of [Llama].
+  ///
+  /// Initializes the [Llama] with the provided parameters and sets up
+  /// the listener.
+  ///
+  /// Parameters:
+  /// - [modelParams]: The parameters required for the model. This parameter is required.
+  /// - [contextParams]: The parameters for the context. This parameter is optional and defaults to an instance of [ContextParams].
+  /// - [samplingParams]: The parameters for sampling. This parameter is optional and defaults to an instance of [SamplingParams] with `greedy` set to `true`.
+  Llama(
+      {required ModelParams modelParams,
+      ContextParams? contextParams,
+      SamplingParams samplingParams = const SamplingParams(greedy: true)})
+      : _modelParams = modelParams,
+        _contextParams = contextParams ?? ContextParams(),
+        _samplingParams = samplingParams;
+
+  void _listener() async {
+    _receivePort = ReceivePort();
+
+    final isolateParams = _LlamaWorkerParams(
+      modelParams: _modelParams,
+      contextParams: _contextParams,
+      samplingParams: _samplingParams,
+      sendPort: _receivePort!.sendPort
+    );
+
+    _isolate = await Isolate.spawn(_LlamaWorker.entry, isolateParams.toRecord());
+
+    await for (final data in _receivePort!) {
+      if (data is SendPort) {
+        _sendPort = data;
+        _initialized.complete();
+      } 
+      else if (data is String) {
+        _responseController.add(data);
+      } 
+      else if (data is Uint8List) {
+        _responseController.add(data);
+      }
+      else if (data == null) {
+        _responseController.close();
+      }
+    }
+  }
+
+  @override
+  Stream<String> prompt(List<ChatMessage> messages) async* {
+    if (isFreed) {
+      throw LlamaException('LlamaIsolated has been freed');
+    }
+
+    if (!_initialized.isCompleted) {
+      _listener();
+      await _initialized.future;
+    }
+
+    _responseController = StreamController<String>();
+
+    _sendPort!.send(messages._toRecords());
+
+    await for (final response in _responseController.stream) {
+      yield response;
+    }
+  }
+
+  @override
+  Future<Uint8List> tts(String text) async {
+    if (isFreed) {
+      throw LlamaException('LlamaIsolated has been freed');
+    }
+
+    if (!_initialized.isCompleted) {
+      _listener();
+      await _initialized.future;
+    }
+
+    _responseController = StreamController<Uint8List>();
+
+    _sendPort!.send(text);
+
+    return await _responseController.stream.first;
+  }
+
+  @override
+  void stop() {
+    _isolate?.kill(priority: Isolate.immediate);
+    _receivePort?.close();
+    _initialized = Completer();
+  }
+
+  @override
+  void reload() => stop();
 }
