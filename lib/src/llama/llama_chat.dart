@@ -1,13 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
-  static final _modelFinalizer =
-      Finalizer<ffi.Pointer<llama_model>>(_LlamaBase.lib.llama_free_model);
-  static final _contextFinalizer =
-      Finalizer<ffi.Pointer<llama_context>>(_LlamaBase.lib.llama_free);
-  static final _samplerFinalizer =
-      Finalizer<ffi.Pointer<llama_sampler>>(_LlamaBase.lib.llama_sampler_free);
-
   ffi.Pointer<llama_model> _model = ffi.nullptr;
   ffi.Pointer<llama_context> _context = ffi.nullptr;
   ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;
@@ -81,7 +74,7 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
         .llama_load_model_from_file(nativeModelPath, nativeModelParams);
     assert(_model != ffi.nullptr, LlamaException('Failed to load model'));
 
-    _modelFinalizer.attach(this, _model);
+    _LlamaBase.modelFinalizer.attach(this, _model);
 
     _initContext();
     _initSampler();
@@ -99,7 +92,7 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
     _context = _LlamaBase.lib.llama_init_from_model(_model, nativeContextParams);
     assert(_context != ffi.nullptr, LlamaException('Failed to initialize context'));
 
-    _contextFinalizer.attach(this, _context);
+    _LlamaBase.contextFinalizer.attach(this, _context);
   }
 
   void _initSampler() {
@@ -113,7 +106,7 @@ class LlamaChat with _LlamaPromptMixin implements _LlamaBase {
     _sampler = _samplingParams.toNative(vocab);
     assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
 
-    _samplerFinalizer.attach(this, _sampler);
+    _LlamaBase.samplerFinalizer.attach(this, _sampler);
   }
 
   @override

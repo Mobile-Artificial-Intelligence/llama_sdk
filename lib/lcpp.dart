@@ -14,6 +14,7 @@ import 'src/utility/bindings.dart';
 
 part 'src/llama/llama.dart';
 part 'src/llama/llama_exception.dart';
+part 'src/llama/llama_tts.dart';
 part 'src/llama/llama_base.dart';
 part 'src/llama/llama_chat.dart';
 part 'src/llama/llama_worker.dart';

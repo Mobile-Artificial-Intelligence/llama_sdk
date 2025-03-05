@@ -21,6 +21,13 @@ part of 'package:lcpp/lcpp.dart';
 ///
 /// Throws an `LlamaException` if the platform is unsupported.
 abstract interface class _LlamaBase {
+  static final modelFinalizer =
+      Finalizer<ffi.Pointer<llama_model>>(_LlamaBase.lib.llama_free_model);
+  static final contextFinalizer =
+      Finalizer<ffi.Pointer<llama_context>>(_LlamaBase.lib.llama_free);
+  static final samplerFinalizer =
+      Finalizer<ffi.Pointer<llama_sampler>>(_LlamaBase.lib.llama_sampler_free);
+
   static llama? _lib;
 
   /// Returns an instance of the `llama` library.
