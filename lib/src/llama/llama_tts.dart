@@ -219,6 +219,19 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       codes[i] = ((codes[i] as int) - 151672) as llama_token;
     }
 
+    batch = _LlamaBase.lib.llama_batch_init(codes.length, 0, 1);
+
+    for (int i = 0; i < codes.length; i++) {
+      _batchAdd(batch, codes[i], i as llama_pos, [0], true);
+    }
+
+    assert(_LlamaBase.lib.llama_decode(_ctsContext, batch) == 0, LlamaException('Failed to decode'));
+
+    _LlamaBase.lib.llama_synchronize(_ctsContext);
+
+    final nEmbd = _LlamaBase.lib.llama_model_n_embd(_ctsModel);
+    final embd = _LlamaBase.lib.llama_get_embeddings(_ctsContext);
+
     // TODO
     throw UnimplementedError();
   }
