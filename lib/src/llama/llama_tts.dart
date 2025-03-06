@@ -246,6 +246,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     const nWin = 1280;
     const nPad = (nWin - nHop) ~/ 2;
     final nOut = (nCodes - 1) * nHop + nWin;
+    final nThread = _ttsParams.nThreads;
 
     List<double> hann = [];
 
@@ -265,6 +266,32 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
         eList[k * nCodes + l] = embd[l * embd.length + k];
       }
     }
+
+    for (int k = 0; k < embd.length/2; ++k) {
+      for (int l = 0; l < nCodes; ++l) {
+        double mag = eList[k * nCodes + l];
+        double phi = eList[(k + embd.length ~/ 2) * nCodes + l];
+
+        mag = math.exp(mag);
+
+        if (mag > 1e2) {
+          mag = 1e2;
+        }
+
+        sList[k * (nCodes + l) + 0] = mag * math.cos(phi);
+        sList[k * (nCodes + l) + 1] = mag * math.sin(phi);
+      }
+    }
+
+    for (int l = 0; l < nCodes; ++l) {
+      for (int k = 0; k < embd.length /2; ++k) {
+        stList[l* embd.length + 2 * k + 0] = sList[2 * (k * nCodes + l) + 0];
+        stList[l* embd.length + 2 * k + 1] = sList[2 * (k * nCodes + l) + 1];
+      }
+    }
+
+    final res = List.filled(nCodes * nFft, 0.0);
+    final hann2 = List.filled(nCodes * nFft, 0.0);
 
     // TODO
     throw UnimplementedError();
