@@ -140,16 +140,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     List<int> seqIds = List<int>.generate(nParallel, (i) => i);
 
     for (int i = 0; i < nPromptTokens; ++i) {
-      batch.token[batch.n_tokens] = promptTokens[i];
-      batch.pos[batch.n_tokens] = i;
-      batch.logits[batch.n_tokens] = 0;
-      batch.n_seq_id[batch.n_tokens] = nParallel;
-
-      for (int j = 0; j < nParallel; ++j) {
-        batch.seq_id[batch.n_tokens][j] = seqIds[j];
-      }
-
-      batch.n_tokens++;
+      _batchAdd(batch, promptTokens[i] as llama_token, i as llama_pos, seqIds, false);
     }
 
     assert(batch.n_tokens == nPromptTokens, LlamaException('Failed to initialize batch'));
@@ -198,11 +189,51 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
         _LlamaBase.lib.llama_sampler_accept(_samplers[i], newTokenId.value);
 
         codes.add(newTokenId.value as llama_token);
+
+        if (_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value) || nDecode == nPredict) {
+          // Mark the stream as finished
+          iBatch[i] = -1;
+          continue;
+        }
+
+        iBatch[i] = batch.n_tokens;
+
+        _batchAdd(batch, newTokenId.value as llama_token, nPast as llama_pos, [i], true);
       }
+
+      if (batch.n_tokens == 0) {
+        break;
+      }
+
+      nDecode++;
+      nPast++;
+
+      assert(_LlamaBase.lib.llama_decode(_ttcContext, batch) == 0, LlamaException('Failed to decode'));
+    }
+
+    _LlamaBase.lib.llama_batch_free(batch);
+
+    codes.removeWhere((code) => code as int < 151672 || code as int > 155772);
+
+    for (int i = 0; i < codes.length; i++) {
+      codes[i] = ((codes[i] as int) - 151672) as llama_token;
     }
 
     // TODO
     throw UnimplementedError();
+  }
+
+  void _batchAdd(llama_batch batch, llama_token id, llama_pos pos, List<int> seqIds, bool logits) {
+    batch.token[batch.n_tokens] = id as int;
+    batch.pos[batch.n_tokens] = pos as int;
+    batch.logits[batch.n_tokens] = logits ? 1 : 0;
+    batch.n_seq_id[batch.n_tokens] = seqIds.length;
+
+    for (int j = 0; j < nParallel; ++j) {
+      batch.seq_id[batch.n_tokens][j] = seqIds[j];
+    }
+
+    batch.n_tokens++;
   }
 
   List<llama_token> _prepareGuideTokens(String prompt) {
