@@ -120,7 +120,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     calloc.free(promptPtr);
 
-    const nParallel = 1;
+    const nParallel = 1; // TODO: Expose this as a parameter
 
     llama_batch batch = _LlamaBase.lib.llama_batch_init(math.max(nPromptTokens, nParallel), 0, nParallel);
 
@@ -147,6 +147,28 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     assert(_LlamaBase.lib.llama_decode(_ttcContext, batch) == 0, LlamaException('Failed to decode'));
 
     _LlamaBase.lib.llama_synchronize(_ttcContext);
+
+    List<int> iBatch = List.filled(nParallel, batch.n_tokens - 1);
+
+    int nPast = batch.n_tokens;
+    int nDecode = 0;
+
+    bool nextTokenUsesGuideToken = true;
+
+    const nPredict = 4096; // TODO: Expose this as a parameter
+
+    while (nDecode <= nPredict) {
+      batch.n_tokens = 0;
+
+      for (int i = 0; i < nParallel; ++i) {
+        if (iBatch[i] < 0) {
+          // The stream is already finished
+          continue;
+        }
+
+        // TODO
+      }
+    }
 
     // TODO
     throw UnimplementedError();
