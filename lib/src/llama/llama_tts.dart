@@ -230,17 +230,15 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     _LlamaBase.lib.llama_synchronize(_ctsContext);
 
     final nEmbd = _LlamaBase.lib.llama_model_n_embd(_ctsModel);
-    final embdPtr = _LlamaBase.lib.llama_get_embeddings(_ctsContext);
+    final embd = _LlamaBase.lib.llama_get_embeddings(_ctsContext);
 
-    List<double> embd = List.generate(nEmbd, (i) => embdPtr[i]);
-
-    final audio = _embdToAudio(embd, codes.length);
+    final audio = _embdToAudio(embd, nEmbd, codes.length);
 
     // TODO
     throw UnimplementedError();
   }
 
-  List<double> _embdToAudio(List<double> embd, int nCodes) {
+  List<double> _embdToAudio(ffi.Pointer<ffi.Float> embd, int nEmbd, int nCodes) {
     const nFft = 1280;
     const nHop = 320;
     const nWin = 1280;
@@ -255,22 +253,22 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       hann.add(0.5 * (1 - math.cos(x)));
     }
 
-    final nSpec = embd.length ~/ nCodes;
+    final nSpec = nEmbd ~/ nCodes;
 
     final eList = List.filled(nSpec, 0.0);
     final sList = List.filled(nSpec, 0.0);
     final stList = List.filled(nSpec, 0.0);
 
     for (int l = 0; l < nCodes; ++l) {
-      for (int k = 0; k < embd.length; ++k) {
-        eList[k * nCodes + l] = embd[l * embd.length + k];
+      for (int k = 0; k < nEmbd; ++k) {
+        eList[k * nCodes + l] = embd[l * nEmbd + k];
       }
     }
 
-    for (int k = 0; k < embd.length/2; ++k) {
+    for (int k = 0; k < nEmbd / 2; ++k) {
       for (int l = 0; l < nCodes; ++l) {
         double mag = eList[k * nCodes + l];
-        double phi = eList[(k + embd.length ~/ 2) * nCodes + l];
+        double phi = eList[(k + nEmbd ~/ 2) * nCodes + l];
 
         mag = math.exp(mag);
 
@@ -284,9 +282,9 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     }
 
     for (int l = 0; l < nCodes; ++l) {
-      for (int k = 0; k < embd.length /2; ++k) {
-        stList[l* embd.length + 2 * k + 0] = sList[2 * (k * nCodes + l) + 0];
-        stList[l* embd.length + 2 * k + 1] = sList[2 * (k * nCodes + l) + 1];
+      for (int k = 0; k < nEmbd /2; ++k) {
+        stList[l* nEmbd + 2 * k + 0] = sList[2 * (k * nCodes + l) + 0];
+        stList[l* nEmbd + 2 * k + 1] = sList[2 * (k * nCodes + l) + 1];
       }
     }
 
