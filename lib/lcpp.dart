@@ -27,3 +27,5 @@ part 'src/params/llama_tts_params.dart';
 part 'src/utility/chat_message.dart';
 part 'src/params/worker_params.dart';
 part 'src/outetts/voice.dart';
+part 'src/utility/num_2_words.dart';
+part 'src/utility/wav.dart';

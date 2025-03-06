@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+part of 'package:lcpp/lcpp.dart';
 
 class WAV {
   int chunkSize;
