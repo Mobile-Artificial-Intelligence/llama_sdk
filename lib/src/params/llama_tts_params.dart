@@ -109,7 +109,7 @@ class LlamaTtsParams extends LlamaParams {
       nUBatch: map['n_ubatch'],
       nSeqMax: map['n_seq_max'],
       nThreads: map['n_threads'],
-      nThreadsBatch: map['nThreadsBatch'],
+      nThreadsBatch: map['n_threads_batch'],
       ropeScalingType: map['rope_scaling_type'] != null ? RopeScalingType.fromString(map['rope_scaling_type']) : null,
       poolingType: map['pooling_type'] != null ? PoolingType.fromString(map['pooling_type']) : null,
       attentionType: map['attention_type'] != null ? AttentionType.fromString(map['attention_type']) : null,
