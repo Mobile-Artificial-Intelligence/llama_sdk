@@ -3,6 +3,7 @@ part of 'package:lcpp/lcpp.dart';
 class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   static const nParallel = 1; // TODO: Expose this as a parameter
   static const nPredict = 4096; // TODO: Expose this as a parameter
+  static const useGuideTokens = true; // TODO: Expose this as a parameter
 
   LlamaTTS(LlamaTtsParams ttsParams) 
     : _ttsParams = ttsParams {
@@ -105,8 +106,13 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final audioData = _ttsParams.voice._getFormattedData(version);
     final processedText = _processText(text);
     final prompt = '<|im_start|>\n$processedText$audioText<|text_end|>\n$audioData';
-    final guideTokens = _prepareGuideTokens(processedText); // TODO: Make this conditional
     final promptPtr = prompt.toNativeUtf8().cast<ffi.Char>();
+
+    List<llama_token> guideTokens = [];
+
+    if (useGuideTokens) {
+      guideTokens = _prepareGuideTokens(processedText);
+    }
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
 
@@ -164,6 +170,8 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     ffi.Pointer<llama_token> newTokenId = calloc<llama_token>(1);
 
+    List<llama_token> codes = [];
+
     while (nDecode <= nPredict) {
       batch.n_tokens = 0;
 
@@ -174,7 +182,22 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
         }
 
         newTokenId.value = _LlamaBase.lib.llama_sampler_sample(_samplers[i], _ttcContext, iBatch[i]);
-        // TODO
+        
+        if (
+          guideTokens.isNotEmpty && 
+          nextTokenUsesGuideToken &&
+          !_LlamaBase.lib.llama_vocab_is_control(vocab, newTokenId.value) &&
+          !_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value)
+        ) {
+          final guideToken = guideTokens.removeAt(0);
+          newTokenId.value = guideToken as int;
+        }
+
+        nextTokenUsesGuideToken = newTokenId.value == 198;
+
+        _LlamaBase.lib.llama_sampler_accept(_samplers[i], newTokenId.value);
+
+        codes.add(newTokenId.value as llama_token);
       }
     }
 
