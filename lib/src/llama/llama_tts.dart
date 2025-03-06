@@ -38,11 +38,11 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     _ttcModel = _LlamaBase.lib
         .llama_load_model_from_file(nativeTtcModelPath, nativeModelParams);
-    assert(_ttcModel != ffi.nullptr, LlamaException('Failed to load model'));
+    assert(_ttcModel != ffi.nullptr, LlamaException('Failed to load TTC model'));
 
     _ctsModel = _LlamaBase.lib
         .llama_load_model_from_file(nativeCtsModelPath, nativeModelParams);
-    assert(_ctsModel != ffi.nullptr, LlamaException('Failed to load model'));
+    assert(_ctsModel != ffi.nullptr, LlamaException('Failed to load CTS model'));
 
     _LlamaBase.modelFinalizer.attach(this, _ttcModel);
     _LlamaBase.modelFinalizer.attach(this, _ctsModel);
@@ -66,10 +66,10 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     }
 
     _ttcContext = _LlamaBase.lib.llama_init_from_model(_ttcModel, nativeContextParams);
-    assert(_ttcContext != ffi.nullptr, LlamaException('Failed to initialize context'));
+    assert(_ttcContext != ffi.nullptr, LlamaException('Failed to initialize TTC context'));
 
     _ctsContext = _LlamaBase.lib.llama_init_from_model(_ctsModel, nativeContextParams);
-    assert(_ctsContext != ffi.nullptr, LlamaException('Failed to initialize context'));
+    assert(_ctsContext != ffi.nullptr, LlamaException('Failed to initialize CTS context'));
 
     _LlamaBase.contextFinalizer.attach(this, _ttcContext);
     _LlamaBase.contextFinalizer.attach(this, _ctsContext);
