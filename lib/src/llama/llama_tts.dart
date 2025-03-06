@@ -283,8 +283,8 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     for (int l = 0; l < nCodes; ++l) {
       for (int k = 0; k < nEmbd /2; ++k) {
-        stList[l* nEmbd + 2 * k + 0] = sList[2 * (k * nCodes + l) + 0];
-        stList[l* nEmbd + 2 * k + 1] = sList[2 * (k * nCodes + l) + 1];
+        stList[l * nEmbd + 2 * k + 0] = sList[2 * (k * nCodes + l) + 0];
+        stList[l * nEmbd + 2 * k + 1] = sList[2 * (k * nCodes + l) + 1];
       }
     }
 
@@ -293,6 +293,52 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     // TODO
     throw UnimplementedError();
+  }
+
+  // Inverse Real FFT (IRFFT) Implementation
+  void _irfft(int nFft, List<double> input, List<double> output) {
+    int n = nFft ~/ 2 + 1;
+    List<double> real = List.filled(nFft, 0.0);
+    List<double> imag = List.filled(nFft, 0.0);
+
+    // Restore real & imaginary components
+    for (int k = 0; k < n; k++) {
+      real[k] = input[2 * k];
+      imag[k] = input[2 * k + 1];
+    }
+
+    // Perform inverse FFT (Cooley-Tukey Algorithm)
+    for (int i = 0; i < nFft; i++) {
+      double sumReal = 0.0;
+      for (int k = 0; k < n; k++) {
+        double angle = 2 * math.pi * k * i / nFft;
+        sumReal += real[k] * math.cos(angle) - imag[k] * math.sin(angle);
+      }
+      output[i] = sumReal / nFft; // Normalize output
+    }
+  }
+
+  // Overlap-add method for reconstructing audio
+  void _fold(List<double> input, int nOut, int nWin, int nHop, int nPad, List<double> output) {
+    List<double> sumWeights = List.filled(nOut, 0.0);
+    output.fillRange(0, nOut, 0.0);
+
+    for (int i = 0; i < input.length ~/ nWin; i++) {
+      int offset = i * nHop;
+      for (int j = 0; j < nWin; j++) {
+        if (offset + j < nOut) {
+          output[offset + j] += input[i * nWin + j];
+          sumWeights[offset + j] += 1.0;
+        }
+      }
+    }
+
+    // Normalize by overlap factor
+    for (int i = 0; i < nOut; i++) {
+      if (sumWeights[i] > 0) {
+        output[i] /= sumWeights[i];
+      }
+    }
   }
 
   void _batchAdd(llama_batch batch, llama_token id, llama_pos pos, List<int> seqIds, bool logits) {
