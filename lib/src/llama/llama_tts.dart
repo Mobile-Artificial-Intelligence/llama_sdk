@@ -105,7 +105,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final audioData = _ttsParams.voice._getFormattedData(version);
     final processedText = _processText(text);
     final prompt = '<|im_start|>\n$processedText$audioText<|text_end|>\n$audioData';
-    final guideTokens = _prepareGuideTokens(processedText);
+    final guideTokens = _prepareGuideTokens(processedText); // TODO: Make this conditional
     final promptPtr = prompt.toNativeUtf8().cast<ffi.Char>();
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
