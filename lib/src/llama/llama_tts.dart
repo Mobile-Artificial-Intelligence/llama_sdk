@@ -105,6 +105,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final audioData = _ttsParams.voice._getFormattedData(version);
     final processedText = _processText(text);
     final prompt = '<|im_start|>\n$processedText$audioText<|text_end|>\n$audioData';
+    final guideTokens = _prepareGuideTokens(processedText);
     final promptPtr = prompt.toNativeUtf8().cast<ffi.Char>();
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
@@ -179,6 +180,70 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     // TODO
     throw UnimplementedError();
+  }
+
+  List<llama_token> _prepareGuideTokens(String prompt) {
+    final version = _OuteTtsVersion.getVersion(_ttcModel);
+    final delimiter = version == _OuteTtsVersion.v3 ? '<|space|>' : '<|text_sep|>';
+
+    final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
+
+    List<llama_token> result = [];
+    int start = 0;
+    int end = prompt.indexOf(delimiter);
+
+    const bufferSize = 256;
+    ffi.Pointer<llama_token> buffer = calloc<llama_token>(bufferSize);
+
+    int nTokens =_LlamaBase.lib.llama_tokenize(
+      vocab, 
+      '\n'.toNativeUtf8().cast<ffi.Char>(), 
+      1, 
+      buffer, 
+      bufferSize, 
+      false, 
+      true
+    );
+
+    assert(nTokens > 0, LlamaException('Failed to tokenize'));
+
+    result.add(buffer.value as llama_token);
+
+    while (end != -1) {
+      nTokens =_LlamaBase.lib.llama_tokenize(
+        vocab, 
+        prompt.substring(start, end).toNativeUtf8().cast<ffi.Char>(), 
+        end - start, 
+        buffer, 
+        bufferSize, 
+        false, 
+        true
+      );
+
+      assert(nTokens > 0, LlamaException('Failed to tokenize'));
+
+      result.add(buffer.value as llama_token);
+      start = end + delimiter.length;
+      end = prompt.indexOf(delimiter, start);
+    }
+
+    nTokens =_LlamaBase.lib.llama_tokenize(
+      vocab, 
+      prompt.substring(start).toNativeUtf8().cast<ffi.Char>(), 
+      prompt.length - start, 
+      buffer, 
+      bufferSize, 
+      false, 
+      true
+    );
+
+    if (nTokens > 0) {
+      result.add(buffer.value as llama_token);
+    }
+
+    calloc.free(buffer);
+
+    return result;
   }
 
   List<String> _splitIntoThrees(String str) {
