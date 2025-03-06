@@ -1,6 +1,9 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
+  static const nParallel = 1; // TODO: Expose this as a parameter
+  static const nPredict = 4096; // TODO: Expose this as a parameter
+
   LlamaTTS(LlamaTtsParams ttsParams) 
     : _ttsParams = ttsParams {
     _LlamaBase.lib.ggml_backend_load_all();
@@ -13,7 +16,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   ffi.Pointer<llama_model> _ctsModel = ffi.nullptr;
   ffi.Pointer<llama_context> _ttcContext = ffi.nullptr;
   ffi.Pointer<llama_context> _ctsContext = ffi.nullptr;
-  ffi.Pointer<llama_sampler> _sampler = ffi.nullptr;
+  List<ffi.Pointer<llama_sampler>> _samplers = [];
 
   LlamaTtsParams _ttsParams;
 
@@ -76,15 +79,20 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   }
 
   void _initSampler() {
-    if (_sampler != ffi.nullptr) {
-      _LlamaBase.lib.llama_sampler_free(_sampler);
+    if (_samplers.isNotEmpty) {
+      for (final sampler in _samplers) {
+        _LlamaBase.lib.llama_sampler_free(sampler);
+      }
     }
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
-    _sampler = _ttsParams.getSampler(vocab);
-    assert(_sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
-
-    _LlamaBase.samplerFinalizer.attach(this, _sampler);
+    
+    for (int i = 0; i < nParallel; i++) {
+      final sampler = _ttsParams.getSampler(vocab);
+      assert(sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
+      _samplers.add(sampler);
+      _LlamaBase.samplerFinalizer.attach(this, sampler);
+    }
   }
 
   @override
@@ -120,8 +128,6 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     calloc.free(promptPtr);
 
-    const nParallel = 1; // TODO: Expose this as a parameter
-
     llama_batch batch = _LlamaBase.lib.llama_batch_init(math.max(nPromptTokens, nParallel), 0, nParallel);
 
     List<int> seqIds = List<int>.generate(nParallel, (i) => i);
@@ -155,7 +161,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     bool nextTokenUsesGuideToken = true;
 
-    const nPredict = 4096; // TODO: Expose this as a parameter
+    ffi.Pointer<llama_token> newTokenId = calloc<llama_token>(1);
 
     while (nDecode <= nPredict) {
       batch.n_tokens = 0;
@@ -166,6 +172,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
           continue;
         }
 
+        newTokenId.value = _LlamaBase.lib.llama_sampler_sample(_samplers[i], _ttcContext, iBatch[i]);
         // TODO
       }
     }
