@@ -253,7 +253,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       hann.add(0.5 * (1 - math.cos(x)));
     }
 
-    final nSpec = nEmbd ~/ nCodes;
+    final nSpec = nEmbd * nCodes;
 
     final eList = List.filled(nSpec, 0.0);
     final sList = List.filled(nSpec, 0.0);
