@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'dart:ffi' as ffi;
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:math' as math;
 
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';

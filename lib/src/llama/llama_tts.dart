@@ -118,6 +118,36 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       throw LlamaException('Failed to tokenize');
     }
 
+    calloc.free(promptPtr);
+
+    const nParallel = 1;
+
+    llama_batch batch = _LlamaBase.lib.llama_batch_init(math.max(nPromptTokens, nParallel), 0, nParallel);
+
+    List<int> seqIds = List<int>.generate(nParallel, (i) => i);
+
+    for (int i = 0; i < nPromptTokens; ++i) {
+      batch.token[batch.n_tokens] = promptTokens[i];
+      batch.pos[batch.n_tokens] = i;
+      batch.logits[batch.n_tokens] = 0;
+      batch.n_seq_id[batch.n_tokens] = nParallel;
+
+      for (int j = 0; j < nParallel; ++j) {
+        batch.seq_id[batch.n_tokens][j] = seqIds[j];
+      }
+
+      batch.n_tokens++;
+    }
+
+    assert(batch.n_tokens == nPromptTokens, LlamaException('Failed to initialize batch'));
+
+    // llama_decode will output logits only for the last token of the prompt
+    batch.logits[batch.n_tokens - 1] = 1;
+
+    assert(_LlamaBase.lib.llama_decode(_ttcContext, batch) == 0, LlamaException('Failed to decode'));
+
+    _LlamaBase.lib.llama_synchronize(_ttcContext);
+
     // TODO
     throw UnimplementedError();
   }
