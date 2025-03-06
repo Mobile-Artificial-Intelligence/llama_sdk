@@ -230,7 +230,41 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     _LlamaBase.lib.llama_synchronize(_ctsContext);
 
     final nEmbd = _LlamaBase.lib.llama_model_n_embd(_ctsModel);
-    final embd = _LlamaBase.lib.llama_get_embeddings(_ctsContext);
+    final embdPtr = _LlamaBase.lib.llama_get_embeddings(_ctsContext);
+
+    List<double> embd = List.generate(nEmbd, (i) => embdPtr[i]);
+
+    final audio = _embdToAudio(embd, codes.length);
+
+    // TODO
+    throw UnimplementedError();
+  }
+
+  List<double> _embdToAudio(List<double> embd, int nCodes) {
+    const nFft = 1280;
+    const nHop = 320;
+    const nWin = 1280;
+    const nPad = (nWin - nHop) ~/ 2;
+    final nOut = (nCodes - 1) * nHop + nWin;
+
+    List<double> hann = [];
+
+    for (int i = 0; i < nFft; i++) {
+      final x = i * math.pi / (nFft - 1);
+      hann.add(0.5 * (1 - math.cos(x)));
+    }
+
+    final nSpec = embd.length ~/ nCodes;
+
+    final eList = List.filled(nSpec, 0.0);
+    final sList = List.filled(nSpec, 0.0);
+    final stList = List.filled(nSpec, 0.0);
+
+    for (int l = 0; l < nCodes; ++l) {
+      for (int k = 0; k < embd.length; ++k) {
+        eList[k * nCodes + l] = embd[l * embd.length + k];
+      }
+    }
 
     // TODO
     throw UnimplementedError();
