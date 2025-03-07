@@ -54,25 +54,25 @@ jobs:
 
       - name: Sign macOS App
         run: |
-          codesign --deep --force --verbose --options runtime --timestamp --sign "${{ secrets.APPLE_DEVELOPER_ID_APPLICATION }}" example/build/macos/Build/Products/Release/lcpp_example.app
+          codesign --deep --force --verbose --options runtime --timestamp --sign "${{ secrets.APPLE_DEVELOPER_ID_APPLICATION }}" example/build/macos/Build/Products/Release/llama_example.app
 
-          find example/build/macos/Build/Products/Release/lcpp_example.app -type d -name "*.framework" -exec codesign --force --verbose --options runtime --timestamp --sign "${{ secrets.APPLE_DEVELOPER_ID_APPLICATION }}" {} \;
-          find example/build/macos/Build/Products/Release/lcpp_example.app -type f -exec codesign --force --verbose --options runtime --timestamp --sign "${{ secrets.APPLE_DEVELOPER_ID_APPLICATION }}" {} \;
+          find example/build/macos/Build/Products/Release/llama_example.app -type d -name "*.framework" -exec codesign --force --verbose --options runtime --timestamp --sign "${{ secrets.APPLE_DEVELOPER_ID_APPLICATION }}" {} \;
+          find example/build/macos/Build/Products/Release/llama_example.app -type f -exec codesign --force --verbose --options runtime --timestamp --sign "${{ secrets.APPLE_DEVELOPER_ID_APPLICATION }}" {} \;
 
-          codesign --verify --deep --strict --verbose example/build/macos/Build/Products/Release/lcpp_example.app
+          codesign --verify --deep --strict --verbose example/build/macos/Build/Products/Release/llama_example.app
 
       - name: Compress macOS App
         run: |
-          ditto -c -k --sequesterRsrc --keepParent "example/build/macos/Build/Products/Release/lcpp_example.app" "lcpp_example.zip" 
+          ditto -c -k --sequesterRsrc --keepParent "example/build/macos/Build/Products/Release/llama_example.app" "llama_example.zip" 
 
       - name: Notarize macOS App
         run: |
           xcrun notarytool store-credentials --apple-id ${{ secrets.APPLE_ID }} --password ${{ secrets.APPLE_APPLICATION_SPECIFIC_PASSWORD }} --team-id ${{ secrets.APPLE_TEAM_ID }} --validate notorization_profile
-          xcrun notarytool submit --keychain-profile "notorization_profile" --progress --wait lcpp_example.zip
+          xcrun notarytool submit --keychain-profile "notorization_profile" --progress --wait llama_example.zip
 
       - name: Staple Notarization Ticket
         run: |
-          xcrun stapler staple "example/build/macos/Build/Products/Release/lcpp_example.app"
+          xcrun stapler staple "example/build/macos/Build/Products/Release/llama_example.app"
 
       - name: Create DMG
         run: ./scripts/create-dmg.sh ${{ matrix.os == 'macos-13' && 'x86_64' || 'arm64' }}
@@ -80,5 +80,5 @@ jobs:
       - name: Upload macOS Build
         uses: actions/upload-artifact@v4
         with:
-          name: lcpp_example-macos-${{ matrix.os == 'macos-13' && 'x86_64' || 'arm64' }}
+          name: llama_example-macos-${{ matrix.os == 'macos-13' && 'x86_64' || 'arm64' }}
           path: dmg

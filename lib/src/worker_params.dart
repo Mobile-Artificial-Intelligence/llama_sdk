@@ -1,4 +1,4 @@
-part of 'package:lcpp/lcpp.dart';
+part of 'package:llama/llama.dart';
 
 typedef _LlamaWorkerRecord = (SendPort, String);
 

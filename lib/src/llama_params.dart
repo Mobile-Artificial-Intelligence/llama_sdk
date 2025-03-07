@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-part of 'package:lcpp/lcpp.dart';
+part of 'package:llama/llama.dart';
 
 /// A class that represents the parameters for the Llama model.
 class LlamaParams extends ChangeNotifier {

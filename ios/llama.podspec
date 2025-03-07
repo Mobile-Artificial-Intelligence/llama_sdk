@@ -3,17 +3,23 @@
 # Run `pod lib lint llama.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'lcpp'
-  s.version          = '0.1.8'
-  s.summary          = 'lcpp is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid)'
+  s.name             = 'llama'
+  s.version          = '0.0.1'
+  s.summary          = 'llama is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid)'
   s.description      = <<-DESC
-lcpp is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid)
+llama is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid)
                        DESC
-  s.homepage         = 'https://github.com/Mobile-Artificial-Intelligence/lcpp'
+  s.homepage         = 'https://github.com/Mobile-Artificial-Intelligence/llama'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Dane Madsen' => 'dane_madsen@hotmail.com' }
-  s.dependency 'FlutterMacOS'
+  s.dependency 'Flutter'
+  s.platform = :ios, '13.0'
+
+  # Flutter.framework does not contain a i386 slice.
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version = '5.0'
+  # n.b. above is standard flutter (modulo missing s.source_files)
+
 
   # This will ensure the source files in Classes/ are included in the native
   # builds of apps using this FFI plugin. Podspec does not support relative
@@ -59,7 +65,6 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
                    'llama_cpp/ggml/src/ggml-metal/*.m',
                    '!llama_cpp/common/build-info.cpp'
   s.frameworks = 'Accelerate', 'Foundation', 'Metal', 'MetalKit'
-  s.platform = :osx, '10.15'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'USER_HEADER_SEARCH_PATHS' => [

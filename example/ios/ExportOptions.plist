@@ -6,7 +6,7 @@
 	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.example.lcpp</key>
+		<key>com.example.llama</key>
 		<string>App-Store Distribution</string>
 	</dict>
 	<key>signingCertificate</key>

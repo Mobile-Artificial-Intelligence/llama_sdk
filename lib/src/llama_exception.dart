@@ -1,4 +1,4 @@
-part of 'package:lcpp/lcpp.dart';
+part of 'package:llama/llama.dart';
 
 /// A custom exception class for handling errors specific to the Llama application.
 ///

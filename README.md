@@ -2,19 +2,19 @@
   <img alt="logo" height="200px" src="https://raw.githubusercontent.com/Mobile-Artificial-Intelligence/maid/refs/heads/main/images/logo.png">
 </div>
 
-# lcpp
+# llama
 
 <div align="center">
 
-[![Build Android](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-android.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-android.yml)
-[![Build iOS](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-ios.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-ios.yml)
-[![Build Linux](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-linux.yml)
-[![Build MacOS](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-macos.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-macos.yml)
-[![Build Windows](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/lcpp/actions/workflows/build-windows.yml)
+[![Build Android](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-android.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-android.yml)
+[![Build iOS](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-ios.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-ios.yml)
+[![Build Linux](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-linux.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-linux.yml)
+[![Build MacOS](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-macos.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-macos.yml)
+[![Build Windows](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-windows.yml/badge.svg)](https://github.com/Mobile-Artificial-Intelligence/llama/actions/workflows/build-windows.yml)
 
 </div>
 
-lcpp is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid)
+llama is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid)
 
 ## Features
 
@@ -23,17 +23,17 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
 
 ## Getting started
 
-To use this package, add `lcpp` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+To use this package, add `llama` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
 ```yaml
 dependencies:
-  lcpp: ^0.2.0
+  llama: ^0.2.0
 ```
 
 then you can import llama in your Dart code
 
 ```dart
-import 'package:lcpp/lcpp.dart';
+import 'package:llama/llama.dart';
 ```
 
 ## Usage

@@ -9,10 +9,10 @@ if [ -z "$1" ]; then
 fi
 
 ARCH="$1"
-APP_NAME="lcpp_example"
+APP_NAME="llama_example"
 APP_DIR="example/build/macos/Build/Products/Release/${APP_NAME}.app"
 DMG_DIR="dmg"
-TMP_MOUNT="/tmp/lcpp_example"
+TMP_MOUNT="/tmp/llama_example"
 WINX=0
 WINY=0
 WINW=750
