@@ -10,7 +10,7 @@ class WAV {
   int blockAlign;
   int bitsPerSample;
   int dataChunkSize;
-  Uint8List data;
+  List<double> data;
 
   WAV({
     this.fmtChunkSize = 16,
@@ -42,8 +42,26 @@ class WAV {
 
     bytes.addAll(Uint8List.fromList('data'.codeUnits));
     bytes.addAll(Uint8List(4)..buffer.asByteData().setUint32(0, dataChunkSize, Endian.little));
-    bytes.addAll(data);
+    bytes.addAll(_convertToPCM16(data));
 
     return Uint8List.fromList(bytes);
+  }
+
+  Uint8List _convertToPCM16(List<double> audio) {
+    final int length = audio.length;
+    final ByteData byteData = ByteData(length * 2); // 2 bytes per sample
+
+    for (int i = 0; i < length; i++) {
+      // Clamp values to [-1.0, 1.0]
+      double sample = math.max(-1.0, math.min(1.0, audio[i]));
+
+      // Convert to 16-bit PCM
+      int intSample = (sample * 32767).round(); // 16-bit range: [-32768, 32767]
+
+      // Store as little-endian
+      byteData.setInt16(i * 2, intSample, Endian.little);
+    }
+
+    return byteData.buffer.asUint8List();
   }
 }

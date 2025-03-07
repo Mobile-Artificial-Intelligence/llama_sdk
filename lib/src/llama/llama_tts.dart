@@ -17,7 +17,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   ffi.Pointer<llama_model> _ctsModel = ffi.nullptr;
   ffi.Pointer<llama_context> _ttcContext = ffi.nullptr;
   ffi.Pointer<llama_context> _ctsContext = ffi.nullptr;
-  List<ffi.Pointer<llama_sampler>> _samplers = [];
+  final List<ffi.Pointer<llama_sampler>> _samplers = [];
 
   LlamaTtsParams _ttsParams;
 
@@ -239,8 +239,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
       audio[i] = 0.0;
     }
 
-    // TODO
-    throw UnimplementedError();
+    return WAV(data: audio).toBytes();
   }
 
   Future<List<double>> _embdToAudio(ffi.Pointer<ffi.Float> embd, int nEmbd, int nCodes) async {
