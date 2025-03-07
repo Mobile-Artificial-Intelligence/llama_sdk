@@ -104,7 +104,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final prompt = '<|im_start|>\n$processedText$audioText<|text_end|>\n$audioData';
     final promptPtr = prompt.toNativeUtf8().cast<ffi.Char>();
 
-    List<llama_token> guideTokens = [];
+    List<int> guideTokens = [];
 
     if (_ttsParams.useGuideTokens) {
       guideTokens = _prepareGuideTokens(processedText);
@@ -136,7 +136,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     List<int> seqIds = List<int>.generate(_ttsParams.nParallel, (i) => i);
 
     for (int i = 0; i < nPromptTokens; ++i) {
-      _batchAdd(batch, promptTokens[i] as llama_token, i as llama_pos, seqIds, false);
+      _batchAdd(batch, promptTokens[i], i, seqIds, false);
     }
 
     assert(batch.n_tokens == nPromptTokens, LlamaException('Failed to initialize batch'));
@@ -157,7 +157,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     ffi.Pointer<llama_token> newTokenId = calloc<llama_token>(1);
 
-    List<llama_token> codes = [];
+    List<int> codes = [];
 
     while (nDecode <= _ttsParams.nPredict) {
       batch.n_tokens = 0;
@@ -177,14 +177,14 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
           !_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value)
         ) {
           final guideToken = guideTokens.removeAt(0);
-          newTokenId.value = guideToken as int;
+          newTokenId.value = guideToken;
         }
 
         nextTokenUsesGuideToken = newTokenId.value == 198;
 
         _LlamaBase.lib.llama_sampler_accept(_samplers[i], newTokenId.value);
 
-        codes.add(newTokenId.value as llama_token);
+        codes.add(newTokenId.value);
 
         if (_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value) || nDecode == _ttsParams.nPredict) {
           // Mark the stream as finished
@@ -194,7 +194,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
         iBatch[i] = batch.n_tokens;
 
-        _batchAdd(batch, newTokenId.value as llama_token, nPast as llama_pos, [i], true);
+        _batchAdd(batch, newTokenId.value, nPast, [i], true);
       }
 
       if (batch.n_tokens == 0) {
@@ -209,16 +209,16 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     _LlamaBase.lib.llama_batch_free(batch);
 
-    codes.removeWhere((code) => code as int < 151672 || code as int > 155772);
+    codes.removeWhere((code) => code < 151672 || code > 155772);
 
     for (int i = 0; i < codes.length; i++) {
-      codes[i] = ((codes[i] as int) - 151672) as llama_token;
+      codes[i] -= 151672;
     }
 
     batch = _LlamaBase.lib.llama_batch_init(codes.length, 0, 1);
 
     for (int i = 0; i < codes.length; i++) {
-      _batchAdd(batch, codes[i], i as llama_pos, [0], true);
+      _batchAdd(batch, codes[i], i, [0], true);
     }
 
     assert(_LlamaBase.lib.llama_decode(_ctsContext, batch) == 0, LlamaException('Failed to decode'));
@@ -384,9 +384,9 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     }
   }
 
-  void _batchAdd(llama_batch batch, llama_token id, llama_pos pos, List<int> seqIds, bool logits) {
-    batch.token[batch.n_tokens] = id as int;
-    batch.pos[batch.n_tokens] = pos as int;
+  void _batchAdd(llama_batch batch, int id, int pos, List<int> seqIds, bool logits) {
+    batch.token[batch.n_tokens] = id;
+    batch.pos[batch.n_tokens] = pos;
     batch.logits[batch.n_tokens] = logits ? 1 : 0;
     batch.n_seq_id[batch.n_tokens] = seqIds.length;
 
@@ -397,13 +397,13 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     batch.n_tokens++;
   }
 
-  List<llama_token> _prepareGuideTokens(String prompt) {
+  List<int> _prepareGuideTokens(String prompt) {
     final version = _OuteTtsVersion.getVersion(_ttcModel);
     final delimiter = version == _OuteTtsVersion.v3 ? '<|space|>' : '<|text_sep|>';
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
 
-    List<llama_token> result = [];
+    List<int> result = [];
     int start = 0;
     int end = prompt.indexOf(delimiter);
 
@@ -422,7 +422,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     assert(nTokens > 0, LlamaException('Failed to tokenize'));
 
-    result.add(buffer.value as llama_token);
+    result.add(buffer.value);
 
     while (end != -1) {
       nTokens =_LlamaBase.lib.llama_tokenize(
@@ -437,7 +437,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
       assert(nTokens > 0, LlamaException('Failed to tokenize'));
 
-      result.add(buffer.value as llama_token);
+      result.add(buffer.value);
       start = end + delimiter.length;
       end = prompt.indexOf(delimiter, start);
     }
@@ -453,7 +453,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     );
 
     if (nTokens > 0) {
-      result.add(buffer.value as llama_token);
+      result.add(buffer.value);
     }
 
     calloc.free(buffer);
