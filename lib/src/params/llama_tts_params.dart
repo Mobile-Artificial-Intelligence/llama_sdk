@@ -28,10 +28,40 @@ class LlamaTtsParams extends LlamaParams {
     notifyListeners();
   }
 
+  int _nParallel;
+
+  int get nParallel => _nParallel;
+
+  set nParallel(int value) {
+    _nParallel = value;
+    notifyListeners();
+  }
+
+  int _nPredict;
+
+  int get nPredict => _nPredict;
+
+  set nPredict(int value) {
+    _nPredict = value;
+    notifyListeners();
+  }
+
+  bool _useGuideTokens;
+
+  bool get useGuideTokens => _useGuideTokens;
+
+  set useGuideTokens(bool value) {
+    _useGuideTokens = value;
+    notifyListeners();
+  }
+
   LlamaTtsParams({
     required File ttcModel,
     required File ctsModel,
     required VoiceData voice,
+    int nParallel = 1,
+    int nPredict = 4096,
+    bool useGuideTokens = true,
     super.vocabOnly,
     super.useMmap,
     super.useMlock,
@@ -94,12 +124,20 @@ class LlamaTtsParams extends LlamaParams {
     super.drySamplerMultiplier,
     super.drySamplerDryBase,
     super.drySamplerAllowedLength,
-  }) : _ttcModel = ttcModel, _ctsModel = ctsModel, _voice = voice;
+  })  : _ttcModel = ttcModel, 
+        _ctsModel = ctsModel, 
+        _voice = voice, 
+        _nParallel = nParallel, 
+        _nPredict = nPredict,
+        _useGuideTokens = useGuideTokens;
 
   factory LlamaTtsParams.fromMap(Map<String, dynamic> map) => LlamaTtsParams(
       ttcModel: File(map['ttc_model']),
       ctsModel: File(map['cts_model']),
       voice: VoiceData.fromMap(map['voice']),
+      nParallel: map['n_parallel'],
+      nPredict: map['n_predict'],
+      useGuideTokens: map['use_guide_tokens'],
       vocabOnly: map['vocab_only'],
       useMmap: map['use_mmap'],
       useMlock: map['use_mlock'],
@@ -171,6 +209,9 @@ class LlamaTtsParams extends LlamaParams {
     'ttc_model': ttcModel.path,
     'cts_model': ctsModel.path,
     'voice': voice.toMap(),
+    'n_parallel': nParallel,
+    'n_predict': nPredict,
+    'use_guide_tokens': useGuideTokens,
     ...super.toMap(),
   };
 }
