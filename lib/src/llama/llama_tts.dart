@@ -1,10 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
-  static const nParallel = 1; // TODO: Expose this as a parameter
-  static const nPredict = 4096; // TODO: Expose this as a parameter
-  static const useGuideTokens = true; // TODO: Expose this as a parameter
-
   LlamaTTS(LlamaTtsParams ttsParams) 
     : _ttsParams = ttsParams {
     _LlamaBase.lib.ggml_backend_load_all();
@@ -88,7 +84,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     final vocab = _LlamaBase.lib.llama_model_get_vocab(_ttcModel);
     
-    for (int i = 0; i < nParallel; i++) {
+    for (int i = 0; i < _ttsParams.nParallel; i++) {
       final sampler = _ttsParams.getSampler(vocab);
       assert(sampler != ffi.nullptr, LlamaException('Failed to initialize sampler'));
       _samplers.add(sampler);
@@ -110,7 +106,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     List<llama_token> guideTokens = [];
 
-    if (useGuideTokens) {
+    if (_ttsParams.useGuideTokens) {
       guideTokens = _prepareGuideTokens(processedText);
     }
 
@@ -135,9 +131,9 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     calloc.free(promptPtr);
 
-    llama_batch batch = _LlamaBase.lib.llama_batch_init(math.max(nPromptTokens, nParallel), 0, nParallel);
+    llama_batch batch = _LlamaBase.lib.llama_batch_init(math.max(nPromptTokens, _ttsParams.nParallel), 0, _ttsParams.nParallel);
 
-    List<int> seqIds = List<int>.generate(nParallel, (i) => i);
+    List<int> seqIds = List<int>.generate(_ttsParams.nParallel, (i) => i);
 
     for (int i = 0; i < nPromptTokens; ++i) {
       _batchAdd(batch, promptTokens[i] as llama_token, i as llama_pos, seqIds, false);
@@ -152,7 +148,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     _LlamaBase.lib.llama_synchronize(_ttcContext);
 
-    List<int> iBatch = List.filled(nParallel, batch.n_tokens - 1);
+    List<int> iBatch = List.filled(_ttsParams.nParallel, batch.n_tokens - 1);
 
     int nPast = batch.n_tokens;
     int nDecode = 0;
@@ -163,10 +159,10 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
     List<llama_token> codes = [];
 
-    while (nDecode <= nPredict) {
+    while (nDecode <= _ttsParams.nPredict) {
       batch.n_tokens = 0;
 
-      for (int i = 0; i < nParallel; ++i) {
+      for (int i = 0; i < _ttsParams.nParallel; ++i) {
         if (iBatch[i] < 0) {
           // The stream is already finished
           continue;
@@ -190,7 +186,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
 
         codes.add(newTokenId.value as llama_token);
 
-        if (_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value) || nDecode == nPredict) {
+        if (_LlamaBase.lib.llama_vocab_is_eog(vocab, newTokenId.value) || nDecode == _ttsParams.nPredict) {
           // Mark the stream as finished
           iBatch[i] = -1;
           continue;
@@ -248,7 +244,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     const nWin = 1280;
     const nPad = (nWin - nHop) ~/ 2;
     final nOut = (nCodes - 1) * nHop + nWin;
-    final nThread = _ttsParams.nThreads ?? 1;
+    final nThreads = _ttsParams.nThreads ?? 1;
 
     List<double> hann = [];
 
@@ -296,10 +292,10 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final hann2 = List.filled(nCodes * nFft, 0.0);
 
     List<Future<List<double>>> futures = [];
-    for (int i = 0; i < nThread; i++) {
+    for (int i = 0; i < nThreads; i++) {
       futures.add(Future(() async {
         List<double> localRes = List.filled(nCodes * nFft, 0.0);
-        for (int l = i; l < nCodes; l += nThread) {
+        for (int l = i; l < nCodes; l += nThreads) {
           final output = await compute(_irfftTask, {
             'nFft': nFft,
             'input': stList.sublist(l * nEmbd, (l + 1) * nEmbd),
@@ -394,7 +390,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     batch.logits[batch.n_tokens] = logits ? 1 : 0;
     batch.n_seq_id[batch.n_tokens] = seqIds.length;
 
-    for (int j = 0; j < nParallel; ++j) {
+    for (int j = 0; j < _ttsParams.nParallel; ++j) {
       batch.seq_id[batch.n_tokens][j] = seqIds[j];
     }
 
