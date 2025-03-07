@@ -1,7 +1,8 @@
 part of 'package:lcpp/lcpp.dart';
 
 class _Num2Words {
-  static List<String> _splitIntoThrees(String str) {
+  static List<String> _splitIntoThrees(int number) {
+    String str = number.toString();
     List<String> parts = [];
 
     for (int i = str.length; i > 0; i -= 3) {
@@ -64,17 +65,17 @@ class _Num2Words {
     return result;
   }
 
-  static String process(String text) {
+  static String process(int number) {
     const suffixes = [
       "thousand", "million", "billion", "trillion", "quadrillion", "quintillion",
       "sextillion", "septillion", "octillion", "nonillion", "decillion"
     ];
 
-    List<String> parts = _splitIntoThrees(text);
+    List<String> parts = _splitIntoThrees(number);
     List<String> result = [];
 
     for (int i = 0; i < parts.length; i++) {
-      int number = int.parse(parts[i]);
+      number = int.parse(parts[i]);
       List<String> words = _hundredsToWords(number);
       result.addAll(words);
 

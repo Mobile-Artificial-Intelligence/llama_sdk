@@ -463,7 +463,19 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   
   String _processText(String text) {
     // Replace numbers with words (Assuming you have an equivalent function)
-    String processedText = _Num2Words.process(text);
+    String processedText = '';
+
+    List<String> parts = text.split(' ');
+    for (final part in parts) {
+      if (int.tryParse(part) != null) {
+        processedText += ' ${_Num2Words.process(int.parse(part))}';
+      } else {
+        processedText += ' $part';
+      }
+    }
+
+    // Trim leading and trailing spaces
+    processedText = processedText.trim();
 
     // Convert to lowercase
     processedText = processedText.toLowerCase();
