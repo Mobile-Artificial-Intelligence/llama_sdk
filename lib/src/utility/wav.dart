@@ -13,17 +13,16 @@ class WAV {
   Uint8List data;
 
   WAV({
-    required this.chunkSize,
-    required this.fmtChunkSize,
-    required this.audioFormat,
-    required this.numChannels,
-    required this.sampleRate,
-    required this.byteRate,
-    required this.blockAlign,
-    required this.bitsPerSample,
-    required this.dataChunkSize,
+    this.fmtChunkSize = 16,
+    this.audioFormat = 1,
+    this.numChannels = 1,
+    this.sampleRate = 24000,
+    this.bitsPerSample = 16,
     required this.data,
-  });
+  })  : byteRate = sampleRate * numChannels * (bitsPerSample ~/ 8), 
+        blockAlign = numChannels * (bitsPerSample ~/ 8),
+        dataChunkSize = data.length * (bitsPerSample ~/ 8),
+        chunkSize = 36 + data.length * (bitsPerSample ~/ 8);
 
   Uint8List toBytes() {
     final bytes = <int>[];

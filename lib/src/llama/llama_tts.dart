@@ -100,7 +100,7 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
   void reload() => _initModel();
 
   @override
-  Future<Uint8List> tts(String text) {
+  Future<Uint8List> tts(String text) async {
     final version = _OuteTtsVersion.getVersion(_ttcModel);
     final audioText = _ttsParams.voice._getFormattedText(version);
     final audioData = _ttsParams.voice._getFormattedData(version);
@@ -232,19 +232,24 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final nEmbd = _LlamaBase.lib.llama_model_n_embd(_ctsModel);
     final embd = _LlamaBase.lib.llama_get_embeddings(_ctsContext);
 
-    final audio = _embdToAudio(embd, nEmbd, codes.length);
+    final audio = await _embdToAudio(embd, nEmbd, codes.length);
+
+    // zero out first 0.25 seconds
+    for (int i = 0; i < 24000/4; ++i) {
+      audio[i] = 0.0;
+    }
 
     // TODO
     throw UnimplementedError();
   }
 
-  List<double> _embdToAudio(ffi.Pointer<ffi.Float> embd, int nEmbd, int nCodes) {
+  Future<List<double>> _embdToAudio(ffi.Pointer<ffi.Float> embd, int nEmbd, int nCodes) async {
     const nFft = 1280;
     const nHop = 320;
     const nWin = 1280;
     const nPad = (nWin - nHop) ~/ 2;
     final nOut = (nCodes - 1) * nHop + nWin;
-    final nThread = _ttsParams.nThreads;
+    final nThread = _ttsParams.nThreads ?? 1;
 
     List<double> hann = [];
 
@@ -291,31 +296,74 @@ class LlamaTTS with _LlamaTTSMixin implements _LlamaBase {
     final res = List.filled(nCodes * nFft, 0.0);
     final hann2 = List.filled(nCodes * nFft, 0.0);
 
-    // TODO
-    throw UnimplementedError();
+    List<Future<List<double>>> futures = [];
+    for (int i = 0; i < nThread; i++) {
+      futures.add(Future(() async {
+        List<double> localRes = List.filled(nCodes * nFft, 0.0);
+        for (int l = i; l < nCodes; l += nThread) {
+          final output = await compute(_irfftTask, {
+            'nFft': nFft,
+            'input': stList.sublist(l * nEmbd, (l + 1) * nEmbd),
+            'hann': hann
+          });
+
+          for (int j = 0; j < nFft; ++j) {
+            localRes[l * nFft + j] = output[j];
+            hann2[l * nFft + j] = hann[j] * hann[j];
+          }
+        }
+        return localRes;
+      }));
+    }
+
+    List<List<double>> results = await Future.wait(futures);
+
+    // Merge results
+    for (var part in results) {
+      for (int i = 0; i < res.length; i++) {
+        res[i] += part[i];
+      }
+    }
+
+    List<double> audio = List.filled(nOut, 0.0);
+    List<double> env = List.filled(nOut, 0.0);
+
+    _fold(res, nOut, nWin, nHop, nPad, audio);
+    _fold(hann2, nOut, nWin, nHop, nPad, env);
+
+    for (int i = 0; i < audio.length; i++) {
+      audio[i] /= env[i];
+    }
+
+    return audio;
   }
 
-  // Inverse Real FFT (IRFFT) Implementation
-  void _irfft(int nFft, List<double> input, List<double> output) {
+  Future<List<double>> _irfftTask(Map<String, dynamic> args) async {
+    int nFft = args['nFft'];
+    List<double> input = args['input'];
+    List<double> hann = args['hann'];
+
     int n = nFft ~/ 2 + 1;
     List<double> real = List.filled(nFft, 0.0);
     List<double> imag = List.filled(nFft, 0.0);
+    List<double> output = List.filled(nFft, 0.0);
 
-    // Restore real & imaginary components
     for (int k = 0; k < n; k++) {
       real[k] = input[2 * k];
       imag[k] = input[2 * k + 1];
     }
 
-    // Perform inverse FFT (Cooley-Tukey Algorithm)
     for (int i = 0; i < nFft; i++) {
       double sumReal = 0.0;
       for (int k = 0; k < n; k++) {
         double angle = 2 * math.pi * k * i / nFft;
         sumReal += real[k] * math.cos(angle) - imag[k] * math.sin(angle);
       }
-      output[i] = sumReal / nFft; // Normalize output
+      output[i] = sumReal / nFft; // Normalize
+      output[i] *= hann[i]; // Apply Hann window
     }
+
+    return output;
   }
 
   // Overlap-add method for reconstructing audio
