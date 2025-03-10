@@ -162,7 +162,8 @@ int llama_prompt(char * msgs, dart_output * output) {
         fprintf(stderr, "failed to apply the chat template\n");
         return 1;
     }
-
+    
+    output(nullptr);
     return 0;
 }
 

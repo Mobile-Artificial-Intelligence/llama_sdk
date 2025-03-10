@@ -378,8 +378,8 @@ std::vector<llama_chat_message> llama_parse_messages(char * messages) {
         auto content = message["content"].get<std::string>();
 
         llama_chat_message msg = {
-            .role = role.c_str(),
-            .content = content.c_str()
+            strdup(role.c_str()),
+            strdup(content.c_str())
         };
 
         result.push_back(msg);

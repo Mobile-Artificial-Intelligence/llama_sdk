@@ -32,6 +32,8 @@ class LlamaNative {
   void _init() => lib.llama_init(_llamaParams.toPointer());
 
   Stream<String> prompt(List<ChatMessage> messages) async* {
+    _controller = StreamController<String>();
+
     _asyncPrompt(messages);
 
     yield* _controller.stream;
@@ -44,6 +46,11 @@ class LlamaNative {
   }
 
   static void _output(ffi.Pointer<ffi.Char> buffer) {
-    _controller.add(buffer.cast<Utf8>().toDartString());
+    if (buffer == ffi.nullptr) {
+      _controller.close();
+    }
+    else {
+      _controller.add(buffer.cast<Utf8>().toDartString());
+    }
   }
 }
