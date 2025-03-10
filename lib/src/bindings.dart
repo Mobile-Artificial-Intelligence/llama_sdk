@@ -76,13 +76,13 @@ class llama {
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_reset');
   late final _llama_reset = _llama_resetPtr.asFunction<void Function()>();
 
-  void llama_free() {
-    return _llama_free();
+  void llama_api_free() {
+    return _llama_api_free();
   }
 
-  late final _llama_freePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_free');
-  late final _llama_free = _llama_freePtr.asFunction<void Function()>();
+  late final _llama_api_freePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_api_free');
+  late final _llama_api_free = _llama_api_freePtr.asFunction<void Function()>();
 }
 
 typedef dart_output

@@ -734,6 +734,7 @@ class LlamaParams extends ChangeNotifier {
     double? drySamplerMultiplier,
     double? drySamplerDryBase,
     int? drySamplerAllowedLength,
+    List<String>? drySamplerSequenceBreakers,
   })  : _modelFile = modelFile,
         _vocabOnly = vocabOnly,
         _useMmap = useMmap,
@@ -796,7 +797,8 @@ class LlamaParams extends ChangeNotifier {
         _drySamplerNCtxTrain = drySamplerNCtxTrain,
         _drySamplerMultiplier = drySamplerMultiplier,
         _drySamplerDryBase = drySamplerDryBase,
-        _drySamplerAllowedLength = drySamplerAllowedLength;
+        _drySamplerAllowedLength = drySamplerAllowedLength,
+        _drySamplerSequenceBreakers = drySamplerSequenceBreakers;
 
   /// Creates a new instance from a map.
   factory LlamaParams.fromMap(Map<String, dynamic> map) => LlamaParams(
@@ -863,6 +865,7 @@ class LlamaParams extends ChangeNotifier {
     drySamplerMultiplier: map['dry_sampler_multiplier'],
     drySamplerDryBase: map['dry_sampler_dry_base'],
     drySamplerAllowedLength: map['dry_sampler_allowed_length'],
+    drySamplerSequenceBreakers: map['dry_sampler_sequence_breakers'],
   );
 
   /// Creates a new instance from a JSON string.
@@ -942,10 +945,14 @@ class LlamaParams extends ChangeNotifier {
     'dry_sampler_multiplier': _drySamplerMultiplier,
     'dry_sampler_dry_base': _drySamplerDryBase,
     'dry_sampler_allowed_length': _drySamplerAllowedLength,
+    'dry_sampler_sequence_breakers': _drySamplerSequenceBreakers,
   };
 
   /// Converts the current instance to a JSON string.
   String toJson() => jsonEncode(toMap());
+
+  /// Converts to a Pointer<Char> instance.
+  ffi.Pointer<ffi.Char> toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
 }
 
 /// Enum representing different types of rope scaling.

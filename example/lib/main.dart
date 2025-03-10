@@ -19,6 +19,7 @@ class LlamaApp extends StatefulWidget {
 class LlamaAppState extends State<LlamaApp> {
   final TextEditingController controller = TextEditingController();
   final List<ChatMessage> messages = [];
+  LlamaNative? model;
   String? modelPath;
   bool busy = false;
 
@@ -42,18 +43,46 @@ class LlamaAppState extends State<LlamaApp> {
       throw Exception('File does not exist');
     }
 
+    final llamaCpp = LlamaNative(LlamaParams(
+      modelFile: resultFile,
+      nCtx: 2048, 
+      nBatch: 2048,
+      greedy: true
+    ));
+
     setState(() {
+      model = llamaCpp;
       modelPath = result.files.single.path;
     });
   }
 
   void onSubmitted(String value) async {
-    final params = LlamaParams.nativeDefault();
-    print(params.toJson());
+    if (model == null) {
+      return;
+    }
+
+    setState(() {
+      busy = true;
+      messages.add(UserChatMessage(value));
+      controller.clear();
+    });
+
+    //final stream = model!.prompt(messages.copy());
+
+    messages.add(AssistantChatMessage(''));
+
+    //await for (var response in stream) {
+    //  setState(() {
+    //    messages.last.content += response;
+    //  });
+    //}
+
+    setState(() => busy = false);
   }
 
   void onStop() {
-
+    //model?.stop();
+    setState(() => busy = false);
   }
 
   @override
