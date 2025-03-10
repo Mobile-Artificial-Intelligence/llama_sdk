@@ -1,6 +1,9 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaNative {
+  static final _finalizer = Finalizer(
+    (_) => lib.llama_api_free(),
+  );
   static StreamController<String> _controller = StreamController<String>();
 
   LlamaParams _llamaParams;
@@ -27,6 +30,7 @@ class LlamaNative {
   LlamaNative(LlamaParams llamaParams)
       : _llamaParams = llamaParams {
     _init();
+    _finalizer.attach(this, null);
   }
 
   void _init() => lib.llama_init(_llamaParams.toPointer());
