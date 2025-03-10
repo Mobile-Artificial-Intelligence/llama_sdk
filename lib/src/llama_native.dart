@@ -1,6 +1,6 @@
 part of 'package:lcpp/lcpp.dart';
 
-class LlamaNative {
+class LlamaNative implements Llama {
   static final _finalizer = Finalizer(
     (_) => lib.llama_api_free(),
   );
@@ -33,8 +33,9 @@ class LlamaNative {
     _finalizer.attach(this, null);
   }
 
-  void _init() => lib.llama_init(_llamaParams.toPointer());
+  void _init() => lib.llama_init(_llamaParams._toPointer());
 
+  @override
   Stream<String> prompt(List<ChatMessage> messages) async* {
     _controller = StreamController<String>();
 
@@ -44,7 +45,7 @@ class LlamaNative {
   }
 
   Future<int> _asyncPrompt(List<ChatMessage> messages) async {
-    final chatMessagesPointer = messages.toPointer();
+    final chatMessagesPointer = messages._toPointer();
 
     return lib.llama_prompt(chatMessagesPointer, ffi.Pointer.fromFunction(_output));
   }
@@ -56,5 +57,11 @@ class LlamaNative {
     else {
       _controller.add(buffer.cast<Utf8>().toDartString());
     }
+  }
+
+  @override
+  void reload() {
+    lib.llama_api_free();
+    _init();
   }
 }

@@ -1,5 +1,7 @@
 part of 'package:lcpp/lcpp.dart';
 
+typedef _ChatMessageRecord = (String role, String content);
+
 /// An abstract class representing a chat message.
 ///
 /// This class provides a base for different types of chat messages, each with
@@ -87,6 +89,9 @@ abstract class ChatMessage {
     }
   }
 
+  factory ChatMessage._fromRecord(_ChatMessageRecord record) =>
+      ChatMessage.withRole(role: record.$1, content: record.$2);
+
   /// Converts a [ChatMessage] object to a map representation.
   ///
   /// The returned map contains the following key-value pairs:
@@ -115,6 +120,8 @@ abstract class ChatMessage {
   ///
   /// Returns a `Map<String, String>` representation of the `ChatMessage`.
   Map<String, String> toMap() => messageToMap(this);
+
+  _ChatMessageRecord _toRecord() => (role, content);
 }
 
 /// A class representing a chat message from a user.
@@ -242,5 +249,25 @@ extension ChatMessages on List<ChatMessage> {
 
   String toJson() => jsonEncode(toMapList());
 
-  ffi.Pointer<ffi.Char> toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
+  ffi.Pointer<ffi.Char> _toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
+
+  List<_ChatMessageRecord> _toRecords() {
+    final List<_ChatMessageRecord> records = [];
+
+    for (var i = 0; i < length; i++) {
+      records.add(this[i]._toRecord());
+    }
+
+    return records;
+  }
+
+  static List<ChatMessage> _fromRecords(List<_ChatMessageRecord> records) {
+    final List<ChatMessage> messages = [];
+
+    for (var record in records) {
+      messages.add(ChatMessage._fromRecord(record));
+    }
+
+    return messages;
+  }
 }

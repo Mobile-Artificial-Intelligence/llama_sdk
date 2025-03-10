@@ -952,7 +952,7 @@ class LlamaParams extends ChangeNotifier {
   String toJson() => jsonEncode(toMap());
 
   /// Converts to a Pointer<Char> instance.
-  ffi.Pointer<ffi.Char> toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
+  ffi.Pointer<ffi.Char> _toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
 }
 
 /// Enum representing different types of rope scaling.
