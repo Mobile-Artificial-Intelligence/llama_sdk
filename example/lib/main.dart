@@ -67,7 +67,7 @@ class LlamaAppState extends State<LlamaApp> {
       controller.clear();
     });
 
-    //final stream = model!.prompt(messages.copy());
+    final stream = model!.prompt(messages.copy());
 
     messages.add(AssistantChatMessage(''));
 

@@ -368,3 +368,22 @@ llama_sampler * llama_sampler_from_json(llama_model * model, json & params) {
 
     return sampler;
 }
+
+std::vector<llama_chat_message> llama_parse_messages(char * messages) {
+    auto json_messages = json::parse(messages);
+    std::vector<llama_chat_message> result;
+
+    for (auto & message : json_messages) {
+        auto role = message["role"].get<std::string>();
+        auto content = message["content"].get<std::string>();
+
+        llama_chat_message msg = {
+            .role = role.c_str(),
+            .content = content.c_str()
+        };
+
+        result.push_back(msg);
+    }
+
+    return result;
+}

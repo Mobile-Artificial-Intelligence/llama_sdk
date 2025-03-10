@@ -96,12 +96,12 @@ abstract class ChatMessage {
   /// Example:
   /// ```dart
   /// ChatMessage message = ChatMessage(role: 'user', content: 'Hello');
-  /// Map<String, dynamic> map = messageToMap(message);
+  /// Map<String, String> map = messageToMap(message);
   /// // map = {'role': 'user', 'content': 'Hello'}
   /// ```
   ///
   /// [message]: The [ChatMessage] object to be converted.
-  static Map<String, dynamic> messageToMap(ChatMessage message) => {
+  static Map<String, String> messageToMap(ChatMessage message) => {
         'role': message.role,
         'content': message.content,
       };
@@ -109,12 +109,12 @@ abstract class ChatMessage {
   /// Converts the current `ChatMessage` instance to a map.
   ///
   /// This method uses the `messageToMap` function to transform the
-  /// `ChatMessage` object into a `Map<String, dynamic>`, which can be
+  /// `ChatMessage` object into a `Map<String, String>`, which can be
   /// useful for serialization or other operations that require a map
   /// representation of the message.
   ///
-  /// Returns a `Map<String, dynamic>` representation of the `ChatMessage`.
-  Map<String, dynamic> toMap() => messageToMap(this);
+  /// Returns a `Map<String, String>` representation of the `ChatMessage`.
+  Map<String, String> toMap() => messageToMap(this);
 }
 
 /// A class representing a chat message from a user.
@@ -237,4 +237,10 @@ extension ChatMessages on List<ChatMessage> {
 
     return messages;
   }
+
+  List<Map<String, String>> toMapList() => map((message) => message.toMap()).toList();
+
+  String toJson() => jsonEncode(toMapList());
+
+  ffi.Pointer<ffi.Char> toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
 }

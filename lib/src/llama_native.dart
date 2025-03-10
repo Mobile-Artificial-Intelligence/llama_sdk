@@ -28,4 +28,9 @@ class LlamaNative {
   }
 
   void _init() => lib.llama_init(_llamaParams.toPointer());
+
+  void prompt(List<ChatMessage> messages) {
+    final chatMessagesPointer = messages.toPointer();
+    lib.llama_prompt(chatMessagesPointer, ffi.nullptr);
+  }
 }

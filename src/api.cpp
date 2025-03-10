@@ -78,4 +78,12 @@ int llama_init(char * params) {
     model = llama_model_load_from_file(model_path.c_str(), model_params);
     ctx = llama_init_from_model(model, context_params);
     smpl = llama_sampler_from_json(model, json_params);
+
+    return 0;
+}
+
+int llama_prompt(char * messages, dart_output * output) {
+    auto msgs = llama_parse_messages(messages);
+
+    return 0;
 }
