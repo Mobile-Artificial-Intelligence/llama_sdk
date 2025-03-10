@@ -27,8 +27,8 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
     set -u
     set -o pipefail
 
-    SOURCE_DIR="../src/llama_cpp"
-    TARGET_DIR="./llama_cpp"
+    SOURCE_DIR="../src"
+    TARGET_DIR="./src"
 
     # Ensure source directory exists
     if [ ! -d "$SOURCE_DIR" ]; then
@@ -50,35 +50,38 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
   CMD
 
   s.source_files = 'build-info.c',
-                   'llama_cpp/src/*.cpp',
-                   'llama_cpp/common/*.cpp',
-                   'llama_cpp/ggml/src/*.c',
-                   'llama_cpp/ggml/src/*.cpp',
-                   'llama_cpp/ggml/src/ggml-cpu/*.c',
-                   'llama_cpp/ggml/src/ggml-cpu/*.cpp',
-                   'llama_cpp/ggml/src/ggml-metal/*.m',
-                   '!llama_cpp/common/build-info.cpp'
+                   'src/*cpp',
+                   'src/llama_cpp/src/*.cpp',
+                   'src/llama_cpp/common/*.cpp',
+                   'src/llama_cpp/ggml/src/*.c',
+                   'src/llama_cpp/ggml/src/*.cpp',
+                   'src/llama_cpp/ggml/src/ggml-cpu/*.c',
+                   'src/llama_cpp/ggml/src/ggml-cpu/*.cpp',
+                   'src/llama_cpp/ggml/src/ggml-metal/*.m',
+                   '!src/llama_cpp/common/build-info.cpp'
   s.frameworks = 'Accelerate', 'Foundation', 'Metal', 'MetalKit'
   s.platform = :osx, '10.15'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
     'USER_HEADER_SEARCH_PATHS' => [
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/include/llama.h',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common', 
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src/ggml-cpu',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src/ggml-metal',
+      '$(PODS_TARGET_SRCROOT)/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/include/llama.h',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common', 
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-cpu',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-metal',
     ],
     'HEADER_SEARCH_PATHS' => [
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/include/llama.h',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/common', 
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src/ggml-cpu',
-      '$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src/ggml-metal',
+      '$(PODS_TARGET_SRCROOT)/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/include/llama.h',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/common', 
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-cpu',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-metal',
     ],
     'OTHER_CFLAGS' => [
       '$(inherited)', 
@@ -86,10 +89,11 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
       '-flto', 
       '-fno-objc-arc', 
       '-w', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/include', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include',
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/common', 
+      '-I$(PODS_TARGET_SRCROOT)/src',
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/include', 
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include',
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src', 
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/common', 
       '-DGGML_LLAMAFILE=OFF', 
       '-DGGML_USE_CPU',
       '-DGGML_USE_ACCELERATE',
@@ -103,10 +107,11 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
       '-w', 
       '-std=c++17', 
       '-fpermissive', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/include', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/include', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/ggml/src', 
-      '-I$(PODS_TARGET_SRCROOT)/llama_cpp/common', 
+      '-I$(PODS_TARGET_SRCROOT)/src',
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/include', 
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include', 
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src', 
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/common', 
       '-DGGML_LLAMAFILE=OFF', 
       '-DGGML_USE_CPU',
       '-DGGML_USE_ACCELERATE',
@@ -122,16 +127,16 @@ lcpp is a dart implementation of llama.cpp used by the mobile artificial intelli
   s.script_phases = [
     {
       :name => 'Build Metal Library',
-      :input_files => ["${PODS_TARGET_SRCROOT}/llama_cpp/ggml/src/ggml-metal/*.metal"],
+      :input_files => ["${PODS_TARGET_SRCROOT}/src/llama_cpp/ggml/src/ggml-metal/*.metal"],
       :output_files => ["${METAL_LIBRARY_OUTPUT_DIR}/default.metallib"],
       :execution_position => :after_compile,
       :script => <<-SCRIPT
         set -e
         set -u
         set -o pipefail
-        cd "${PODS_TARGET_SRCROOT}/llama_cpp"
+        cd "${PODS_TARGET_SRCROOT}/src/llama_cpp"
         xcrun metal \
-          -I"${PODS_TARGET_SRCROOT}/llama_cpp/ggml/src" \
+          -I"${PODS_TARGET_SRCROOT}/src/llama_cpp/ggml/src" \
           -target "air64-${LLVM_TARGET_TRIPLE_VENDOR}-${LLVM_TARGET_TRIPLE_OS_VERSION}${LLVM_TARGET_TRIPLE_SUFFIX:-}" \
           -ffast-math \
           -std=ios-metal2.3 \

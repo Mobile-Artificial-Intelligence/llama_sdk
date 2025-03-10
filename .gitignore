@@ -29,6 +29,7 @@ migrate_working_dir/
 build/
 
 macos/llama_cpp
+macos/src
 ios/llama_cpp
 macos/*.h
 macos/lib/*.h

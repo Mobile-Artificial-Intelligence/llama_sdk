@@ -1,7 +1,5 @@
 part of 'package:lcpp/lcpp.dart';
 
-typedef _ChatMessageRecord = (String role, String content);
-
 /// An abstract class representing a chat message.
 ///
 /// This class provides a base for different types of chat messages, each with
@@ -88,50 +86,6 @@ abstract class ChatMessage {
         throw Exception('Invalid role');
     }
   }
-
-  factory ChatMessage._fromRecord(_ChatMessageRecord record) =>
-      ChatMessage.withRole(role: record.$1, content: record.$2);
-
-  /// Creates a [ChatMessage] instance from a native [llama_chat_message].
-  ///
-  /// This factory constructor takes a [llama_chat_message] object and converts
-  /// its `role` and `content` fields from native UTF-8 strings to Dart strings,
-  /// then uses these values to create a new [ChatMessage] with the corresponding role and content.
-  ///
-  /// Example:
-  /// ```dart
-  /// llama_chat_message nativeMessage = getNativeMessage();
-  /// ChatMessage message = ChatMessage.fromNative(nativeMessage);
-  /// ```
-  ///
-  /// - [message]: The native [llama_chat_message] object to be converted.
-  ///
-  /// Returns a new [ChatMessage] instance with the role and content from the native message.
-  factory ChatMessage.fromNative(llama_chat_message message) =>
-      ChatMessage.withRole(
-          role: message.role.cast<Utf8>().toDartString(),
-          content: message.content.cast<Utf8>().toDartString());
-
-  /// Converts the current chat message instance to its native representation.
-  ///
-  /// This method allocates memory for a `llama_chat_message` struct and sets its
-  /// `role` and `content` fields to the UTF-8 encoded representations of the
-  /// corresponding fields in the current instance.
-  ///
-  /// Returns:
-  ///   A reference to the allocated `llama_chat_message` struct.
-  ///
-  /// Note:
-  ///   The caller is responsible for freeing the allocated memory to avoid memory leaks.
-  llama_chat_message toNative() {
-    final message = calloc<llama_chat_message>();
-    message.ref.role = role.toNativeUtf8().cast<ffi.Char>();
-    message.ref.content = content.toNativeUtf8().cast<ffi.Char>();
-
-    return message.ref;
-  }
-
-  _ChatMessageRecord _toRecord() => (role, content);
 
   /// Converts a [ChatMessage] object to a map representation.
   ///
@@ -265,45 +219,6 @@ class SystemChatMessage extends ChatMessage {
 
 /// An extension on the `List<ChatMessage>` class to provide additional functionality.
 extension ChatMessages on List<ChatMessage> {
-  static List<ChatMessage> _fromRecords(List<_ChatMessageRecord> records) {
-    final List<ChatMessage> messages = [];
-
-    for (var record in records) {
-      messages.add(ChatMessage._fromRecord(record));
-    }
-
-    return messages;
-  }
-
-  /// Converts the current list of `llama_chat_message` objects to a native
-  /// representation using FFI.
-  ///
-  /// Allocates memory for the native messages and copies each message
-  /// from the Dart list to the allocated memory.
-  ///
-  /// Returns a pointer to the allocated native messages.
-  ///
-  /// Note: The caller is responsible for freeing the allocated memory.
-  ffi.Pointer<llama_chat_message> toNative() {
-    final messages = calloc<llama_chat_message>(length);
-
-    for (var i = 0; i < length; i++) {
-      messages[i] = this[i].toNative();
-    }
-
-    return messages;
-  }
-
-  List<_ChatMessageRecord> _toRecords() {
-    final List<_ChatMessageRecord> records = [];
-
-    for (var i = 0; i < length; i++) {
-      records.add(this[i]._toRecord());
-    }
-
-    return records;
-  }
-
   /// Creates a copy of the list of `ChatMessage` objects.
   ///
   /// This method iterates over the current list of `ChatMessage` instances,
@@ -321,16 +236,5 @@ extension ChatMessages on List<ChatMessage> {
     }
 
     return messages;
-  }
-}
-
-extension _LlamaChatMessagePtrExtension on ffi.Pointer<llama_chat_message> {
-  void free(int length) {
-    for (var i = 0; i < length; i++) {
-      calloc.free(this[i].role);
-      calloc.free(this[i].content);
-    }
-
-    calloc.free(this);
   }
 }
