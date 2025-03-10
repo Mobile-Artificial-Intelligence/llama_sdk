@@ -4,13 +4,8 @@
 #include "params.hpp"
 #include <cassert>
 #include <vector>
-#include <atomic>
-#include <mutex>
 
 using json = nlohmann::ordered_json;
-
-static std::atomic_bool stop_generation(false);
-static std::mutex continue_mutex;
 
 static llama_model * model = nullptr;
 static llama_context * ctx = nullptr;
@@ -79,11 +74,100 @@ int llama_init(char * params) {
     ctx = llama_init_from_model(model, context_params);
     smpl = llama_sampler_from_json(model, json_params);
 
+    prev_len = 0;
+
     return 0;
 }
 
-int llama_prompt(char * messages, dart_output * output) {
-    auto msgs = llama_parse_messages(messages);
+int llama_prompt(char * msgs, dart_output * output) {
+    auto messages = llama_parse_messages(msgs);
+
+    assert(model != nullptr);
+    assert(ctx != nullptr);
+    assert(smpl != nullptr);
+
+    auto vocab = llama_model_get_vocab(model);
+
+    std::vector<char> formatted(llama_n_ctx(ctx));
+
+    const char * tmpl = llama_model_chat_template(model, nullptr);
+    int new_len = llama_chat_apply_template(tmpl, messages.data(), messages.size(), true, formatted.data(), formatted.size());
+    if (new_len > (int) formatted.size()) {
+        formatted.resize(new_len);
+        new_len = llama_chat_apply_template(tmpl, messages.data(), messages.size(), true, formatted.data(), formatted.size());
+    }
+
+    if (new_len < 0) {
+        fprintf(stderr, "failed to apply the chat template\n");
+        return 1;
+    }
+
+    // remove previous messages to obtain the prompt to generate the response
+    std::string prompt(formatted.begin() + prev_len, formatted.begin() + new_len);
+
+    std::string response;
+
+    const bool is_first = llama_get_kv_cache_used_cells(ctx) == 0;
+
+    // tokenize the prompt
+    const int n_prompt_tokens = -llama_tokenize(vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
+    std::vector<llama_token> prompt_tokens(n_prompt_tokens);
+    if (llama_tokenize(vocab, prompt.c_str(), prompt.size(), prompt_tokens.data(), prompt_tokens.size(), is_first, true) < 0) {
+        GGML_ABORT("failed to tokenize the prompt\n");
+    }
+
+    // prepare a batch for the prompt
+    llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
+    llama_token new_token_id;
+    while (true) {
+        // check if we have enough space in the context to evaluate this batch
+        int n_ctx = llama_n_ctx(ctx);
+        int n_ctx_used = llama_get_kv_cache_used_cells(ctx);
+        if (n_ctx_used + batch.n_tokens > n_ctx) {
+            fprintf(stderr, "context size exceeded\n");
+            break;
+        }
+        
+        if (llama_decode(ctx, batch)) {
+            GGML_ABORT("failed to decode\n");
+        }
+
+        // sample the next token
+        new_token_id = llama_sampler_sample(smpl, ctx, -1);
+
+        // is it an end of generation?
+        if (llama_vocab_is_eog(vocab, new_token_id)) {
+            break;
+        }
+
+        // convert the token to a string, print it and add it to the response
+        char buf[256];
+        int n = llama_token_to_piece(vocab, new_token_id, buf, sizeof(buf), 0, true);
+        if (n < 0) {
+            GGML_ABORT("failed to convert token to piece\n");
+        }
+
+        std::string piece(buf, n);
+        output(piece.c_str());
+        response += piece;
+
+        // prepare the next batch with the sampled token
+        batch = llama_batch_get_one(&new_token_id, 1);
+    }
+
+    // add the response to the messages
+    messages.push_back({"assistant", strdup(response.c_str())});
+    prev_len = llama_chat_apply_template(tmpl, messages.data(), messages.size(), false, nullptr, 0);
+    if (prev_len < 0) {
+        fprintf(stderr, "failed to apply the chat template\n");
+        return 1;
+    }
 
     return 0;
+}
+
+void llama_api_free(void) {
+    llama_sampler_free(smpl);
+    llama_free(ctx);
+    llama_free_model(model);
 }

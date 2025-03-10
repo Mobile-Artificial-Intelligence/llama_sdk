@@ -1,6 +1,8 @@
 part of 'package:lcpp/lcpp.dart';
 
 class LlamaNative {
+  static StreamController<String> _controller = StreamController<String>();
+
   LlamaParams _llamaParams;
 
   /// The current LlamaParams instance.
@@ -29,8 +31,19 @@ class LlamaNative {
 
   void _init() => lib.llama_init(_llamaParams.toPointer());
 
-  void prompt(List<ChatMessage> messages) {
+  Stream<String> prompt(List<ChatMessage> messages) async* {
+    _asyncPrompt(messages);
+
+    yield* _controller.stream;
+  }
+
+  Future<int> _asyncPrompt(List<ChatMessage> messages) async {
     final chatMessagesPointer = messages.toPointer();
-    lib.llama_prompt(chatMessagesPointer, ffi.nullptr);
+
+    return lib.llama_prompt(chatMessagesPointer, ffi.Pointer.fromFunction(_output));
+  }
+
+  static void _output(ffi.Pointer<ffi.Char> buffer) {
+    _controller.add(buffer.cast<Utf8>().toDartString());
   }
 }

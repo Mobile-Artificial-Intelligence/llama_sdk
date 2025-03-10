@@ -71,11 +71,11 @@ class LlamaAppState extends State<LlamaApp> {
 
     messages.add(AssistantChatMessage(''));
 
-    //await for (var response in stream) {
-    //  setState(() {
-    //    messages.last.content += response;
-    //  });
-    //}
+    await for (var response in stream) {
+      setState(() {
+        messages.last.content += response;
+      });
+    }
 
     setState(() => busy = false);
   }
