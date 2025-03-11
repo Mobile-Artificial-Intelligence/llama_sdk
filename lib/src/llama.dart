@@ -84,6 +84,9 @@ class Llama {
         }
       }
     }
+
+    _responseController.close();
+    _ttsCompleter.complete();
   }
 
   /// Generates a stream of responses based on the provided list of chat messages.
@@ -109,6 +112,24 @@ class Llama {
     await for (final response in _responseController.stream) {
       yield response;
     }
+  }
+
+  Future<File> tts(String text) async {
+    if (!_initialized.isCompleted) {
+      _listener();
+      await _initialized.future;
+    }
+
+    _ttsCompleter = Completer();
+
+    final tempDir = await getTemporaryDirectory();
+    final outputPath = '${tempDir.path}/output.wav';
+
+    _sendPort!.send((text, outputPath));
+
+    await _ttsCompleter.future;
+
+    return File(outputPath);
   }
 
   /// Stops the current operation or process.
