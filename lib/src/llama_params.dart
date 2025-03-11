@@ -14,6 +14,16 @@ class LlamaParams extends ChangeNotifier {
     notifyListeners();
   }
 
+  File? _vocoderModelFile;
+
+  /// The path to the vocoder model file.
+  File? get vocoderModelFile => _vocoderModelFile;
+
+  set vocoderModelFile(File? value) {
+    _vocoderModelFile = value;
+    notifyListeners();
+  }
+
   bool? _vocabOnly;
 
   /// Indicates whether only the vocabulary should be loaded.
@@ -672,6 +682,7 @@ class LlamaParams extends ChangeNotifier {
 
   LlamaParams({
     required File modelFile,
+    File? vocoderModelFile,
     bool? vocabOnly,
     bool? useMmap,
     bool? useMlock,
@@ -736,6 +747,7 @@ class LlamaParams extends ChangeNotifier {
     int? drySamplerAllowedLength,
     List<String>? drySamplerSequenceBreakers,
   })  : _modelFile = modelFile,
+        _vocoderModelFile = vocoderModelFile,
         _vocabOnly = vocabOnly,
         _useMmap = useMmap,
         _useMlock = useMlock,
@@ -803,6 +815,7 @@ class LlamaParams extends ChangeNotifier {
   /// Creates a new instance from a map.
   factory LlamaParams.fromMap(Map<String, dynamic> map) => LlamaParams(
     modelFile: File(map['model_path']),
+    vocoderModelFile: map['vocoder_model_path'] != null ? File(map['vocoder_model_path']) : null,
     vocabOnly: map['vocab_only'],
     useMmap: map['use_mmap'],
     useMlock: map['use_mlock'],
@@ -883,6 +896,7 @@ class LlamaParams extends ChangeNotifier {
   /// Converts the current instance to a map.
   Map<String, dynamic> toMap() => {
     'model_path': modelFile?.path,
+    'vocoder_model_path': vocoderModelFile?.path,
     'vocab_only': vocabOnly,
     'use_mmap': useMmap,
     'use_mlock': useMlock,

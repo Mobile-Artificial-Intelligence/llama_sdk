@@ -23,19 +23,19 @@ static std::string audio_data = '';
 int llama_tts_init(char * params) {
     auto json_params = json::parse(params);
 
-    if (!json_params.contains("ttc_model_path") || !json_params["ttc_model_path"].is_string()) {
-        fprintf(stderr, "Missing 'ttc_model_path' in parameters\n");
+    if (!json_params.contains("model_path") || !json_params["model_path"].is_string()) {
+        fprintf(stderr, "Missing 'model_path' in parameters\n");
         return 1;
     }
 
-    auto ttc_model_path = json_params["ttc_model_path"].get<std::string>();
+    auto ttc_model_path = json_params["model_path"].get<std::string>();
 
-    if (!json_params.contains("cts_model_path") || !json_params["cts_model_path"].is_string()) {
-        fprintf(stderr, "Missing 'cts_model_path' in parameters\n");
+    if (!json_params.contains("vocoder_model_path") || !json_params["vocoder_model_path"].is_string()) {
+        fprintf(stderr, "Missing 'vocoder_model_path' in parameters\n");
         return 1;
     }
 
-    auto cts_model_path = json_params["cts_model_path"].get<std::string>();
+    auto cts_model_path = json_params["vocoder_model_path"].get<std::string>();
 
     if (!json_params.contains("voice_path") || !json_params["voice_path"].is_string()) {
         fprintf(stderr, "Missing 'voice_path' in parameters\n");
