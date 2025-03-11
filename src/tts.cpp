@@ -72,6 +72,9 @@ int llama_tts_init(char * params) {
 }
 
 int llama_tts(char * text, char * output_path) {
+    const int n_parallel = 1;
+    const int n_predict  = 4096;
+    
     std::string prompt(text);
     std::string fname(output_path);
 
