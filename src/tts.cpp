@@ -88,6 +88,8 @@ int llama_tts(char * text, char * output_path) {
 
     prompt_add(prompt_inp, vocab, audio_text, false, true);
 
+    outetts_version tts_version = get_tts_version(model_ttc);
+
     std::string prompt_clean = process_text(prompt, tts_version);
 
     std::vector<llama_token> guide_tokens = prepare_guide_tokens(vocab, prompt_clean, tts_version);
