@@ -20,8 +20,8 @@ static llama_context_params ctx_params;
 
 static std::vector<llama_sampler *> smpl;
 
-static std::string audio_text = '';
-static std::string audio_data = '';
+static std::string audio_text;
+static std::string audio_data;
 
 int llama_tts_init(char * params) {
     auto json_params = json::parse(params);
