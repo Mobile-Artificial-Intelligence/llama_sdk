@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -58,6 +59,66 @@ class LlamaAppState extends State<LlamaApp> {
     });
   }
 
+  void loadTTS() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        dialogTitle: "Load Model File",
+        type: FileType.any,
+        allowMultiple: false,
+        allowCompression: false);
+
+    if (result == null ||
+        result.files.isEmpty ||
+        result.files.single.path == null) {
+      throw Exception('No file selected');
+    }
+
+    File modelFile = File(result.files.single.path!);
+
+    result = await FilePicker.platform.pickFiles(
+        dialogTitle: "Load Vocoder Model File",
+        type: FileType.any,
+        allowMultiple: false,
+        allowCompression: false);
+
+    if (result == null ||
+        result.files.isEmpty ||
+        result.files.single.path == null) {
+      throw Exception('No file selected');
+    }
+
+    File vocoderFile = File(result.files.single.path!);
+
+    result = await FilePicker.platform.pickFiles(
+        dialogTitle: "Load Speaker File",
+        type: FileType.any,
+        allowMultiple: false,
+        allowCompression: false);
+
+    if (result == null ||
+        result.files.isEmpty ||
+        result.files.single.path == null) {
+      throw Exception('No file selected');
+    }
+
+    File voiceFile = File(result.files.single.path!);
+
+    final llamaCpp = Llama(
+      ttsParams: LlamaParams(
+        modelFile: modelFile,
+        vocoderFile: vocoderFile,
+        voiceFile: voiceFile,
+        nCtx: 8192,
+        nBatch: 8192,
+        greedy: true
+      ),
+    );
+
+    setState(() {
+      model = llamaCpp;
+      modelPath = "TTS";
+    });
+  }
+
   void onSubmitted(String value) async {
     if (model == null) {
       return;
@@ -68,6 +129,20 @@ class LlamaAppState extends State<LlamaApp> {
       messages.add(UserChatMessage(value));
       controller.clear();
     });
+
+    if (modelPath == "TTS") {
+      final wav = await model!.tts(value);
+
+      final source = DeviceFileSource(wav.path);
+
+      final audioPlayer = AudioPlayer();
+  
+      await audioPlayer.play(source);
+  
+      await audioPlayer.onPlayerComplete.first;
+
+      return;
+    }
 
     final stream = model!.prompt(messages.copy());
 
@@ -105,7 +180,13 @@ class LlamaAppState extends State<LlamaApp> {
         leading: IconButton(
           icon: const Icon(Icons.folder_open),
           onPressed: loadModel,
-        ));
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.mic),
+            onPressed: loadTTS,
+          ),
+        ]);
   }
 
   Widget buildBody() {

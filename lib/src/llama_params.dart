@@ -14,13 +14,23 @@ class LlamaParams extends ChangeNotifier {
     notifyListeners();
   }
 
-  File? _vocoderModelFile;
+  File? _vocoderFile;
 
   /// The path to the vocoder model file.
-  File? get vocoderModelFile => _vocoderModelFile;
+  File? get vocoderFile => _vocoderFile;
 
-  set vocoderModelFile(File? value) {
-    _vocoderModelFile = value;
+  set vocoderFile(File? value) {
+    _vocoderFile = value;
+    notifyListeners();
+  }
+
+  File? _voiceFile;
+
+  /// The path to the speaker file.
+  File? get voiceFile => _voiceFile;
+
+  set voiceFile(File? value) {
+    _voiceFile = value;
     notifyListeners();
   }
 
@@ -682,7 +692,8 @@ class LlamaParams extends ChangeNotifier {
 
   LlamaParams({
     required File modelFile,
-    File? vocoderModelFile,
+    File? vocoderFile,
+    File? voiceFile,
     bool? vocabOnly,
     bool? useMmap,
     bool? useMlock,
@@ -747,7 +758,8 @@ class LlamaParams extends ChangeNotifier {
     int? drySamplerAllowedLength,
     List<String>? drySamplerSequenceBreakers,
   })  : _modelFile = modelFile,
-        _vocoderModelFile = vocoderModelFile,
+        _vocoderFile = vocoderFile,
+        _voiceFile = voiceFile,
         _vocabOnly = vocabOnly,
         _useMmap = useMmap,
         _useMlock = useMlock,
@@ -815,7 +827,8 @@ class LlamaParams extends ChangeNotifier {
   /// Creates a new instance from a map.
   factory LlamaParams.fromMap(Map<String, dynamic> map) => LlamaParams(
     modelFile: File(map['model_path']),
-    vocoderModelFile: map['vocoder_model_path'] != null ? File(map['vocoder_model_path']) : null,
+    vocoderFile: map['vocoder_model_path'] != null ? File(map['vocoder_model_path']) : null,
+    voiceFile: map['voice_path'] != null ? File(map['voice_path']) : null,
     vocabOnly: map['vocab_only'],
     useMmap: map['use_mmap'],
     useMlock: map['use_mlock'],
@@ -896,7 +909,8 @@ class LlamaParams extends ChangeNotifier {
   /// Converts the current instance to a map.
   Map<String, dynamic> toMap() => {
     'model_path': modelFile?.path,
-    'vocoder_model_path': vocoderModelFile?.path,
+    'vocoder_model_path': vocoderFile?.path,
+    'voice_path': voiceFile?.path,
     'vocab_only': vocabOnly,
     'use_mmap': useMmap,
     'use_mlock': useMlock,

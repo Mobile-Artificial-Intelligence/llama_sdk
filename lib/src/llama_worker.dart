@@ -2,6 +2,8 @@ part of 'package:lcpp/lcpp.dart';
 
 typedef _LlamaWorkerRecord = (SendPort, String?, String?);
 
+typedef _TtsRecord = (String, String);
+
 class _LlamaWorkerParams {
   final SendPort sendPort;
   final LlamaParams? llmParams;
@@ -52,7 +54,7 @@ class _LlamaWorker {
       case const (List<_ChatMessageRecord>):
         handlePrompt(data.cast<_ChatMessageRecord>());
         break;
-      case const ((String, String)):
+      case const (_TtsRecord):
         handleTTS(data.$1, data.$2);
         break;
       default:
