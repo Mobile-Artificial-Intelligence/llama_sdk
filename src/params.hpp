@@ -8,7 +8,7 @@
 
 using json = nlohmann::ordered_json;
 
-struct llama_model_params llama_model_params_from_json(json & params) {
+inline struct llama_model_params llama_model_params_from_json(json & params) {
     auto model_params = llama_model_default_params();
 
     if (params.contains("vocab_only") && params["vocab_only"].is_boolean()) {
@@ -30,7 +30,7 @@ struct llama_model_params llama_model_params_from_json(json & params) {
     return model_params;
 }
 
-struct llama_context_params llama_context_params_from_json(json & params) {
+inline struct llama_context_params llama_context_params_from_json(json & params) {
     auto context_params = llama_context_default_params();
 
     if (params.contains("n_ctx") && params["n_ctx"].is_number_integer()) {
@@ -124,7 +124,7 @@ struct llama_context_params llama_context_params_from_json(json & params) {
     return context_params;
 }
 
-llama_sampler * llama_sampler_from_json(llama_model * model, json & params) {
+inline llama_sampler * llama_sampler_from_json(llama_model * model, json & params) {
     assert(model != nullptr);
 
     auto vocab = llama_model_get_vocab(model);
@@ -372,7 +372,7 @@ llama_sampler * llama_sampler_from_json(llama_model * model, json & params) {
     return sampler;
 }
 
-std::vector<llama_chat_message> llama_parse_messages(char * messages) {
+inline std::vector<llama_chat_message> llama_parse_messages(char * messages) {
     auto json_messages = json::parse(messages);
     std::vector<llama_chat_message> result;
 
