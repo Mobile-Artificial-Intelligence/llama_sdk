@@ -17,19 +17,24 @@ class _LlamaWorkerParams {
 }
 
 class _LlamaWorker {
+  static final _finalizer = Finalizer(
+    (_) => lib.llama_api_free(),
+  );
+  static SendPort? _sendPort;
+
   final Completer<void> completer = Completer<void>();
   final ReceivePort receivePort = ReceivePort();
-  final SendPort sendPort;
-  LlamaNative? native;
+  final LlamaParams llamaParams;
 
   _LlamaWorker({
-    required this.sendPort,
-    required LlamaParams llamaParams
+    required SendPort sendPort,
+    required this.llamaParams
   }) {
-    native = LlamaNative(llamaParams);
-
+    _sendPort = sendPort;
     sendPort.send(receivePort.sendPort);
     receivePort.listen(handleData);
+    _init();
+    _finalizer.attach(this, null);
   }
 
   factory _LlamaWorker.fromRecord(_LlamaWorkerRecord record) => _LlamaWorker(
@@ -49,22 +54,25 @@ class _LlamaWorker {
   }
 
   void handlePrompt(List<_ChatMessageRecord> data) async {
-    assert(native != null, LlamaException('Llama Native is not initialized'));
-    
     final messages = ChatMessages._fromRecords(data);
-    final stream = native!.prompt(messages);
+    final chatMessagesPointer = messages._toPointer();
 
-    await for (final response in stream) {
-      sendPort.send(response);
-    }
-
-    await Future.delayed(const Duration(milliseconds: 100));
-
-    sendPort.send(null);
+    lib.llama_prompt(chatMessagesPointer, ffi.Pointer.fromFunction(_output));
   }
 
   static void entry(_LlamaWorkerRecord record) async {
     final worker = _LlamaWorker.fromRecord(record);
     await worker.completer.future;
+  }
+
+  void _init() => lib.llama_init(llamaParams._toPointer());
+
+  static void _output(ffi.Pointer<ffi.Char> buffer) {
+    if (buffer == ffi.nullptr) {
+      _sendPort!.send(null);
+    }
+    else {
+      _sendPort!.send(buffer.cast<Utf8>().toDartString());
+    }
   }
 }

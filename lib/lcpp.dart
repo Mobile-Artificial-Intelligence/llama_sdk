@@ -13,8 +13,6 @@ import 'src/hook.dart';
 
 part 'src/chat_message.dart';
 part 'src/llama_exception.dart';
-part 'src/llama_isolated.dart';
-part 'src/llama_native.dart';
+part 'src/llama.dart';
 part 'src/llama_params.dart';
 part 'src/llama_worker.dart';
-part 'src/llama.dart';
