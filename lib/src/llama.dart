@@ -24,17 +24,17 @@ class Llama {
   SendPort? _sendPort;
   ReceivePort? _receivePort;
 
-  LlamaParams _llamaParams;
+  LlamaParams _llmParams;
 
   /// Gets the current LlamaParams instance.
   ///
   /// The [LlamaParams] instance contains the parameters used by the llama.
   ///
   /// Returns the current [LlamaParams] instance.
-  LlamaParams get llamaParams => _llamaParams;
+  LlamaParams get llmParams => _llmParams;
 
-  set llamaParams(LlamaParams value) {
-    _llamaParams = value;
+  set llmParams(LlamaParams value) {
+    _llmParams = value;
     stop();
   }
 
@@ -51,16 +51,16 @@ class Llama {
   /// the listener.
   ///
   /// Parameters:
-  /// - [llamaParams]: The parameters required for the Llama model.
-  Llama(LlamaParams llamaParams)
-      : _llamaParams = llamaParams;
+  /// - [llmParams]: The parameters required for the Llama model.
+  Llama(LlamaParams llmParams)
+      : _llmParams = llmParams;
 
   void _listener() async {
     _receivePort = ReceivePort();
 
     final workerParams = _LlamaWorkerParams(
       sendPort: _receivePort!.sendPort,
-      llamaParams: _llamaParams,
+      llmParams: _llmParams,
     );
 
     _isolate = await Isolate.spawn(_LlamaWorker.entry, workerParams.toRecord());
