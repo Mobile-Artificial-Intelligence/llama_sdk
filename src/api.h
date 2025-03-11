@@ -1,3 +1,6 @@
+#ifndef API_H
+#define API_H
+
 #if defined(_WIN32) && !defined(__MINGW32__)
     #define DART_API __declspec(dllimport)
 #else
@@ -28,4 +31,6 @@ DART_API void llama_tts_free(void);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

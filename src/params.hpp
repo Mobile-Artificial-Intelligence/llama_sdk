@@ -1,3 +1,6 @@
+#ifndef PARAMS_HPP
+#define PARAMS_HPP
+
 #include "llama.h"
 #include "json.hpp"
 #include <cassert>
@@ -387,3 +390,5 @@ std::vector<llama_chat_message> llama_parse_messages(char * messages) {
 
     return result;
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef TTS_HPP
+#define TTS_HPP
+
 #define _USE_MATH_DEFINES // For M_PI on MSVC
 
 #include "llama.h"
@@ -482,3 +485,5 @@ static std::vector<float> embd_to_audio(
 
     return audio;
 }
+
+#endif
