@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev
     paths:
       - '.github/workflows/build-macos.yml'
       - 'macos/**'
