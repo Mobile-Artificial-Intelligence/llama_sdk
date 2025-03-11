@@ -10,6 +10,7 @@ on:
       - '.github/workflows/build-linux.yml'
       - 'linux/**'
       - 'lib/**'
+      - 'src/**'
       - 'example/linux/**'
       - 'example/lib/**'
       - 'pubspec.yaml'

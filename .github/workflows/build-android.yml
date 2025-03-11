@@ -10,6 +10,7 @@ on:
       - '.github/workflows/build-android.yml'
       - 'android/**'
       - 'lib/**'
+      - 'src/**'
       - 'example/android/**'
       - 'example/lib/**'
       - 'pubspec.yaml'

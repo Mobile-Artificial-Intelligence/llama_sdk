@@ -10,6 +10,7 @@ on:
       - '.github/workflows/build-macos.yml'
       - 'macos/**'
       - 'lib/**'
+      - 'src/**'
       - 'example/macos/**'
       - 'example/lib/**'
       - 'pubspec.yaml'

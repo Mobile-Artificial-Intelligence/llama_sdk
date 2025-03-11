@@ -10,6 +10,7 @@ on:
   #    - '.github/workflows/build-ios.yml'
   #    - 'ios/**'
   #    - 'lib/**'
+  #    - 'src/**'
   #    - 'example/ios/**'
   #    - 'example/lib/**'
   #    - 'pubspec.yaml'
