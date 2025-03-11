@@ -52,6 +52,9 @@ class _LlamaWorker {
       case const (List<_ChatMessageRecord>):
         handlePrompt(data.cast<_ChatMessageRecord>());
         break;
+      case const ((String, String)):
+        handleTTS(data.$1, data.$2);
+        break;
       default:
         completer.completeError(LlamaException('Invalid data type'));
         break;
@@ -67,6 +70,21 @@ class _LlamaWorker {
     final chatMessagesPointer = messages._toPointer();
 
     lib.llama_prompt(chatMessagesPointer, ffi.Pointer.fromFunction(_output));
+  }
+
+  void handleTTS(String text, String outputPath) async {
+    if (ttsParams == null) {
+      throw LlamaException('LlamaParams is null');
+    }
+
+    final textPointer = text.toNativeUtf8().cast<ffi.Char>();
+    final outputPathPointer = outputPath.toNativeUtf8().cast<ffi.Char>();
+
+    lib.llama_tts(textPointer, outputPathPointer);
+
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    _sendPort!.send(false);
   }
 
   static void entry(_LlamaWorkerRecord record) async {
@@ -86,7 +104,7 @@ class _LlamaWorker {
 
   static void _output(ffi.Pointer<ffi.Char> buffer) {
     if (buffer == ffi.nullptr) {
-      _sendPort!.send(null);
+      _sendPort!.send(true);
     }
     else {
       _sendPort!.send(buffer.cast<Utf8>().toDartString());

@@ -18,6 +18,7 @@ part of 'package:lcpp/lcpp.dart';
 /// The [reload] method stops the current operation and reloads the isolate.
 class Llama {
   Completer _initialized = Completer();
+  Completer _ttsCompleter = Completer();
   StreamController<String> _responseController = StreamController<String>()
     ..close();
   Isolate? _isolate;
@@ -47,13 +48,6 @@ class Llama {
     stop();
   }
 
-  /// Indicates whether the resource has been freed.
-  ///
-  /// This boolean flag is used to track the state of the resource,
-  /// where `true` means the resource has been freed and `false` means
-  /// it is still in use.
-  bool isFreed = false;
-
   /// Constructs an instance of [LlamaIsolated].
   ///
   /// Initializes the [LlamaIsolated] with the provided parameters and sets up
@@ -81,8 +75,13 @@ class Llama {
         _initialized.complete();
       } else if (data is String) {
         _responseController.add(data);
-      } else if (data == null) {
-        _responseController.close();
+      } else if (data is bool) {
+        if (data) {
+          _responseController.close();
+        }
+        else {
+          _ttsCompleter.complete();
+        }
       }
     }
   }
@@ -98,10 +97,6 @@ class Llama {
   /// - Parameter messages: A list of [ChatMessage] objects that represent the chat history.
   /// - Returns: A [Stream] of strings, where each string is a generated response.
   Stream<String> prompt(List<ChatMessage> messages) async* {
-    if (isFreed) {
-      throw LlamaException('LlamaIsolated has been freed');
-    }
-
     if (!_initialized.isCompleted) {
       _listener();
       await _initialized.future;
