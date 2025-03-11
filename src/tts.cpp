@@ -241,7 +241,10 @@ int llama_tts(char * text, char * output_path) {
 }
 
 void llama_tts_free(void) {
-    llama_sampler_free(smpl);
+    for (auto & s : smpl) {
+        llama_sampler_free(s);
+    }
+
     llama_model_free(model_ttc);
     llama_model_free(model_cts);
 }
