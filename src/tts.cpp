@@ -74,7 +74,7 @@ int llama_tts_init(char * params) {
 int llama_tts(char * text, char * output_path) {
     const int n_parallel = 1;
     const int n_predict  = 4096;
-    
+
     std::string prompt(text);
     std::string fname(output_path);
 
@@ -232,13 +232,14 @@ int llama_tts(char * text, char * output_path) {
 
     save_wav16(fname, audio, n_sr);
 
+    llama_free(ctx_ttc);
+    llama_free(ctx_cts);
+
     return 0;
 }
 
 void llama_tts_free(void) {
     llama_sampler_free(smpl);
-    llama_free(ctx_ttc);
-    llama_free(ctx_cts);
     llama_model_free(model_ttc);
     llama_model_free(model_cts);
 }
