@@ -8,8 +8,6 @@
 #include <atomic>
 #include <mutex>
 
-using json = nlohmann::ordered_json;
-
 const int n_parallel = 1;
 const int n_predict  = 4096;
 

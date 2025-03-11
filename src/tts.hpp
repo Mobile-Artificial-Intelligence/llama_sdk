@@ -5,6 +5,7 @@
 
 #include "llama.h"
 #include "json.hpp"
+#include "params.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -15,8 +16,6 @@
 #include <string>
 #include <thread>
 #include <vector>
-
-using json = nlohmann::ordered_json;
 
 enum outetts_version {
     OUTETTS_V0_2,

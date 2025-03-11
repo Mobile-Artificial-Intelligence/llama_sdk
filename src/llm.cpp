@@ -7,8 +7,6 @@
 #include <atomic>
 #include <mutex>
 
-using json = nlohmann::ordered_json;
-
 static std::atomic_bool stop_generation(false);
 static std::mutex continue_mutex;
 
