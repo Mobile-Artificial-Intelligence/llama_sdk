@@ -18,7 +18,7 @@ static llama_model * model_cts = nullptr;
 
 static llama_context_params ctx_params;
 
-static std::vector<llama_sampler *> smpl(n_parallel);
+static std::vector<llama_sampler *> smpl;
 
 static std::string audio_text = '';
 static std::string audio_data = '';
@@ -62,6 +62,8 @@ int llama_tts_init(char * params) {
     ggml_backend_load_all();
 
     model_ttc = llama_model_load_from_file(ttc_model_path.c_str(), model_params);
+
+    smpl = std::vector<llama_sampler *>(n_parallel);
     for (int i = 0; i < n_parallel; ++i) {
         smpl[i] = llama_sampler_from_json(model_ttc, json_params);
     }
