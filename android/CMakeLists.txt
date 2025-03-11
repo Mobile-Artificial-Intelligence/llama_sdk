@@ -14,8 +14,9 @@ set(LLAMA_CPP_DIR ${API_DIR}/llama_cpp)
 add_subdirectory(${LLAMA_CPP_DIR} ${CMAKE_BINARY_DIR}/llama_cpp_build)
 
 target_sources(
-    llama 
-    PRIVATE 
-    ${API_DIR}/llm.cpp
-    ${API_DIR}/tts.cpp
+  llama 
+  PRIVATE 
+  ${API_DIR}/params.cpp
+  ${API_DIR}/llm.cpp
+  ${API_DIR}/tts.cpp
 )

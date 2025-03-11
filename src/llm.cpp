@@ -15,6 +15,25 @@ static llama_context * ctx = nullptr;
 static llama_sampler * smpl = nullptr;
 static int prev_len = 0;
 
+std::vector<llama_chat_message> llama_parse_messages(char * messages) {
+    auto json_messages = json::parse(messages);
+    std::vector<llama_chat_message> result;
+
+    for (auto & message : json_messages) {
+        auto role = message["role"].get<std::string>();
+        auto content = message["content"].get<std::string>();
+
+        llama_chat_message msg = {
+            strdup(role.c_str()),
+            strdup(content.c_str())
+        };
+
+        result.push_back(msg);
+    }
+
+    return result;
+}
+
 char * llama_default_params(void) {
     json params = json::object();
 

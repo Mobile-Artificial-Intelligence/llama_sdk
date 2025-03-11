@@ -25,6 +25,7 @@ add_subdirectory(${LLAMA_CPP_DIR} ${CMAKE_CURRENT_BINARY_DIR}/shared)
 target_sources(
   llama 
   PRIVATE 
+  ${API_DIR}/params.cpp
   ${API_DIR}/llm.cpp
   ${API_DIR}/tts.cpp
 )
