@@ -21,33 +21,6 @@ part of 'package:lcpp/lcpp.dart';
 ///
 /// Throws an `LlamaException` if the platform is unsupported.
 abstract interface class Llama {
-  static llama? _lib;
-
-  /// Returns an instance of the `llama` library.
-  ///
-  /// This getter initializes the `_lib` field if it is `null` by loading the
-  /// appropriate dynamic library based on the current platform:
-  ///
-  /// - On Windows, it loads `llama.dll`.
-  /// - On Linux or Android, it loads `libllama.so`.
-  /// - On macOS or iOS, it loads `llama.framework/llama`.
-  ///
-  /// Throws a [LlamaException] if the platform is unsupported.
-  static llama get lib {
-    if (_lib == null) {
-      if (Platform.isWindows) {
-        _lib = llama(ffi.DynamicLibrary.open('llama.dll'));
-      } else if (Platform.isLinux || Platform.isAndroid) {
-        _lib = llama(ffi.DynamicLibrary.open('libllama.so'));
-      } else if (Platform.isMacOS || Platform.isIOS) {
-        _lib = llama(ffi.DynamicLibrary.open('lcpp.framework/lcpp'));
-      } else {
-        throw LlamaException('Unsupported platform');
-      }
-    }
-    return _lib!;
-  }
-
   /// Factory constructor for creating a [Llama] instance.
   ///
   /// Depending on the value of [isolate], this constructor will either create

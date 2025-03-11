@@ -8,7 +8,8 @@ cmake_minimum_required(VERSION 3.10)
 set(PROJECT_NAME "llama")
 project(${PROJECT_NAME} LANGUAGES CXX)
 
-set(LLAMA_CPP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../src/llama_cpp)
+set(API_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../src)
+set(LLAMA_CPP_DIR ${API_DIR}/llama_cpp)
 
 set(BUILD_SHARED_LIBS ON)
 set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "library install dir" FORCE)
@@ -21,8 +22,10 @@ set(LLAMA_VULKAN ON CACHE BOOL "llama: enable vulkan" FORCE)
 
 add_subdirectory(${LLAMA_CPP_DIR} ${CMAKE_CURRENT_BINARY_DIR}/shared)
 
+target_sources(llama PRIVATE ${API_DIR}/api.cpp)
+
 set_target_properties(llama PROPERTIES
-  PUBLIC_HEADER ${LLAMA_CPP_DIR}/include/llama.h
+  PUBLIC_HEADER ${API_DIR}/api.h
   BUILD_WITH_INSTALL_RPATH TRUE
   INSTALL_RPATH "$ORIGIN"
 )

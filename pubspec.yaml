@@ -1,6 +1,6 @@
 name: lcpp
 description: "lcpp is a dart implementation of llama.cpp used by the mobile artificial intelligence distribution (maid) for local model inference."
-version: 0.2.0
+version: 0.2.1
 homepage: "https://github.com/Mobile-Artificial-Intelligence/lcpp"
 
 environment:
@@ -25,10 +25,7 @@ ffigen:
   ignore-source-errors: true
   headers:
     entry-points:
-      - 'src/llama_cpp/include/llama.h'
-      - 'src/llama_cpp/ggml/include/ggml.h'
-      - 'src/llama_cpp/ggml/include/ggml-cpu.h'
-      - 'src/llama_cpp/ggml/include/ggml-backend.h'
+      - 'src/api.h'
   compiler-opts:
     - '-I/usr/lib/clang/17/include'
 

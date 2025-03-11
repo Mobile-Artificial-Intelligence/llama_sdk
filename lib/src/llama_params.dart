@@ -4,12 +4,12 @@ part of 'package:lcpp/lcpp.dart';
 
 /// A class that represents the parameters for the Llama model.
 class LlamaParams extends ChangeNotifier {
-  File _modelFile;
+  File? _modelFile;
 
   /// The path to the model file.
-  File get modelFile => _modelFile;
+  File? get modelFile => _modelFile;
 
-  set modelFile(File value) {
+  set modelFile(File? value) {
     _modelFile = value;
     notifyListeners();
   }
@@ -734,6 +734,7 @@ class LlamaParams extends ChangeNotifier {
     double? drySamplerMultiplier,
     double? drySamplerDryBase,
     int? drySamplerAllowedLength,
+    List<String>? drySamplerSequenceBreakers,
   })  : _modelFile = modelFile,
         _vocabOnly = vocabOnly,
         _useMmap = useMmap,
@@ -796,7 +797,8 @@ class LlamaParams extends ChangeNotifier {
         _drySamplerNCtxTrain = drySamplerNCtxTrain,
         _drySamplerMultiplier = drySamplerMultiplier,
         _drySamplerDryBase = drySamplerDryBase,
-        _drySamplerAllowedLength = drySamplerAllowedLength;
+        _drySamplerAllowedLength = drySamplerAllowedLength,
+        _drySamplerSequenceBreakers = drySamplerSequenceBreakers;
 
   /// Creates a new instance from a map.
   factory LlamaParams.fromMap(Map<String, dynamic> map) => LlamaParams(
@@ -863,14 +865,24 @@ class LlamaParams extends ChangeNotifier {
     drySamplerMultiplier: map['dry_sampler_multiplier'],
     drySamplerDryBase: map['dry_sampler_dry_base'],
     drySamplerAllowedLength: map['dry_sampler_allowed_length'],
+    drySamplerSequenceBreakers: map['dry_sampler_sequence_breakers'],
   );
 
   /// Creates a new instance from a JSON string.
   factory LlamaParams.fromJson(String source) => LlamaParams.fromMap(jsonDecode(source));
 
+  /// Creates a new instance with the default parameters.
+  factory LlamaParams.nativeDefault() {
+    final charParams = lib.llama_default_params();
+
+    final stringParams = charParams.cast<Utf8>().toDartString();
+
+    return LlamaParams.fromJson(stringParams);
+  }
+
   /// Converts the current instance to a map.
   Map<String, dynamic> toMap() => {
-    'model_path': modelFile.path,
+    'model_path': modelFile?.path,
     'vocab_only': vocabOnly,
     'use_mmap': useMmap,
     'use_mlock': useMlock,
@@ -881,9 +893,9 @@ class LlamaParams extends ChangeNotifier {
     'n_seq_max': nSeqMax,
     'n_threads': nThreads,
     'n_threads_batch': nThreadsBatch,
-    'rope_scaling_type': ropeScalingType.toString().split('.').last,
-    'pooling_type': poolingType.toString().split('.').last,
-    'attention_type': attentionType.toString().split('.').last,
+    'rope_scaling_type': ropeScalingType?.name,
+    'pooling_type': poolingType?.name,
+    'attention_type': attentionType?.name,
     'rope_frequency_base': ropeFrequencyBase,
     'rope_frequency_scale': ropeFrequencyScale,
     'yarn_extrapolation_factor': yarnExtrapolationFactor,
@@ -892,8 +904,8 @@ class LlamaParams extends ChangeNotifier {
     'yarn_beta_slow': yarnBetaSlow,
     'yarn_original_context': yarnOriginalContext,
     'defragmentation_threshold': defragmentationThreshold,
-    'type_k': typeK.toString().split('.').last,
-    'type_v': typeV.toString().split('.').last,
+    'type_k': typeK?.name,
+    'type_v': typeV?.name,
     'embeddings': embeddings,
     'offload_kqv': offloadKqv,
     'flash_attention': flashAttention,
@@ -933,338 +945,14 @@ class LlamaParams extends ChangeNotifier {
     'dry_sampler_multiplier': _drySamplerMultiplier,
     'dry_sampler_dry_base': _drySamplerDryBase,
     'dry_sampler_allowed_length': _drySamplerAllowedLength,
+    'dry_sampler_sequence_breakers': _drySamplerSequenceBreakers,
   };
 
   /// Converts the current instance to a JSON string.
   String toJson() => jsonEncode(toMap());
 
-  /// Retrieves and initializes the model parameters for the llama model.
-  ///
-  /// This function initializes the model parameters using the default values
-  /// provided by the llama library. It then updates the parameters based on
-  /// the optional properties `vocabOnly`, `useMmap`, `useMlock`, and `checkTensors`
-  /// if they are not null.
-  ///
-  /// Returns:
-  ///   A `llama_model_params` object containing the initialized and updated
-  ///   model parameters.
-  llama_model_params getModelParams() {
-    final llama_model_params modelParams =
-        Llama.lib.llama_model_default_params();
-    log("Model params initialized");
-
-    if (vocabOnly != null) {
-      modelParams.vocab_only = vocabOnly!;
-    }
-
-    if (useMmap != null) {
-      modelParams.use_mmap = useMmap!;
-    }
-
-    if (useMlock != null) {
-      modelParams.use_mlock = useMlock!;
-    }
-
-    if (checkTensors != null) {
-      modelParams.check_tensors = checkTensors!;
-    }
-
-    return modelParams;
-  }
-
-  /// Returns a configured `llama_context_params` object based on the current instance's properties.
-  /// 
-  /// This method initializes a `llama_context_params` object with default values and then overrides
-  /// those values with the properties of the current instance if they are not null.
-  /// 
-  /// The following properties are set:
-  /// 
-  /// - `n_ctx`: The context size.
-  /// - `n_batch`: The batch size.
-  /// - `n_ubatch`: The unrolled batch size.
-  /// - `n_seq_max`: The maximum sequence length.
-  /// - `n_threads`: The number of threads.
-  /// - `n_threads_batch`: The number of threads for batch processing.
-  /// - `rope_scaling_type`: The type of rope scaling, adjusted by subtracting 1 from the enum index.
-  /// - `pooling_type`: The type of pooling, adjusted by subtracting 1 from the enum index.
-  /// - `attention_type`: The type of attention, adjusted by subtracting 1 from the enum index.
-  /// - `rope_freq_base`: The base frequency for rope.
-  /// - `rope_freq_scale`: The scaling factor for rope frequency.
-  /// - `yarn_ext_factor`: The extrapolation factor for yarn.
-  /// - `yarn_attn_factor`: The attenuation factor for yarn.
-  /// - `yarn_beta_fast`: The fast beta value for yarn.
-  /// - `yarn_beta_slow`: The slow beta value for yarn.
-  /// - `yarn_orig_ctx`: The original context for yarn.
-  /// - `defrag_thold`: The defragmentation threshold.
-  /// - `type_k`: The type K, converted to a C int.
-  /// - `type_v`: The type V, converted to a C int.
-  /// - `embeddings`: The embeddings.
-  /// - `offload_kqv`: The offload KQV flag.
-  /// - `flash_attn`: The flash attention flag.
-  /// - `no_perf`: The no performance flag.
-  /// 
-  /// Returns:
-  /// - A `llama_context_params` object with the configured properties.
-  llama_context_params getContextParams() {
-    final llama_context_params contextParams =
-        Llama.lib.llama_context_default_params();
-
-    contextParams.n_ctx = nCtx;
-
-    if (nBatch != null) {
-      contextParams.n_batch = nBatch!;
-    }
-
-    if (nUBatch != null) {
-      contextParams.n_ubatch = nUBatch!;
-    }
-
-    if (nSeqMax != null) {
-      contextParams.n_seq_max = nSeqMax!;
-    }
-
-    if (nThreads != null) {
-      contextParams.n_threads = nThreads!;
-    }
-
-    if (nThreadsBatch != null) {
-      contextParams.n_threads_batch = nThreadsBatch!;
-    }
-
-    if (ropeScalingType != null) {
-      // This enum starts at -1, so we need to subtract 1 from the index
-      contextParams.rope_scaling_typeAsInt = ropeScalingType!.index - 1;
-    }
-
-    if (poolingType != null) {
-      // This enum starts at -1, so we need to subtract 1 from the index
-      contextParams.pooling_typeAsInt = poolingType!.index - 1;
-    }
-
-    if (attentionType != null) {
-      // This enum starts at -1, so we need to subtract 1 from the index
-      contextParams.attention_typeAsInt = attentionType!.index - 1;
-    }
-
-    if (ropeFrequencyBase != null) {
-      contextParams.rope_freq_base = ropeFrequencyBase!;
-    }
-
-    if (ropeFrequencyScale != null) {
-      contextParams.rope_freq_scale = ropeFrequencyScale!;
-    }
-
-    if (yarnExtrapolationFactor != null) {
-      contextParams.yarn_ext_factor = yarnExtrapolationFactor!;
-    }
-
-    if (yarnAttenuationFactor != null) {
-      contextParams.yarn_attn_factor = yarnAttenuationFactor!;
-    }
-
-    if (yarnBetaFast != null) {
-      contextParams.yarn_beta_fast = yarnBetaFast!;
-    }
-
-    if (yarnBetaSlow != null) {
-      contextParams.yarn_beta_slow = yarnBetaSlow!;
-    }
-
-    if (yarnOriginalContext != null) {
-      contextParams.yarn_orig_ctx = yarnOriginalContext!;
-    }
-
-    if (defragmentationThreshold != null) {
-      contextParams.defrag_thold = defragmentationThreshold!;
-    }
-
-    if (typeK != null) {
-      // It may seem redundant to multiply by 1, but it's necessary to convert to a C int
-      contextParams.type_kAsInt = typeK!.index * 1;
-    }
-
-    if (typeV != null) {
-      // It may seem redundant to multiply by 1, but it's necessary to convert to a C int
-      contextParams.type_vAsInt = typeV!.index * 1;
-    }
-
-    if (embeddings != null) {
-      contextParams.embeddings = embeddings!;
-    }
-
-    if (offloadKqv != null) {
-      contextParams.offload_kqv = offloadKqv!;
-    }
-
-    if (flashAttention != null) {
-      contextParams.flash_attn = flashAttention!;
-    }
-
-    if (noPerformance != null) {
-      contextParams.no_perf = noPerformance!;
-    }
-
-    return contextParams;
-  }
-
-  /// Initializes and returns a pointer to a `llama_sampler` with the specified parameters.
-  ///
-  /// This method creates a sampler chain and adds various samplers to it based on the provided
-  /// parameters. The samplers are added in the following order:
-  ///
-  /// 1. Greedy sampler (if `greedy` is true).
-  /// 2. Infill sampler (if `_infill` is true, requires `vocab` to be non-null).
-  /// 3. Distribution sampler (if `_seed` is not null).
-  /// 4. Top-K sampler (if `_topK` is not null).
-  /// 5. Top-P sampler (if both `_topP` and `_minKeepTopP` are not null).
-  /// 6. Min-P sampler (if both `_minP` and `_minKeepMinP` are not null).
-  /// 7. Typical sampler (if both `_typicalP` and `_minKeepTypicalP` are not null).
-  /// 8. Temperature sampler (if `_temperature` is not null, with optional delta and exponent).
-  /// 9. XTC sampler (if `_xtcP`, `_xtcT`, `_minKeepXtc`, and `_xtcSeed` are all not null).
-  /// 10. Mirostat sampler (if `_mirostatNVocab`, `_mirostatSeed`, `_mirostatTau`, `_mirostatEta`, and `_mirostatM` are all not null).
-  /// 11. Mirostat V2 sampler (if `_mirostatV2Seed`, `_mirostatV2Tau`, and `_mirostatV2Eta` are all not null).
-  /// 12. Grammar sampler (if `_grammarStr` and `_grammarRoot` are not null, requires `vocab` to be non-null).
-  /// 13. Penalties sampler (if `_penaltiesLastN`, `_penaltiesRepeat`, `_penaltiesFrequency`, and `_penaltiesPresent` are all not null).
-  /// 14. Dry sampler (if `_drySamplerSequenceBreakers`, `_drySamplerNCtxTrain`, `_drySamplerMultiplier`, `_drySamplerDryBase`, and `_drySamplerAllowedLength` are all not null, requires `vocab` to be non-null).
-  ///
-  /// Parameters:
-  /// - [vocab] (optional): A pointer to a `llama_vocab` required for certain samplers.
-  ///
-  /// Returns:
-  /// - A pointer to the initialized `llama_sampler`.
-  ///
-  /// Throws:
-  /// - `LlamaException` if `vocab` is required but not provided.
-  ffi.Pointer<llama_sampler> getSampler([ffi.Pointer<llama_vocab>? vocab]) {
-    final sampler = Llama.lib.llama_sampler_chain_init(
-        Llama.lib.llama_sampler_chain_default_params());
-
-    if (greedy) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler, Llama.lib.llama_sampler_init_greedy());
-    }
-
-    if (_infill) {
-      assert(vocab != null, LlamaException('Vocabulary is required for infill'));
-      Llama.lib.llama_sampler_chain_add(
-          sampler, Llama.lib.llama_sampler_init_infill(vocab!));
-    }
-
-    if (_seed != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler, Llama.lib.llama_sampler_init_dist(_seed!));
-    }
-
-    if (_topK != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler, Llama.lib.llama_sampler_init_top_k(_topK!));
-    }
-
-    if (_topP != null && _minKeepTopP != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler, Llama.lib.llama_sampler_init_top_p(_topP!, _minKeepTopP!));
-    }
-
-    if (_minP != null && _minKeepMinP != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler, Llama.lib.llama_sampler_init_min_p(_minP!, _minKeepMinP!));
-    }
-
-    if (_typicalP != null && _minKeepTypicalP != null) {
-      Llama.lib.llama_sampler_chain_add(sampler,
-          Llama.lib.llama_sampler_init_typical(_typicalP!, _minKeepTypicalP!));
-    }
-
-    if (_temperature != null) {
-      if (_temperatureDelta == null || _temperatureExponent == null) {
-        Llama.lib.llama_sampler_chain_add(sampler,
-            Llama.lib.llama_sampler_init_temp(_temperature!));
-      } else {
-        Llama.lib.llama_sampler_chain_add(
-            sampler,
-            Llama.lib.llama_sampler_init_temp_ext(_temperature!,
-                _temperatureDelta!, _temperatureExponent!));
-      }
-    }
-
-    if (_xtcP != null &&
-        _xtcT != null &&
-        _minKeepXtc != null &&
-        _xtcSeed != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler,
-          Llama.lib
-              .llama_sampler_init_xtc(_xtcP!, _xtcT!, _minKeepXtc!, _xtcSeed!));
-    }
-
-    if (_mirostatNVocab != null &&
-        _mirostatSeed != null &&
-        _mirostatTau != null &&
-        _mirostatEta != null &&
-        _mirostatM != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler,
-          Llama.lib.llama_sampler_init_mirostat(_mirostatNVocab!,
-              _mirostatSeed!, _mirostatTau!, _mirostatEta!, _mirostatM!));
-    }
-
-    if (_mirostatV2Seed != null &&
-        _mirostatV2Tau != null &&
-        _mirostatV2Eta != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler,
-          Llama.lib.llama_sampler_init_mirostat_v2(
-              _mirostatV2Seed!, _mirostatV2Tau!, _mirostatV2Eta!));
-    }
-
-    if (_grammarStr != null && _grammarRoot != null) {
-      assert(vocab != null, LlamaException('Vocabulary is required for grammar'));
-      Llama.lib.llama_sampler_chain_add(
-          sampler,
-          Llama.lib.llama_sampler_init_grammar(
-              vocab!,
-              _grammarStr!.toNativeUtf8().cast<ffi.Char>(),
-              _grammarRoot!.toNativeUtf8().cast<ffi.Char>()));
-    }
-
-    if (_penaltiesLastN != null &&
-        _penaltiesRepeat != null &&
-        _penaltiesFrequency != null &&
-        _penaltiesPresent != null) {
-      Llama.lib.llama_sampler_chain_add(
-          sampler,
-          Llama.lib.llama_sampler_init_penalties(_penaltiesLastN!,
-              _penaltiesRepeat!, _penaltiesFrequency!, _penaltiesPresent!));
-    }
-
-    if (_drySamplerSequenceBreakers != null &&
-        _drySamplerNCtxTrain != null &&
-        _drySamplerMultiplier != null &&
-        _drySamplerDryBase != null &&
-        _drySamplerAllowedLength != null) {
-      assert(vocab != null, LlamaException('Vocabulary is required for dry sampler'));
-      final sequenceBreakers =
-          calloc<ffi.Pointer<ffi.Char>>(_drySamplerSequenceBreakers!.length);
-      for (var i = 0; i < _drySamplerSequenceBreakers!.length; i++) {
-        sequenceBreakers[i] =
-            _drySamplerSequenceBreakers![i].toNativeUtf8().cast<ffi.Char>();
-      }
-
-      Llama.lib.llama_sampler_chain_add(
-          sampler,
-          Llama.lib.llama_sampler_init_dry(
-              vocab!,
-              _drySamplerNCtxTrain!,
-              _drySamplerMultiplier!,
-              _drySamplerDryBase!,
-              _drySamplerAllowedLength!,
-              _drySamplerPenaltyLastN!,
-              sequenceBreakers,
-              _drySamplerSequenceBreakers!.length));
-    }
-
-    return sampler;
-  }
+  /// Converts to a Pointer<Char> instance.
+  ffi.Pointer<ffi.Char> _toPointer() => toJson().toNativeUtf8().cast<ffi.Char>();
 }
 
 /// Enum representing different types of rope scaling.
