@@ -22,7 +22,12 @@ set(LLAMA_VULKAN ON CACHE BOOL "llama: enable vulkan" FORCE)
 
 add_subdirectory(${LLAMA_CPP_DIR} ${CMAKE_CURRENT_BINARY_DIR}/shared)
 
-target_sources(llama PRIVATE ${API_DIR}/llm.cpp)
+target_sources(
+  llama 
+  PRIVATE 
+  ${API_DIR}/llm.cpp
+  ${API_DIR}/tts.cpp
+)
 
 set_target_properties(llama PROPERTIES
   PUBLIC_HEADER ${API_DIR}/api.h
