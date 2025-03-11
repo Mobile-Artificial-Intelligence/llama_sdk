@@ -38,6 +38,15 @@ class Llama {
     stop();
   }
 
+  LlamaParams _ttsParams;
+
+  LlamaParams get ttsParams => _ttsParams;
+
+  set ttsParams(LlamaParams value) {
+    _ttsParams = value;
+    stop();
+  }
+
   /// Indicates whether the resource has been freed.
   ///
   /// This boolean flag is used to track the state of the resource,
@@ -52,8 +61,8 @@ class Llama {
   ///
   /// Parameters:
   /// - [llmParams]: The parameters required for the Llama model.
-  Llama(LlamaParams llmParams)
-      : _llmParams = llmParams;
+  Llama({required LlamaParams llmParams, required LlamaParams ttsParams})
+      : _llmParams = llmParams, _ttsParams = ttsParams;
 
   void _listener() async {
     _receivePort = ReceivePort();
@@ -61,6 +70,7 @@ class Llama {
     final workerParams = _LlamaWorkerParams(
       sendPort: _receivePort!.sendPort,
       llmParams: _llmParams,
+      ttsParams: _ttsParams,
     );
 
     _isolate = await Isolate.spawn(_LlamaWorker.entry, workerParams.toRecord());

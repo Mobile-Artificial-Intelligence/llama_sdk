@@ -43,12 +43,21 @@ class LlamaAppState extends State<LlamaApp> {
       throw Exception('File does not exist');
     }
 
-    final llamaCpp = Llama(LlamaParams(
-      modelFile: resultFile,
-      nCtx: 2048, 
-      nBatch: 2048,
-      greedy: true
-    ));
+    final llamaCpp = Llama(
+      llmParams: LlamaParams(
+        modelFile: resultFile,
+        nCtx: 2048, 
+        nBatch: 2048,
+        greedy: true
+      ),
+      ttsParams: LlamaParams(
+        modelFile: resultFile,
+        vocoderModelFile: resultFile,
+        nCtx: 2048, 
+        nBatch: 2048,
+        greedy: true
+      )
+    );
 
     setState(() {
       model = llamaCpp;

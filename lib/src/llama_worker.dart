@@ -1,18 +1,20 @@
 part of 'package:lcpp/lcpp.dart';
 
-typedef _LlamaWorkerRecord = (SendPort, String);
+typedef _LlamaWorkerRecord = (SendPort, String, String);
 
 class _LlamaWorkerParams {
   final SendPort sendPort;
   final LlamaParams llmParams;
+  final LlamaParams ttsParams;
 
   _LlamaWorkerParams({
     required this.sendPort,
-    required this.llmParams
+    required this.llmParams,
+    required this.ttsParams
   });
 
   _LlamaWorkerRecord toRecord() {
-    return (sendPort, llmParams.toJson());
+    return (sendPort, llmParams.toJson(), ttsParams.toJson());
   }
 }
 
@@ -25,10 +27,12 @@ class _LlamaWorker {
   final Completer<void> completer = Completer<void>();
   final ReceivePort receivePort = ReceivePort();
   final LlamaParams llmParams;
+  final LlamaParams ttsParams;
 
   _LlamaWorker({
     required SendPort sendPort,
-    required this.llmParams
+    required this.llmParams,
+    required this.ttsParams
   }) {
     _sendPort = sendPort;
     sendPort.send(receivePort.sendPort);
@@ -39,7 +43,8 @@ class _LlamaWorker {
 
   factory _LlamaWorker.fromRecord(_LlamaWorkerRecord record) => _LlamaWorker(
     sendPort: record.$1,
-    llmParams: LlamaParams.fromJson(record.$2)
+    llmParams: LlamaParams.fromJson(record.$2),
+    ttsParams: LlamaParams.fromJson(record.$3)
   );
 
   void handleData(dynamic data) async {
@@ -65,7 +70,10 @@ class _LlamaWorker {
     await worker.completer.future;
   }
 
-  void _init() => lib.llama_llm_init(llmParams._toPointer());
+  void _init() {
+    lib.llama_llm_init(llmParams._toPointer());
+    lib.llama_tts_init(ttsParams._toPointer());
+  }
 
   static void _output(ffi.Pointer<ffi.Char> buffer) {
     if (buffer == ffi.nullptr) {
