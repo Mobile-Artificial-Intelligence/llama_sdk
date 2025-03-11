@@ -16,6 +16,8 @@ DART_API int llama_init(char * params);
 
 DART_API int llama_prompt(char * messages, dart_output * output);
 
+DART_API void llama_stop(void);
+
 DART_API void llama_api_free(void);
 
 #ifdef __cplusplus

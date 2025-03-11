@@ -68,14 +68,6 @@ class llama {
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_stop');
   late final _llama_stop = _llama_stopPtr.asFunction<void Function()>();
 
-  void llama_reset() {
-    return _llama_reset();
-  }
-
-  late final _llama_resetPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_reset');
-  late final _llama_reset = _llama_resetPtr.asFunction<void Function()>();
-
   void llama_api_free() {
     return _llama_api_free();
   }

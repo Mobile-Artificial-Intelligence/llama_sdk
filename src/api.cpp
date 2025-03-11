@@ -4,8 +4,13 @@
 #include "params.hpp"
 #include <cassert>
 #include <vector>
+#include <atomic>
+#include <mutex>
 
 using json = nlohmann::ordered_json;
+
+static std::atomic_bool stop_generation(false);
+static std::mutex continue_mutex;
 
 static llama_model * model = nullptr;
 static llama_context * ctx = nullptr;
@@ -82,6 +87,9 @@ int llama_init(char * params) {
 int llama_prompt(char * msgs, dart_output * output) {
     auto messages = llama_parse_messages(msgs);
 
+    std::lock_guard<std::mutex> lock(continue_mutex);
+    stop_generation.store(false);
+
     assert(model != nullptr);
     assert(ctx != nullptr);
     assert(smpl != nullptr);
@@ -119,7 +127,7 @@ int llama_prompt(char * msgs, dart_output * output) {
     // prepare a batch for the prompt
     llama_batch batch = llama_batch_get_one(prompt_tokens.data(), prompt_tokens.size());
     llama_token new_token_id;
-    while (true) {
+    while (!stop_generation.load()) {
         // check if we have enough space in the context to evaluate this batch
         int n_ctx = llama_n_ctx(ctx);
         int n_ctx_used = llama_get_kv_cache_used_cells(ctx);
@@ -165,6 +173,10 @@ int llama_prompt(char * msgs, dart_output * output) {
     
     output(nullptr);
     return 0;
+}
+
+void llama_stop(void) {
+    stop_generation.store(true);
 }
 
 void llama_api_free(void) {
