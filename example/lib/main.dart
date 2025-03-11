@@ -50,13 +50,6 @@ class LlamaAppState extends State<LlamaApp> {
         nBatch: 2048,
         greedy: true
       ),
-      ttsParams: LlamaParams(
-        modelFile: resultFile,
-        vocoderModelFile: resultFile,
-        nCtx: 2048, 
-        nBatch: 2048,
-        greedy: true
-      )
     );
 
     setState(() {

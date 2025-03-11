@@ -24,25 +24,25 @@ class Llama {
   SendPort? _sendPort;
   ReceivePort? _receivePort;
 
-  LlamaParams _llmParams;
+  LlamaParams? _llmParams;
 
   /// Gets the current LlamaParams instance.
   ///
   /// The [LlamaParams] instance contains the parameters used by the llama.
   ///
   /// Returns the current [LlamaParams] instance.
-  LlamaParams get llmParams => _llmParams;
+  LlamaParams? get llmParams => _llmParams;
 
-  set llmParams(LlamaParams value) {
+  set llmParams(LlamaParams? value) {
     _llmParams = value;
     stop();
   }
 
-  LlamaParams _ttsParams;
+  LlamaParams? _ttsParams;
 
-  LlamaParams get ttsParams => _ttsParams;
+  LlamaParams? get ttsParams => _ttsParams;
 
-  set ttsParams(LlamaParams value) {
+  set ttsParams(LlamaParams? value) {
     _ttsParams = value;
     stop();
   }
@@ -61,7 +61,7 @@ class Llama {
   ///
   /// Parameters:
   /// - [llmParams]: The parameters required for the Llama model.
-  Llama({required LlamaParams llmParams, required LlamaParams ttsParams})
+  Llama({LlamaParams? llmParams, LlamaParams? ttsParams})
       : _llmParams = llmParams, _ttsParams = ttsParams;
 
   void _listener() async {
