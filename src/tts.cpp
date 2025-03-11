@@ -75,10 +75,10 @@ int llama_tts(char * text, char * output_path) {
     std::string prompt(text);
     std::string fname(output_path);
 
-    context_params.embeddings = false;
-    auto ctx_ttc = llama_init_from_model(model_ttc, context_params);
-    context_params.embeddings = true;
-    auto ctx_cts = llama_init_from_model(model_cts, context_params);
+    ctx_params.embeddings = false;
+    auto ctx_ttc = llama_init_from_model(model_ttc, ctx_params);
+    ctx_params.embeddings = true;
+    auto ctx_cts = llama_init_from_model(model_cts, ctx_params);
 
     std::vector<llama_token> prompt_inp;
 
