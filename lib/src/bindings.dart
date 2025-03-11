@@ -43,6 +43,20 @@ class llama {
   late final _llama_llm_init =
       _llama_llm_initPtr.asFunction<int Function(ffi.Pointer<ffi.Char>)>();
 
+  int llama_tts_init(
+    ffi.Pointer<ffi.Char> params,
+  ) {
+    return _llama_tts_init(
+      params,
+    );
+  }
+
+  late final _llama_tts_initPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char>)>>(
+          'llama_tts_init');
+  late final _llama_tts_init =
+      _llama_tts_initPtr.asFunction<int Function(ffi.Pointer<ffi.Char>)>();
+
   int llama_prompt(
     ffi.Pointer<ffi.Char> messages,
     ffi.Pointer<dart_output> output,
@@ -60,6 +74,23 @@ class llama {
   late final _llama_prompt = _llama_promptPtr.asFunction<
       int Function(ffi.Pointer<ffi.Char>, ffi.Pointer<dart_output>)>();
 
+  int llama_tts(
+    ffi.Pointer<ffi.Char> text,
+    ffi.Pointer<ffi.Char> output_path,
+  ) {
+    return _llama_tts(
+      text,
+      output_path,
+    );
+  }
+
+  late final _llama_ttsPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int Function(
+              ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>>('llama_tts');
+  late final _llama_tts = _llama_ttsPtr
+      .asFunction<int Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
+
   void llama_llm_stop() {
     return _llama_llm_stop();
   }
@@ -75,6 +106,14 @@ class llama {
   late final _llama_llm_freePtr =
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_llm_free');
   late final _llama_llm_free = _llama_llm_freePtr.asFunction<void Function()>();
+
+  void llama_tts_free() {
+    return _llama_tts_free();
+  }
+
+  late final _llama_tts_freePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function()>>('llama_tts_free');
+  late final _llama_tts_free = _llama_tts_freePtr.asFunction<void Function()>();
 }
 
 typedef dart_output
