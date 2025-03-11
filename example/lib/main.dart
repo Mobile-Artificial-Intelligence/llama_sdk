@@ -88,19 +88,7 @@ class LlamaAppState extends State<LlamaApp> {
 
     File vocoderFile = File(result.files.single.path!);
 
-    result = await FilePicker.platform.pickFiles(
-        dialogTitle: "Load Speaker File",
-        type: FileType.any,
-        allowMultiple: false,
-        allowCompression: false);
-
-    if (result == null ||
-        result.files.isEmpty ||
-        result.files.single.path == null) {
-      throw Exception('No file selected');
-    }
-
-    File voiceFile = File(result.files.single.path!);
+    File voiceFile = await Voices.enFemale1.file;
 
     final llamaCpp = Llama(
       ttsParams: LlamaParams(

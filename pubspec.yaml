@@ -31,6 +31,8 @@ ffigen:
     - '-I/usr/lib/clang/17/include'
 
 flutter:
+  assets:
+    - voices/
   plugin:
     platforms:
       android:
