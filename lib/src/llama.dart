@@ -111,7 +111,7 @@ class Llama {
   /// This method should be called to terminate any ongoing tasks or
   /// processes that need to be halted. It ensures that resources are
   /// properly released and the system is left in a stable state.
-  void stop() => lib.llama_stop();
+  void stop() => lib.llama_llm_stop();
 
   /// Frees the resources used by the Llama model.
   void reload() {

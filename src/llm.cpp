@@ -60,7 +60,7 @@ char * llama_default_params(void) {
     return strdup(params.dump().c_str());
 }
 
-int llama_init(char * params) {
+int llama_llm_init(char * params) {
     auto json_params = json::parse(params);
 
     if (!json_params.contains("model_path") || !json_params["model_path"].is_string()) {
@@ -175,11 +175,11 @@ int llama_prompt(char * msgs, dart_output * output) {
     return 0;
 }
 
-void llama_stop(void) {
+void llama_llm_stop(void) {
     stop_generation.store(true);
 }
 
-void llama_api_free(void) {
+void llama_llm_free(void) {
     llama_sampler_free(smpl);
     llama_free(ctx);
     llama_free_model(model);

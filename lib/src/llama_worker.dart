@@ -18,7 +18,7 @@ class _LlamaWorkerParams {
 
 class _LlamaWorker {
   static final _finalizer = Finalizer(
-    (_) => lib.llama_api_free(),
+    (_) => lib.llama_llm_free(),
   );
   static SendPort? _sendPort;
 
@@ -65,7 +65,7 @@ class _LlamaWorker {
     await worker.completer.future;
   }
 
-  void _init() => lib.llama_init(llamaParams._toPointer());
+  void _init() => lib.llama_llm_init(llamaParams._toPointer());
 
   static void _output(ffi.Pointer<ffi.Char> buffer) {
     if (buffer == ffi.nullptr) {
