@@ -29,39 +29,36 @@ target_sources(
   ${API_DIR}/llm.cpp
 )
 
-# General compile options
+# Compile options
 target_compile_options(
   llama 
   PRIVATE 
   -O3 
   -DNDEBUG
-  -ffunction-sections 
-  -fdata-sections
-)
-
-# Emscripten-specific compile flags (passed as single strings)
-target_compile_options(
-  llama
-  PRIVATE
+  -flto=full
   "-sWASM=1"
   "-sALLOW_MEMORY_GROWTH=1"
+  "-sEXPORTED_FUNCTIONS=['_main', '_llama_default_params', '_llama_llm_init', '_llama_prompt', '_llama_llm_stop', '_llama_llm_free']"
+  "-sEXTRA_EXPORTED_RUNTIME_METHODS=['addFunction']"
 )
 
 # Emscripten-specific link options (passed as single strings)
 target_link_options(
   llama 
   PRIVATE 
+  -O3 
+  -DNDEBUG
+  -flto=full
   "-sWASM=1"
   "-sALLOW_MEMORY_GROWTH=1"
   "-sEXPORTED_FUNCTIONS=['_main', '_llama_default_params', '_llama_llm_init', '_llama_prompt', '_llama_llm_stop', '_llama_llm_free']"
-  "-sEXTRA_EXPORTED_RUNTIME_METHODS=['ccall','cwrap']"
-  -Wl,--gc-sections 
-  -flto
+  "-sEXTRA_EXPORTED_RUNTIME_METHODS=['addFunction']"
+  "-sNO_EXIT_RUNTIME=1"
 )
 
 # Define the executable target with a proper entry point.
 add_executable(lcpp wasm-entry.c)
-target_link_libraries(lcpp PRIVATE llama)
+target_link_libraries(lcpp PRIVATE ggml llama)
 
 # Set output directory for the final wasm file
 set_target_properties(
