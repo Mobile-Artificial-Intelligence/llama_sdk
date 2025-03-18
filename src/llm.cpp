@@ -2,6 +2,7 @@
 #include "llama.h"
 #include "json.hpp"
 #include "params.hpp"
+#include <stdio.h>
 #include <cassert>
 #include <vector>
 #include <atomic>
@@ -201,3 +202,9 @@ void llama_llm_free(void) {
     llama_free(ctx);
     llama_free_model(model);
 }
+
+#ifdef __EMSCRIPTEN__
+int main(int argc, char ** argv) {
+    printf("Llama.CPP WASM\n");
+}
+#endif

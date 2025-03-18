@@ -11,6 +11,8 @@ endif()
 # Set build metadata and update target from Android to wasm
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=wasm")
 
+set(BUILD_SHARED_LIBS OFF)
+
 # Optional: set executable suffix to .html (Emscripten default output)
 set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
@@ -26,7 +28,6 @@ target_sources(
   llama 
   PRIVATE 
   ${API_DIR}/params.cpp
-  ${API_DIR}/llm.cpp
 )
 
 # Compile options
@@ -34,12 +35,23 @@ target_compile_options(
   llama 
   PRIVATE 
   -O3 
+  -msimd128 
+  -pthread
   -DNDEBUG
   -flto=full
+  "-sUSE_PTHREADS=1"
+  "-sASYNCIFY=1"
+  "-sPTHREAD_POOL_SIZE=4"
   "-sWASM=1"
   "-sALLOW_MEMORY_GROWTH=1"
+  "-sALLOW_TABLE_GROWTH=1"
+  "-sSHARED_MEMORY=1"
+  "-sEXPORT_ALL=1"
+  "-sEXPORT_ES6=1"
+  "-sMODULARIZE=1"
   "-sEXPORTED_FUNCTIONS=['_main', '_llama_default_params', '_llama_llm_init', '_llama_prompt', '_llama_llm_stop', '_llama_llm_free']"
   "-sEXTRA_EXPORTED_RUNTIME_METHODS=['addFunction']"
+  "-sNO_EXIT_RUNTIME=1"
 )
 
 # Emscripten-specific link options (passed as single strings)
@@ -47,17 +59,27 @@ target_link_options(
   llama 
   PRIVATE 
   -O3 
+  -msimd128 
+  -pthread
   -DNDEBUG
   -flto=full
+  "-sUSE_PTHREADS=1"
+  "-sASYNCIFY=1"
+  "-sPTHREAD_POOL_SIZE=4"
   "-sWASM=1"
   "-sALLOW_MEMORY_GROWTH=1"
+  "-sALLOW_TABLE_GROWTH=1"
+  "-sSHARED_MEMORY=1"
+  "-sEXPORT_ALL=1"
+  "-sEXPORT_ES6=1"
+  "-sMODULARIZE=1"
   "-sEXPORTED_FUNCTIONS=['_main', '_llama_default_params', '_llama_llm_init', '_llama_prompt', '_llama_llm_stop', '_llama_llm_free']"
   "-sEXTRA_EXPORTED_RUNTIME_METHODS=['addFunction']"
   "-sNO_EXIT_RUNTIME=1"
 )
 
 # Define the executable target with a proper entry point.
-add_executable(lcpp wasm-entry.c)
+add_executable(lcpp ${API_DIR}/llm.cpp)
 target_link_libraries(lcpp PRIVATE ggml llama)
 
 # Set output directory for the final wasm file
