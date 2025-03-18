@@ -14,9 +14,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_COMMIT=unknown -DBUILD_COMPILER=
 # Optional: set executable suffix to .html (Emscripten default output)
 set(CMAKE_EXECUTABLE_SUFFIX ".html")
 
-set(BUILD_SHARED_LIBS ON)
-set(CMAKE_INSTALL_LIBDIR lib CACHE PATH "library install dir" FORCE)
-
 # Define directories for sources
 set(API_DIR ../src)
 set(LLAMA_CPP_DIR ${API_DIR}/llama_cpp)
@@ -65,3 +62,11 @@ target_link_options(
 # Define the executable target with a proper entry point.
 add_executable(lcpp wasm-entry.c)
 target_link_libraries(lcpp PRIVATE llama)
+
+# Set output directory for the final wasm file
+set_target_properties(
+    lcpp 
+    PROPERTIES 
+    RUNTIME_OUTPUT_NAME "llama"
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/web
+)
