@@ -31,6 +31,10 @@ ffigen:
     - '-I/usr/lib/clang/17/include'
 
 flutter:
+  assets:
+    - web/llama.js
+    - web/llama.wasm
+
   plugin:
     platforms:
       android:
