@@ -38,7 +38,7 @@ set(EMCC_CFLAGS
   "-sFORCE_FILESYSTEM=1"
   "-sUSE_PTHREADS=1"
   "-sPTHREAD_POOL_SIZE=4"
-  "-sEXPORTED_FUNCTIONS=_main,_llama_default_params,_llama_llm_init,_llama_prompt,_llama_llm_stop,_llama_llm_free"
+  "-sEXPORTED_FUNCTIONS=_main,_llama_default_params,_llama_llm_init,_llama_prompt_simple,_llama_llm_stop,_llama_llm_free"
   "-sEXPORTED_RUNTIME_METHODS=ccall,cwrap"
   "-sNO_EXIT_RUNTIME=1"
 )
@@ -54,7 +54,7 @@ target_link_options(llama PRIVATE ${EMCC_CFLAGS})
 target_compile_options(ggml PRIVATE ${EMCC_CFLAGS})
 target_link_options(ggml PRIVATE ${EMCC_CFLAGS})
 
-# Apply Emscripten flags to the ggml target
+# Apply Emscripten flags to the ggml-cpu target
 target_compile_options(ggml-cpu PRIVATE ${EMCC_CFLAGS})
 target_link_options(ggml-cpu PRIVATE ${EMCC_CFLAGS})
 
