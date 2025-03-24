@@ -16,8 +16,6 @@ static llama_context * ctx = nullptr;
 static llama_sampler * smpl = nullptr;
 static int prev_len = 0;
 
-static std::string simple_buffer = "";
-
 std::vector<llama_chat_message> llama_parse_messages(char * messages) {
     auto json_messages = json::parse(messages);
     std::vector<llama_chat_message> result;
@@ -193,22 +191,6 @@ int llama_prompt(char * msgs, dart_output * output) {
     
     output(nullptr);
     return 0;
-}
-
-void simple_output(const char * msg) {
-    if (msg != nullptr) {
-        simple_buffer += msg;
-    } else {
-        simple_buffer += "\n";
-    }
-}
-
-char * llama_prompt_simple(char * messages) {
-    simple_buffer.clear();
-
-    llama_prompt(messages, simple_output);
-
-    return strdup(simple_buffer.c_str());
 }
 
 void llama_llm_stop(void) {
