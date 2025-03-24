@@ -1,0 +1,6 @@
+targets:
+  $default:
+    builders:
+      lcpp|install_wasm:
+        generate_for:
+          - pubspec.yaml
