@@ -32,15 +32,11 @@ class Llama {
   }
 
   void _init() {
-    final paramsDartString = controller.toJson();
-    final paramsJsString = paramsDartString.toJS;
-    final paramsLength = (paramsDartString.length + 1).toJS;
-    JSNumber paramsPtr = malloc(paramsLength);
-    stringToUTF8(paramsJsString, paramsPtr, paramsLength);
+    final wasmString = controller.toJson().toWasm;
 
-    final result = UTF8ToString(paramsPtr);
+    final result = UTF8ToString(wasmString);
     print(result.toDart);
-    free(paramsPtr);
+    free(wasmString);
   }
 
   /// Generates a stream of responses based on the provided list of chat messages.

@@ -38,3 +38,12 @@ external JSNumber addFunction(JSFunction fn, JSString signature);
 
 @JS('Module.FS_createDataFile')
 external void createDataFile(JSString parent, JSString name, JSArrayBuffer data, JSBoolean canRead, JSBoolean canWrite, JSBoolean canOwn);
+
+extension WasmStringExtension on String {
+  JSNumber get toWasm {
+    final len = (length + 1).toJS;
+    final ptr = malloc(len);
+    stringToUTF8(toJS, ptr, len);
+    return ptr;
+  }
+}
