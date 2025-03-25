@@ -39,7 +39,7 @@ set(EMCC_CFLAGS
   "-sUSE_PTHREADS=1"
   "-sPTHREAD_POOL_SIZE=4"
   "-sEXPORTED_FUNCTIONS=_main,_llama_default_params,_llama_llm_init,_llama_prompt,_llama_llm_stop,_llama_llm_free"
-  "-sEXPORTED_RUNTIME_METHODS=ccall,cwrap"
+  "-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction"
   "-sNO_EXIT_RUNTIME=1"
 )
 
