@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -25,6 +26,18 @@ class LlamaAppState extends State<LlamaApp> {
   bool busy = false;
 
   void loadModel() async {
+    if (kIsWeb) {
+      final llamaCpp = Llama(LlamaController(
+        modelPath: '', nCtx: 2048, nBatch: 2048, greedy: true));
+
+      setState(() {
+        model = llamaCpp;
+        modelPath = 'Test model';
+      });
+      return;
+    }
+
+
     final result = await FilePicker.platform.pickFiles(
         dialogTitle: "Load Model File",
         type: FileType.any,

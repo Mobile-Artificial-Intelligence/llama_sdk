@@ -1,5 +1,9 @@
 library;
 
+import 'dart:js_interop';
+
+import 'package:lcpp/src/web/bindings.dart';
+
 import 'src/shared/chat_message.dart';
 export 'src/shared/chat_message.dart';
 

@@ -21,6 +21,12 @@ external void llamaStop();
 @JS('Module._llama_llm_free')
 external void llamaFree();
 
+@JS('Module._malloc')
+external JSNumber malloc(JSNumber size);
+
+@JS('Module._free')
+external void free(JSNumber ptr);
+
 @JS('Module.stringToUTF8')
 external JSNumber stringToUTF8(JSString str, JSNumber buffer, JSNumber length);
 

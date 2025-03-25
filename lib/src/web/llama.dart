@@ -27,7 +27,21 @@ class Llama {
   ///
   /// Parameters:
   /// - [controller]: The parameters required for the Llama model.
-  Llama(this.controller);
+  Llama(this.controller) {
+    _init();
+  }
+
+  void _init() {
+    final paramsDartString = controller.toJson();
+    final paramsJsString = paramsDartString.toJS;
+    final paramsLength = (paramsDartString.length + 1).toJS;
+    JSNumber paramsPtr = malloc(paramsLength);
+    stringToUTF8(paramsJsString, paramsPtr, paramsLength);
+
+    final result = UTF8ToString(paramsPtr);
+    print(result.toDart);
+    free(paramsPtr);
+  }
 
   /// Generates a stream of responses based on the provided list of chat messages.
   ///
