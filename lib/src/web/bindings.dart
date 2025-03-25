@@ -36,6 +36,12 @@ external JSString UTF8ToString(JSNumber buffer);
 @JS('Module.addFunction')
 external JSNumber addFunction(JSFunction fn, JSString signature);
 
+@JS('Module.removeFunction')
+external void removeFunction(JSNumber fn);
+
+@JS('Module.FS_unlink')
+external void unlink(JSString path);
+
 @JS('Module.FS_createDataFile')
 external void createDataFile(JSString parent, JSString name, JSArrayBuffer data, JSBoolean canRead, JSBoolean canWrite, JSBoolean canOwn);
 

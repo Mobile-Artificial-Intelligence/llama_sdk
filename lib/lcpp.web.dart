@@ -1,6 +1,7 @@
 library;
 
 import 'dart:js_interop';
+import 'dart:typed_data';
 
 import 'package:lcpp/src/web/bindings.dart';
 
@@ -14,3 +15,4 @@ import 'src/shared/llama_exception.dart';
 export 'src/shared/llama_exception.dart';
 
 part 'src/web/llama.dart';
+part 'src/web/uint8list_extension.dart';

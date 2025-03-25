@@ -26,18 +26,6 @@ class LlamaAppState extends State<LlamaApp> {
   bool busy = false;
 
   void loadModel() async {
-    if (kIsWeb) {
-      final llamaCpp = Llama(LlamaController(
-        modelPath: '', nCtx: 2048, nBatch: 2048, greedy: true));
-
-      setState(() {
-        model = llamaCpp;
-        modelPath = 'Test model';
-      });
-      return;
-    }
-
-
     final result = await FilePicker.platform.pickFiles(
         dialogTitle: "Load Model File",
         type: FileType.any,
@@ -46,23 +34,22 @@ class LlamaAppState extends State<LlamaApp> {
 
     if (result == null ||
         result.files.isEmpty ||
-        result.files.single.path == null) {
+        result.files.single.bytes == null) {
       throw Exception('No file selected');
     }
 
-    File resultFile = File(result.files.single.path!);
+    String path = kIsWeb ? result.files.single.bytes!.toPath : result.files.single.path!;
 
-    final exists = await resultFile.exists();
-    if (!exists) {
+    if (!kIsWeb && !File(path).existsSync()) {
       throw Exception('File does not exist');
     }
 
     final llamaCpp = Llama(LlamaController(
-        modelPath: resultFile.path, nCtx: 2048, nBatch: 2048, greedy: true));
+        modelPath: path, nCtx: 2048, nBatch: 2048, greedy: true));
 
     setState(() {
       model = llamaCpp;
-      modelPath = result.files.single.path;
+      modelPath = path;
     });
   }
 
