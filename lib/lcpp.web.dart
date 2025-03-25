@@ -4,6 +4,7 @@ import 'dart:js_interop';
 import 'dart:typed_data';
 
 import 'package:lcpp/src/web/bindings.dart';
+import 'package:lcpp/src/web/fs.dart';
 
 import 'src/shared/chat_message.dart';
 export 'src/shared/chat_message.dart';

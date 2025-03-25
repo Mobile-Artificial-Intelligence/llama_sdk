@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:lcpp/lcpp.dart'
@@ -30,15 +31,35 @@ class LlamaAppState extends State<LlamaApp> {
         dialogTitle: "Load Model File",
         type: FileType.any,
         allowMultiple: false,
-        allowCompression: false);
+        allowCompression: false,
+        withReadStream: kIsWeb,
+      );
 
     if (result == null ||
-        result.files.isEmpty ||
-        result.files.single.bytes == null) {
+        result.files.isEmpty
+      ) {
       throw Exception('No file selected');
     }
 
-    String path = kIsWeb ? result.files.single.bytes!.toPath : result.files.single.path!;
+    String path = '';
+
+    if (kIsWeb) {
+      final readStream = result.files.single.readStream!;
+      final bytesBuilder = BytesBuilder();
+
+      await for (final chunk in readStream) {
+        if (chunk.isEmpty) break;
+
+        bytesBuilder.add(chunk);
+      }
+      
+      final bytes = bytesBuilder.toBytes();
+
+      path = bytes.toPath;
+    }
+    else {
+      path = result.files.single.path!;
+    }
 
     if (!kIsWeb && !File(path).existsSync()) {
       throw Exception('File does not exist');

@@ -7,7 +7,6 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
-import 'package:lcpp/lcpp.web.dart';
 
 import 'src/native/bindings_hook.dart';
 
@@ -15,6 +14,7 @@ import 'src/shared/chat_message.dart';
 export 'src/shared/chat_message.dart';
 
 import 'src/shared/llama_controller.dart';
+import 'src/shared/llama_exception.dart';
 export 'src/shared/llama_controller.dart';
 
 export 'src/shared/llama_exception.dart';
