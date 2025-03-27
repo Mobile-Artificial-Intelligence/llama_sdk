@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:lcpp/lcpp.dart'
@@ -45,17 +44,9 @@ class LlamaAppState extends State<LlamaApp> {
 
     if (kIsWeb) {
       final readStream = result.files.single.readStream!;
-      final bytesBuilder = BytesBuilder();
+      final name = result.files.single.name;
 
-      await for (final chunk in readStream) {
-        if (chunk.isEmpty) break;
-
-        bytesBuilder.add(chunk);
-      }
-      
-      final bytes = bytesBuilder.toBytes();
-
-      path = bytes.toPath;
+      path = await getWasmPath(readStream, name);
     }
     else {
       path = result.files.single.path!;

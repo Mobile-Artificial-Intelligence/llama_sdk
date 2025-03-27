@@ -1,5 +1,10 @@
 part of 'package:lcpp/lcpp.dart';
 
+/// A utility function that returns the path of the WebAssembly file.
+Future<String> getWasmPath(Stream<List<int>> stream, String name)  {
+  throw UnimplementedError();
+}
+
 /// A class that isolates the Llama implementation to run in a separate isolate.
 ///
 /// This class implements the [Llama] interface and provides methods to interact

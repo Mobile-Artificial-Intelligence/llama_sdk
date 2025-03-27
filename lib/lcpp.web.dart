@@ -16,4 +16,4 @@ import 'src/shared/llama_exception.dart';
 export 'src/shared/llama_exception.dart';
 
 part 'src/web/llama.dart';
-part 'src/web/uint8list_extension.dart';
+part 'src/web/get_wasm_path.dart';
