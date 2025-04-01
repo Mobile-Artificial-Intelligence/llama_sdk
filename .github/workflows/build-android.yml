@@ -33,10 +33,10 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Install dependencies
+      - name: Install CMake and Ninja
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake libvulkan-dev
+          sudo apt-get install -y cmake ninja-build
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
