@@ -34,3 +34,4 @@ macos/*.h
 macos/lib/*.h
 macos/lib/*.dylib
 macos/lib/*.metal
+example/android/app/.cxx

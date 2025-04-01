@@ -13,6 +13,8 @@ set(LLAMA_CPP_DIR ${API_DIR}/llama_cpp)
 # Add subdirectory with explicit source and binary directories
 add_subdirectory(${LLAMA_CPP_DIR} ${CMAKE_BINARY_DIR}/llama_cpp_build)
 
+set(GGML_VULKAN ON CACHE BOOL "Enable Vulkan support" FORCE)
+
 target_sources(
   llama 
   PRIVATE 
@@ -36,7 +38,18 @@ target_link_options(
   -flto
 )
 
+find_package(Vulkan REQUIRED)
+target_link_libraries(llama PRIVATE Vulkan::Vulkan)
+
+target_compile_options(
+  llama 
+  PRIVATE 
+  -DGGML_USE_CPU 
+  -DGGML_USE_VULKAN
+  -pthread
+)
+
 # Enable compiler optimizations for arm64-v8a
 if(ANDROID_ABI STREQUAL "arm64-v8a")
-  target_compile_options(llama PRIVATE -march=armv8.4-a+fp16+dotprod -DLM_GGML_USE_CPU -DLM_GGML_USE_CPU_AARCH64 -pthread)
+  target_compile_options(llama PRIVATE -march=armv8.4-a+fp16+dotprod -DGGML_USE_CPU_AARCH64)
 endif()
