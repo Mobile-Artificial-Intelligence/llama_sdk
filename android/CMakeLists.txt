@@ -9,6 +9,10 @@ add_link_options("LINKER:--hash-style=gnu,--build-id=none,--gc-sections")
 
 # Set the minimum Android API level
 set(GGML_VULKAN ON CACHE BOOL "Enable Vulkan support" FORCE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVulkan_INCLUDE_DIR=${ANDROID_NDK}/sources/third_party/vulkan/src/include/vulkan")
+
+# Add Vulkan header files
+include_directories(${ANDROID_NDK}/sources/third_party/vulkan/src/include/vulkan)
 
 # Enable compiler optimizations for arm64-v8a
 if(ANDROID_ABI STREQUAL "arm64-v8a")

@@ -36,7 +36,7 @@ jobs:
       - name: Install CMake and Ninja
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build
+          sudo apt-get install -y cmake
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
