@@ -1,6 +1,6 @@
 #include "api.h"
-#include "llama.h"
-#include "json.hpp"
+#include "llama_cpp/include/llama.h"
+#include "llama_cpp/vendor/nlohmann/json.hpp"
 #include "params.hpp"
 #include <cassert>
 #include <vector>
@@ -15,8 +15,8 @@ static llama_context * ctx = nullptr;
 static llama_sampler * smpl = nullptr;
 static int prev_len = 0;
 
-std::vector<llama_chat_message> llama_parse_messages(char * messages) {
-    auto json_messages = json::parse(messages);
+static std::vector<llama_chat_message> llama_parse_messages(char * messages) {
+    auto json_messages = nlohmann::ordered_json::parse(messages);
     std::vector<llama_chat_message> result;
 
     for (auto & message : json_messages) {
@@ -35,7 +35,7 @@ std::vector<llama_chat_message> llama_parse_messages(char * messages) {
 }
 
 char * llama_default_params(void) {
-    json params = json::object();
+    nlohmann::ordered_json params = nlohmann::ordered_json::object();
 
     /// Model parameters
     auto default_model_params = llama_model_default_params();
@@ -77,7 +77,7 @@ char * llama_default_params(void) {
 }
 
 int llama_llm_init(char * params) {
-    auto json_params = json::parse(params);
+    auto json_params = nlohmann::ordered_json::parse(params);
 
     if (!json_params.contains("model_path") || !json_params["model_path"].is_string()) {
         fprintf(stderr, "Missing 'model_path' in parameters\n");
@@ -131,7 +131,9 @@ int llama_prompt(char * msgs, dart_output * output) {
 
     std::string response;
 
-    const bool is_first = llama_kv_self_seq_pos_max(ctx, 0) == 0;
+    // Get memory handle and check position
+    llama_memory_t mem = llama_get_memory(ctx);
+    const bool is_first = llama_memory_seq_pos_max(mem, 0) == 0;
 
     // tokenize the prompt
     const int n_prompt_tokens = -llama_tokenize(vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
@@ -146,7 +148,7 @@ int llama_prompt(char * msgs, dart_output * output) {
     while (!stop_generation.load()) {
         // check if we have enough space in the context to evaluate this batch
         int n_ctx = llama_n_ctx(ctx);
-        int n_ctx_used = llama_kv_self_seq_pos_max(ctx, 0);
+        int n_ctx_used = llama_memory_seq_pos_max(mem, 0);
         if (n_ctx_used + batch.n_tokens > n_ctx) {
             fprintf(stderr, "context size exceeded\n");
             break;

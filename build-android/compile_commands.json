@@ -1,0 +1,314 @@
+[
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/cc -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu11 -fPIC -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -o CMakeFiles/ggml-base.dir/ggml.c.o -c /workspace/src/llama_cpp/ggml/src/ggml.c",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml.c",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -o CMakeFiles/ggml-base.dir/ggml.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/cc -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu11 -fPIC -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -o CMakeFiles/ggml-base.dir/ggml-alloc.c.o -c /workspace/src/llama_cpp/ggml/src/ggml-alloc.c",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-alloc.c",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-alloc.c.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -o CMakeFiles/ggml-base.dir/ggml-backend.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-backend.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-backend.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-backend.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -o CMakeFiles/ggml-base.dir/ggml-opt.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-opt.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-opt.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-opt.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -o CMakeFiles/ggml-base.dir/ggml-threading.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-threading.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-threading.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-threading.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/cc -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu11 -fPIC -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -o CMakeFiles/ggml-base.dir/ggml-quants.c.o -c /workspace/src/llama_cpp/ggml/src/ggml-quants.c",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-quants.c",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-quants.c.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BUILD -DGGML_COMMIT=\\\"aa79524c\\\" -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_VERSION=\\\"0.0.6027\\\" -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_base_EXPORTS -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -o CMakeFiles/ggml-base.dir/gguf.cpp.o -c /workspace/src/llama_cpp/ggml/src/gguf.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/gguf.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-base.dir/gguf.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/cc -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu11 -fPIC -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/ggml-cpu.c",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/ggml-cpu.c",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/ggml-cpu.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/ggml-cpu.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/repack.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/repack.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/hbm.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/hbm.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/cc -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu11 -fPIC -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/quants.c",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/quants.c",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/traits.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/traits.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/amx/amx.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/amx/amx.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/amx/mmq.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/amx/mmq.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/binary-ops.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/binary-ops.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/unary-ops.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/unary-ops.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/vec.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/vec.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/ops.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/ops.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/llamafile/sgemm.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/llamafile/sgemm.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/cc -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu11 -fPIC -Wshadow -Wstrict-prototypes -Wpointer-arith -Wmissing-prototypes -Werror=implicit-int -Werror=implicit-function-declaration -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wdouble-promotion -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/quants.c.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/arch/x86/quants.c",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/arch/x86/quants.c",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/quants.c.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_BUILD -DGGML_BACKEND_SHARED -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU_REPACK -DGGML_USE_LLAMAFILE -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_cpu_EXPORTS -I/workspace/src/llama_cpp/ggml/src/.. -I/workspace/src/llama_cpp/ggml/src/. -I/workspace/src/llama_cpp/ggml/src/ggml-cpu -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -march=native -o CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-cpu/arch/x86/repack.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-cpu/arch/x86/repack.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/x86/repack.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/ggml/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_BUILD -DGGML_SCHED_MAX_COPIES=4 -DGGML_SHARED -DGGML_USE_CPU -D_GNU_SOURCE -D_XOPEN_SOURCE=600 -Dggml_EXPORTS -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -std=gnu++17 -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -o CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o -c /workspace/src/llama_cpp/ggml/src/ggml-backend-reg.cpp",
+  "file": "/workspace/src/llama_cpp/ggml/src/ggml-backend-reg.cpp",
+  "output": "llama_cpp_build/ggml/src/CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama.cpp.o -c /workspace/src/llama_cpp/src/llama.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-adapter.cpp.o -c /workspace/src/llama_cpp/src/llama-adapter.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-adapter.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-adapter.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-arch.cpp.o -c /workspace/src/llama_cpp/src/llama-arch.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-arch.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-arch.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-batch.cpp.o -c /workspace/src/llama_cpp/src/llama-batch.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-batch.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-batch.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-chat.cpp.o -c /workspace/src/llama_cpp/src/llama-chat.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-chat.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-chat.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-context.cpp.o -c /workspace/src/llama_cpp/src/llama-context.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-context.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-context.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-cparams.cpp.o -c /workspace/src/llama_cpp/src/llama-cparams.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-cparams.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-cparams.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-grammar.cpp.o -c /workspace/src/llama_cpp/src/llama-grammar.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-grammar.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-grammar.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-graph.cpp.o -c /workspace/src/llama_cpp/src/llama-graph.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-graph.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-graph.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-hparams.cpp.o -c /workspace/src/llama_cpp/src/llama-hparams.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-hparams.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-hparams.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-impl.cpp.o -c /workspace/src/llama_cpp/src/llama-impl.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-impl.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-impl.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-io.cpp.o -c /workspace/src/llama_cpp/src/llama-io.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-io.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-io.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-kv-cache-unified.cpp.o -c /workspace/src/llama_cpp/src/llama-kv-cache-unified.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-kv-cache-unified.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-kv-cache-unified.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-kv-cache-unified-iswa.cpp.o -c /workspace/src/llama_cpp/src/llama-kv-cache-unified-iswa.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-kv-cache-unified-iswa.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-kv-cache-unified-iswa.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-memory.cpp.o -c /workspace/src/llama_cpp/src/llama-memory.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-memory.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-memory.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-memory-hybrid.cpp.o -c /workspace/src/llama_cpp/src/llama-memory-hybrid.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-memory-hybrid.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-memory-hybrid.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-memory-recurrent.cpp.o -c /workspace/src/llama_cpp/src/llama-memory-recurrent.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-memory-recurrent.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-memory-recurrent.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-mmap.cpp.o -c /workspace/src/llama_cpp/src/llama-mmap.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-mmap.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-mmap.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-model-loader.cpp.o -c /workspace/src/llama_cpp/src/llama-model-loader.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-model-loader.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-model-loader.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-model-saver.cpp.o -c /workspace/src/llama_cpp/src/llama-model-saver.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-model-saver.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-model-saver.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-model.cpp.o -c /workspace/src/llama_cpp/src/llama-model.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-model.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-model.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-quant.cpp.o -c /workspace/src/llama_cpp/src/llama-quant.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-quant.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-quant.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-sampling.cpp.o -c /workspace/src/llama_cpp/src/llama-sampling.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-sampling.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-sampling.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/llama-vocab.cpp.o -c /workspace/src/llama_cpp/src/llama-vocab.cpp",
+  "file": "/workspace/src/llama_cpp/src/llama-vocab.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/llama-vocab.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/unicode-data.cpp.o -c /workspace/src/llama_cpp/src/unicode-data.cpp",
+  "file": "/workspace/src/llama_cpp/src/unicode-data.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/unicode-data.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/unicode.cpp.o -c /workspace/src/llama_cpp/src/unicode.cpp",
+  "file": "/workspace/src/llama_cpp/src/unicode.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/unicode.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/workspace/src/params.cpp.o -c /workspace/src/params.cpp",
+  "file": "/workspace/src/params.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/workspace/src/params.cpp.o"
+},
+{
+  "directory": "/workspace/build-android/llama_cpp_build/src",
+  "command": "/usr/bin/c++ -DGGML_BACKEND_SHARED -DGGML_SHARED -DGGML_USE_CPU -DLLAMA_BUILD -DLLAMA_SHARED -Dllama_EXPORTS -I/workspace/src/llama_cpp/src/. -I/workspace/src/llama_cpp/src/../include -I/workspace/android/../src/llama_cpp/common -I/workspace/android/../src/llama_cpp/include -I/workspace/android/../src/llama_cpp/vendor/nlohmann -I/workspace/android/../src -I/workspace/src/llama_cpp/ggml/src/../include  -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -O3 -DNDEBUG -fPIC -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -Wunreachable-code-break -Wunreachable-code-return -Wmissing-prototypes -Wextra-semi -O3 -DNDEBUG -ffunction-sections -fdata-sections -o CMakeFiles/llama.dir/workspace/src/llm.cpp.o -c /workspace/src/llm.cpp",
+  "file": "/workspace/src/llm.cpp",
+  "output": "llama_cpp_build/src/CMakeFiles/llama.dir/workspace/src/llm.cpp.o"
+}
+]

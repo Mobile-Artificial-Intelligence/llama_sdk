@@ -1,0 +1,794 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      The system is: Linux - 6.12.8+ - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is Clang, found in:
+        /workspace/build-android/CMakeFiles/3.31.6/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is Clang, found in:
+        /workspace/build-android/CMakeFiles/3.31.6/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f57e1/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f57e1.dir/build.make CMakeFiles/cmTC_f57e1.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO'
+        Building C object CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -MD -MT CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Ubuntu clang version 20.1.2 (0ubuntu1)
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/lib/llvm-20/bin
+        Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         (in-process)
+         "/usr/lib/llvm-20/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO -v -fcoverage-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO -resource-dir /usr/lib/llvm-20/lib/clang/20 -dependency-file CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/llvm-20/lib/clang/20/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -x c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 20.1.2 based upon LLVM 20.1.2 default target x86_64-pc-linux-gnu
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include"
+        ignoring nonexistent directory "/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/llvm-20/lib/clang/20/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Linking C executable cmTC_f57e1
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f57e1.dir/link.txt --verbose=1
+        Ubuntu clang version 20.1.2 (0ubuntu1)
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/lib/llvm-20/bin
+        Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         "/usr/bin/ld" -z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_f57e1 /lib/x86_64-linux-gnu/Scrt1.o /lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64 -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /lib/x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.44
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -o cmTC_f57e1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/llvm-20/lib/clang/20/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/llvm-20/lib/clang/20/include] ==> [/usr/lib/llvm-20/lib/clang/20/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/llvm-20/lib/clang/20/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f57e1/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_f57e1.dir/build.make CMakeFiles/cmTC_f57e1.dir/build]
+        ignore line: [gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO']
+        ignore line: [Building C object CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -MD -MT CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Ubuntu clang version 20.1.2 (0ubuntu1)]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/lib/llvm-20/bin]
+        ignore line: [Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ (in-process)]
+        ignore line: [ "/usr/lib/llvm-20/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO -v -fcoverage-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-8xcXTO -resource-dir /usr/lib/llvm-20/lib/clang/20 -dependency-file CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -sys-header-deps -internal-isystem /usr/lib/llvm-20/lib/clang/20/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -x c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 20.1.2 based upon LLVM 20.1.2 default target x86_64-pc-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/llvm-20/lib/clang/20/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_f57e1]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f57e1.dir/link.txt --verbose=1]
+        ignore line: [Ubuntu clang version 20.1.2 (0ubuntu1)]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/lib/llvm-20/bin]
+        ignore line: [Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/usr/bin/ld" -z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_f57e1 /lib/x86_64-linux-gnu/Scrt1.o /lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64 -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /lib/x86_64-linux-gnu/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_f57e1] ==> ignore
+          arg [/lib/x86_64-linux-gnu/Scrt1.o] ==> obj [/lib/x86_64-linux-gnu/Scrt1.o]
+          arg [/lib/x86_64-linux-gnu/crti.o] ==> obj [/lib/x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/14] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/14]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_f57e1.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--no-as-needed] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--no-as-needed] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o]
+          arg [/lib/x86_64-linux-gnu/crtn.o] ==> obj [/lib/x86_64-linux-gnu/crtn.o]
+        linker tool for 'C': /usr/bin/ld
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/14] ==> [/usr/lib/gcc/x86_64-linux-gnu/14]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/lib/x86_64-linux-gnu/Scrt1.o;/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o;/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/14;/usr/lib64;/lib/x86_64-linux-gnu;/lib64;/usr/lib/x86_64-linux-gnu;/lib;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Running the C compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.44
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a32a6/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a32a6.dir/build.make CMakeFiles/cmTC_a32a6.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F'
+        Building CXX object CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -MD -MT CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        Ubuntu clang version 20.1.2 (0ubuntu1)
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/lib/llvm-20/bin
+        Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         (in-process)
+         "/usr/lib/llvm-20/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F -v -fcoverage-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F -resource-dir /usr/lib/llvm-20/lib/clang/20 -dependency-file CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/x86_64-linux-gnu/c++/14 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/backward -internal-isystem /usr/lib/llvm-20/lib/clang/20/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 20.1.2 based upon LLVM 20.1.2 default target x86_64-pc-linux-gnu
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include"
+        ignoring nonexistent directory "/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14
+         /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/x86_64-linux-gnu/c++/14
+         /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/backward
+         /usr/lib/llvm-20/lib/clang/20/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Linking CXX executable cmTC_a32a6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a32a6.dir/link.txt --verbose=1
+        Ubuntu clang version 20.1.2 (0ubuntu1)
+        Target: x86_64-pc-linux-gnu
+        Thread model: posix
+        InstalledDir: /usr/lib/llvm-20/bin
+        Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14
+        Candidate multilib: .;@m64
+        Selected multilib: .;@m64
+         "/usr/bin/ld" -z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_a32a6 /lib/x86_64-linux-gnu/Scrt1.o /lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64 -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /lib/x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.44
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_a32a6
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14]
+          add: [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/x86_64-linux-gnu/c++/14]
+          add: [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/backward]
+          add: [/usr/lib/llvm-20/lib/clang/20/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14] ==> [/usr/include/c++/14]
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/x86_64-linux-gnu/c++/14] ==> [/usr/include/x86_64-linux-gnu/c++/14]
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/backward] ==> [/usr/include/c++/14/backward]
+        collapse include dir [/usr/lib/llvm-20/lib/clang/20/include] ==> [/usr/lib/llvm-20/lib/clang/20/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/14;/usr/include/x86_64-linux-gnu/c++/14;/usr/include/c++/14/backward;/usr/lib/llvm-20/lib/clang/20/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a32a6/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_a32a6.dir/build.make CMakeFiles/cmTC_a32a6.dir/build]
+        ignore line: [gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F']
+        ignore line: [Building CXX object CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -MD -MT CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Ubuntu clang version 20.1.2 (0ubuntu1)]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/lib/llvm-20/bin]
+        ignore line: [Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        ignore line: [ (in-process)]
+        ignore line: [ "/usr/lib/llvm-20/bin/clang" -cc1 -triple x86_64-pc-linux-gnu -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -pic-is-pie -mframe-pointer=all -fmath-errno -ffp-contract=on -fno-rounding-math -mconstructor-aliases -funwind-tables=2 -target-cpu x86-64 -tune-cpu generic -debugger-tuning=gdb -fdebug-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F -v -fcoverage-compilation-dir=/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-fZdV9F -resource-dir /usr/lib/llvm-20/lib/clang/20 -dependency-file CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/x86_64-linux-gnu/c++/14 -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/backward -internal-isystem /usr/lib/llvm-20/lib/clang/20/include -internal-isystem /usr/local/include -internal-isystem /usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include -internal-externc-isystem /usr/include/x86_64-linux-gnu -internal-externc-isystem /include -internal-externc-isystem /usr/include -fdeprecated-macro -ferror-limit 19 -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fcxx-exceptions -fexceptions -faddrsig -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -x c++ /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 20.1.2 based upon LLVM 20.1.2 default target x86_64-pc-linux-gnu]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/14/../../../../x86_64-linux-gnu/include"]
+        ignore line: [ignoring nonexistent directory "/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/x86_64-linux-gnu/c++/14]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/14/../../../../include/c++/14/backward]
+        ignore line: [ /usr/lib/llvm-20/lib/clang/20/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_a32a6]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a32a6.dir/link.txt --verbose=1]
+        ignore line: [Ubuntu clang version 20.1.2 (0ubuntu1)]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /usr/lib/llvm-20/bin]
+        ignore line: [Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Selected GCC installation: /usr/lib/gcc/x86_64-linux-gnu/14]
+        ignore line: [Candidate multilib: .]
+        ignore line: [@m64]
+        ignore line: [Selected multilib: .]
+        ignore line: [@m64]
+        link line: [ "/usr/bin/ld" -z relro --hash-style=gnu --build-id --eh-frame-hdr -m elf_x86_64 -pie -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_a32a6 /lib/x86_64-linux-gnu/Scrt1.o /lib/x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64 -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib64 -L/lib -L/usr/lib -v CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /lib/x86_64-linux-gnu/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_a32a6] ==> ignore
+          arg [/lib/x86_64-linux-gnu/Scrt1.o] ==> obj [/lib/x86_64-linux-gnu/Scrt1.o]
+          arg [/lib/x86_64-linux-gnu/crti.o] ==> obj [/lib/x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/14] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/14]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_a32a6.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o]
+          arg [/lib/x86_64-linux-gnu/crtn.o] ==> obj [/lib/x86_64-linux-gnu/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/14] ==> [/usr/lib/gcc/x86_64-linux-gnu/14]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib64] ==> [/lib64]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/lib/x86_64-linux-gnu/Scrt1.o;/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o;/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/14;/usr/lib64;/lib/x86_64-linux-gnu;/lib64;/usr/lib/x86_64-linux-gnu;/lib;/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.44
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/CheckCSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "/usr/share/cmake-3.31/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/usr/share/cmake-3.31/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "/workspace/src/llama_cpp/ggml/CMakeLists.txt:234 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-tdEvyx"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-tdEvyx"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_C_FLAGS: " -DANDROID_16K_PAGES"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-tdEvyx'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1bb49/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_1bb49.dir/build.make CMakeFiles/cmTC_1bb49.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-tdEvyx'
+        Building C object CMakeFiles/cmTC_1bb49.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -DANDROID_16K_PAGES  -std=gnu11 -MD -MT CMakeFiles/cmTC_1bb49.dir/src.c.o -MF CMakeFiles/cmTC_1bb49.dir/src.c.o.d -o CMakeFiles/cmTC_1bb49.dir/src.c.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-tdEvyx/src.c
+        Linking C executable cmTC_1bb49
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1bb49.dir/link.txt --verbose=1
+        /usr/bin/cc  -DANDROID_16K_PAGES  CMakeFiles/cmTC_1bb49.dir/src.c.o -o cmTC_1bb49
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-tdEvyx'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_C_FLAGS: " -DANDROID_16K_PAGES"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_fopenmplibomp"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e0997/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e0997.dir/build.make CMakeFiles/cmTC_e0997.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr'
+        Building C object CMakeFiles/cmTC_e0997.dir/OpenMPTryFlag.c.o
+        /usr/bin/cc   -DANDROID_16K_PAGES -fopenmp=libomp -std=gnu11 -MD -MT CMakeFiles/cmTC_e0997.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_e0997.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_e0997.dir/OpenMPTryFlag.c.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr/OpenMPTryFlag.c
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_e0997.dir/build.make:82: CMakeFiles/cmTC_e0997.dir/OpenMPTryFlag.c.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-EKQAUr'
+        gmake: *** [Makefile:134: cmTC_e0997/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_C_FLAGS: " -DANDROID_16K_PAGES"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_fopenmplibiomp5"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_076ab/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_076ab.dir/build.make CMakeFiles/cmTC_076ab.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL'
+        Building C object CMakeFiles/cmTC_076ab.dir/OpenMPTryFlag.c.o
+        /usr/bin/cc   -DANDROID_16K_PAGES -fopenmp=libiomp5 -std=gnu11 -MD -MT CMakeFiles/cmTC_076ab.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_076ab.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_076ab.dir/OpenMPTryFlag.c.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL/OpenMPTryFlag.c
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_076ab.dir/build.make:82: CMakeFiles/cmTC_076ab.dir/OpenMPTryFlag.c.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-ULtguL'
+        gmake: *** [Makefile:134: cmTC_076ab/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_C_FLAGS: " -DANDROID_16K_PAGES"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e5717/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e5717.dir/build.make CMakeFiles/cmTC_e5717.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS'
+        Building C object CMakeFiles/cmTC_e5717.dir/OpenMPTryFlag.c.o
+        /usr/bin/cc   -DANDROID_16K_PAGES -fopenmp -std=gnu11 -MD -MT CMakeFiles/cmTC_e5717.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_e5717.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_e5717.dir/OpenMPTryFlag.c.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS/OpenMPTryFlag.c
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_e5717.dir/build.make:82: CMakeFiles/cmTC_e5717.dir/OpenMPTryFlag.c.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-CvfWRS'
+        gmake: *** [Makefile:134: cmTC_e5717/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_C_FLAGS: " -DANDROID_16K_PAGES"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_Xclang fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ffdf0/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ffdf0.dir/build.make CMakeFiles/cmTC_ffdf0.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6'
+        Building C object CMakeFiles/cmTC_ffdf0.dir/OpenMPTryFlag.c.o
+        /usr/bin/cc   -DANDROID_16K_PAGES -Xclang -fopenmp -std=gnu11 -MD -MT CMakeFiles/cmTC_ffdf0.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_ffdf0.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_ffdf0.dir/OpenMPTryFlag.c.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6/OpenMPTryFlag.c
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6/OpenMPTryFlag.c:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_ffdf0.dir/build.make:82: CMakeFiles/cmTC_ffdf0.dir/OpenMPTryFlag.c.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-9q4ty6'
+        gmake: *** [Makefile:134: cmTC_ffdf0/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_CXX_FLAGS: " -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmplibomp"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_13c5c/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_13c5c.dir/build.make CMakeFiles/cmTC_13c5c.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N'
+        Building CXX object CMakeFiles/cmTC_13c5c.dir/OpenMPTryFlag.cpp.o
+        /usr/bin/c++   -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -fopenmp=libomp -std=gnu++17 -MD -MT CMakeFiles/cmTC_13c5c.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_13c5c.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_13c5c.dir/OpenMPTryFlag.cpp.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N/OpenMPTryFlag.cpp
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_13c5c.dir/build.make:82: CMakeFiles/cmTC_13c5c.dir/OpenMPTryFlag.cpp.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-AhMn0N'
+        gmake: *** [Makefile:134: cmTC_13c5c/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_CXX_FLAGS: " -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmplibiomp5"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_dce3f/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_dce3f.dir/build.make CMakeFiles/cmTC_dce3f.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9'
+        Building CXX object CMakeFiles/cmTC_dce3f.dir/OpenMPTryFlag.cpp.o
+        /usr/bin/c++   -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -fopenmp=libiomp5 -std=gnu++17 -MD -MT CMakeFiles/cmTC_dce3f.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_dce3f.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_dce3f.dir/OpenMPTryFlag.cpp.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9/OpenMPTryFlag.cpp
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_dce3f.dir/build.make:82: CMakeFiles/cmTC_dce3f.dir/OpenMPTryFlag.cpp.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-RvNwc9'
+        gmake: *** [Makefile:134: cmTC_dce3f/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_CXX_FLAGS: " -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f0377/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f0377.dir/build.make CMakeFiles/cmTC_f0377.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh'
+        Building CXX object CMakeFiles/cmTC_f0377.dir/OpenMPTryFlag.cpp.o
+        /usr/bin/c++   -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -fopenmp -std=gnu++17 -MD -MT CMakeFiles/cmTC_f0377.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_f0377.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_f0377.dir/OpenMPTryFlag.cpp.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh/OpenMPTryFlag.cpp
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_f0377.dir/build.make:82: CMakeFiles/cmTC_f0377.dir/OpenMPTryFlag.cpp.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-BppvJh'
+        gmake: *** [Makefile:134: cmTC_f0377/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "/workspace/src/llama_cpp/ggml/src/ggml-cpu/CMakeLists.txt:71 (find_package)"
+      - "/workspace/src/llama_cpp/ggml/src/CMakeLists.txt:361 (ggml_add_cpu_backend_variant_impl)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv"
+      binary: "/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS: "/usr/bin/clang-scan-deps-20"
+      CMAKE_CXX_FLAGS: " -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/workspace/src/llama_cpp/cmake/"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_Xclang fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_98ebd/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_98ebd.dir/build.make CMakeFiles/cmTC_98ebd.dir/build
+        gmake[1]: Entering directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv'
+        Building CXX object CMakeFiles/cmTC_98ebd.dir/OpenMPTryFlag.cpp.o
+        /usr/bin/c++   -DBUILD_COMMIT=unknown -DBUILD_COMPILER=unknown -DBUILD_TARGET=Android -DANDROID_16K_PAGES -Xclang -fopenmp -std=gnu++17 -MD -MT CMakeFiles/cmTC_98ebd.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_98ebd.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_98ebd.dir/OpenMPTryFlag.cpp.o -c /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv/OpenMPTryFlag.cpp
+        /workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv/OpenMPTryFlag.cpp:2:10: fatal error: 'omp.h' file not found
+            2 | #include <omp.h>
+              |          ^~~~~~~
+        1 error generated.
+        gmake[1]: *** [CMakeFiles/cmTC_98ebd.dir/build.make:82: CMakeFiles/cmTC_98ebd.dir/OpenMPTryFlag.cpp.o] Error 1
+        gmake[1]: Leaving directory '/workspace/build-android/CMakeFiles/CMakeScratch/TryCompile-NKIKDv'
+        gmake: *** [Makefile:134: cmTC_98ebd/fast] Error 2
+        
+      exitCode: 2
+...

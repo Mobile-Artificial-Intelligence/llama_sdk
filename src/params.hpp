@@ -1,8 +1,8 @@
 #ifndef PARAMS_HPP
 #define PARAMS_HPP
 
-#include "llama.h"
-#include "json.hpp"
+#include "llama_cpp/include/llama.h"
+#include "llama_cpp/vendor/nlohmann/json.hpp"
 
 using json = nlohmann::ordered_json;
 

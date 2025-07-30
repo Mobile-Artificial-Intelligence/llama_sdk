@@ -72,6 +72,7 @@ llama_sdk is a dart implementation of llama.cpp used by the mobile artificial in
       '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src',
       '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-cpu',
       '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-metal',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/vendor/nlohmann',
     ],
     'HEADER_SEARCH_PATHS' => [
       '$(PODS_TARGET_SRCROOT)/src',
@@ -82,6 +83,7 @@ llama_sdk is a dart implementation of llama.cpp used by the mobile artificial in
       '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src',
       '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-cpu',
       '$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src/ggml-metal',
+      '$(PODS_TARGET_SRCROOT)/src/llama_cpp/vendor/nlohmann',
     ],
     'OTHER_CFLAGS' => [
       '$(inherited)', 
@@ -111,7 +113,8 @@ llama_sdk is a dart implementation of llama.cpp used by the mobile artificial in
       '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/include', 
       '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/include', 
       '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/ggml/src', 
-      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/common', 
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/common',
+      '-I$(PODS_TARGET_SRCROOT)/src/llama_cpp/vendor/nlohmann', 
       '-DGGML_LLAMAFILE=OFF', 
       '-DGGML_USE_CPU',
       '-DGGML_USE_ACCELERATE',

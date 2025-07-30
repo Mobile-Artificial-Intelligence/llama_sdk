@@ -26,6 +26,9 @@ target_include_directories(
   llama 
   PRIVATE 
   ${LLAMA_CPP_DIR}/common
+  ${LLAMA_CPP_DIR}/include
+  ${LLAMA_CPP_DIR}/vendor/nlohmann
+  ${API_DIR}
 )
 
 target_sources(
