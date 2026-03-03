@@ -131,7 +131,7 @@ int llama_prompt(char * msgs, dart_output * output) {
 
     std::string response;
 
-    const bool is_first = llama_kv_self_seq_pos_max(ctx, 0) == 0;
+    const bool is_first = llama_memory_seq_pos_max(llama_get_memory(ctx), 0) == 0;
 
     // tokenize the prompt
     const int n_prompt_tokens = -llama_tokenize(vocab, prompt.c_str(), prompt.size(), NULL, 0, is_first, true);
@@ -146,7 +146,7 @@ int llama_prompt(char * msgs, dart_output * output) {
     while (!stop_generation.load()) {
         // check if we have enough space in the context to evaluate this batch
         int n_ctx = llama_n_ctx(ctx);
-        int n_ctx_used = llama_kv_self_seq_pos_max(ctx, 0);
+        int n_ctx_used = llama_memory_seq_pos_max(llama_get_memory(ctx), 0);
         if (n_ctx_used + batch.n_tokens > n_ctx) {
             fprintf(stderr, "context size exceeded\n");
             break;
