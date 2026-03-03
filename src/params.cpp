@@ -13,12 +13,28 @@ struct llama_model_params llama_model_params_from_json(json & params) {
         model_params.use_mmap = params["use_mmap"];
     }
 
+    if (params.contains("use_direct_io") && params["use_direct_io"].is_boolean()) {
+        model_params.use_direct_io = params["use_direct_io"];
+    }
+
     if (params.contains("use_mlock") && params["use_mlock"].is_boolean()) {
         model_params.use_mlock = params["use_mlock"];
     }
 
     if (params.contains("check_tensors") && params["check_tensors"].is_boolean()) {
         model_params.check_tensors = params["check_tensors"];
+    }
+
+    if (params.contains("use_extra_bufts") && params["use_extra_bufts"].is_boolean()) {
+        model_params.use_extra_bufts = params["use_extra_bufts"];
+    }
+
+    if (params.contains("no_host") && params["no_host"].is_boolean()) {
+        model_params.no_host = params["no_host"];
+    }
+
+    if (params.contains("no_alloc") && params["no_alloc"].is_boolean()) {
+        model_params.no_alloc = params["no_alloc"];
     }
 
     return model_params;
@@ -103,12 +119,24 @@ struct llama_context_params llama_context_params_from_json(json & params) {
         context_params.offload_kqv = params["offload_kqv"];
     }
 
-    if (params.contains("flash_attn") && params["flash_attn"].is_boolean()) {
-        context_params.flash_attn = params["flash_attn"];
-    }
-
     if (params.contains("no_perf") && params["no_perf"].is_boolean()) {
         context_params.no_perf = params["no_perf"];
+    }
+
+    if (params.contains("flash_attn_type") && params["flash_attn_type"].is_number_integer()) {
+        context_params.flash_attn_type = (enum llama_flash_attn_type) params["flash_attn_type"].get<int>();
+    }
+
+    if (params.contains("op_offload") && params["op_offload"].is_boolean()) {
+        context_params.op_offload = params["op_offload"];
+    }
+
+    if (params.contains("swa_full") && params["swa_full"].is_boolean()) {
+        context_params.swa_full = params["swa_full"];
+    }
+
+    if (params.contains("kv_unified") && params["kv_unified"].is_boolean()) {
+        context_params.kv_unified = params["kv_unified"];
     }
 
     return context_params;

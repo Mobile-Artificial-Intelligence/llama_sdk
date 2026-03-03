@@ -42,8 +42,12 @@ char * llama_default_params(void) {
 
     params["vocab_only"] = default_model_params.vocab_only;
     params["use_mmap"] = default_model_params.use_mmap;
+    params["use_direct_io"] = default_model_params.use_direct_io;
     params["use_mlock"] = default_model_params.use_mlock;
     params["check_tensors"] = default_model_params.check_tensors;
+    params["use_extra_bufts"] = default_model_params.use_extra_bufts;
+    params["no_host"] = default_model_params.no_host;
+    params["no_alloc"] = default_model_params.no_alloc;
 
     /// Context parameters
     auto default_context_params = llama_context_default_params();
@@ -67,8 +71,11 @@ char * llama_default_params(void) {
     params["defrag_thold"] = default_context_params.defrag_thold;
     params["embeddings"] = default_context_params.embeddings;
     params["offload_kqv"] = default_context_params.offload_kqv;
-    params["flash_attn"] = default_context_params.flash_attn;
     params["no_perf"] = default_context_params.no_perf;
+    params["flash_attn_type"] = default_context_params.flash_attn_type;
+    params["op_offload"] = default_context_params.op_offload;
+    params["swa_full"] = default_context_params.swa_full;
+    params["kv_unified"] = default_context_params.kv_unified;
 
     /// Sampler parameters
     params["greedy"] = true;

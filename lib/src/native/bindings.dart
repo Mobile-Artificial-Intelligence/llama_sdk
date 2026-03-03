@@ -15,8 +15,9 @@ class llama {
 
   /// The symbols are looked up with [lookup].
   llama.fromLookup(
-    ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup,
-  ) : _lookup = lookup;
+      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+          lookup)
+      : _lookup = lookup;
 
   ffi.Pointer<ffi.Char> llama_default_params() {
     return _llama_default_params();
@@ -24,19 +25,21 @@ class llama {
 
   late final _llama_default_paramsPtr =
       _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>(
-    'llama_default_params',
-  );
+          'llama_default_params');
   late final _llama_default_params =
       _llama_default_paramsPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
 
-  int llama_llm_init(ffi.Pointer<ffi.Char> params) {
-    return _llama_llm_init(params);
+  int llama_llm_init(
+    ffi.Pointer<ffi.Char> params,
+  ) {
+    return _llama_llm_init(
+      params,
+    );
   }
 
   late final _llama_llm_initPtr =
       _lookup<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char>)>>(
-    'llama_llm_init',
-  );
+          'llama_llm_init');
   late final _llama_llm_init =
       _llama_llm_initPtr.asFunction<int Function(ffi.Pointer<ffi.Char>)>();
 
@@ -44,7 +47,10 @@ class llama {
     ffi.Pointer<ffi.Char> messages,
     ffi.Pointer<dart_output> output,
   ) {
-    return _llama_prompt(messages, output);
+    return _llama_prompt(
+      messages,
+      output,
+    );
   }
 
   late final _llama_promptPtr = _lookup<
